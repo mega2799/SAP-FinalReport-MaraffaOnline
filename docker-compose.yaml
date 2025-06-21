@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  app:
+    image: "danteev/texlive"
+    volumes:
+      - "./:/workdir"
+    working_dir: "/workdir"
+    command: ["/bin/sh", "locallyTest.sh"]
