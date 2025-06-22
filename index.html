@@ -1,0 +1,1311 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>{{Your meta-title here}}</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+  </style>
+</head>
+<body>
+
+    
+    <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="doc-title">{{Your meta-title here}}</span>
+        <ul class="nav pull-right doc-info">
+                            </ul>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+    <div class="row">
+            <div id="TOC" class="span3">
+        <div class="well toc">
+
+        <ul>
+        <li><a href="#declaration"
+        id="toc-declaration">Declaration</a></li>
+        <li><a href="#abstract" id="toc-abstract">Abstract</a></li>
+        <li><a href="#acknowledgements"
+        id="toc-acknowledgements">Acknowledgements</a>
+        <ul>
+        <li><a href="#list-of-abbreviations"
+        id="toc-list-of-abbreviations">List of Abbreviations</a></li>
+        </ul></li>
+        <li><a href="#ch:into" id="toc-ch:into">Introduction</a>
+        <ul>
+        <li><a href="#sec:into_back"
+        id="toc-sec:into_back">Background</a></li>
+        <li><a href="#sec:intro_prob_art"
+        id="toc-sec:intro_prob_art">Problem statement</a></li>
+        <li><a href="#sec:intro_aims_obj"
+        id="toc-sec:intro_aims_obj">Aims and objectives</a></li>
+        <li><a href="#sec:intro_sol" id="toc-sec:intro_sol">Solution
+        approach</a>
+        <ul>
+        <li><a href="#sec:intro_some_sub1"
+        id="toc-sec:intro_some_sub1">A subsection 1</a></li>
+        <li><a href="#sec:intro_some_sub2"
+        id="toc-sec:intro_some_sub2">A subsection 2</a></li>
+        </ul></li>
+        <li><a href="#sec:intro_sum_results"
+        id="toc-sec:intro_sum_results">Summary of contributions and
+        achievements</a></li>
+        <li><a href="#sec:intro_org" id="toc-sec:intro_org">Organization
+        of the report</a></li>
+        </ul></li>
+        <li><a href="#ch:lit_rev" id="toc-ch:lit_rev">Literature
+        Review</a>
+        <ul>
+        <li><a
+        href="#example-of-in-text-citation-of-references-in-latex"
+        id="toc-example-of-in-text-citation-of-references-in-latex">Example
+        of in-text citation of references in LaTeX</a></li>
+        <li><a href="#example-of-risk-of-unintentional-plagiarism"
+        id="toc-example-of-risk-of-unintentional-plagiarism">Example of
+        “risk” of unintentional plagiarism</a></li>
+        <li><a href="#critique-of-the-review"
+        id="toc-critique-of-the-review">Critique of the review</a></li>
+        <li><a href="#summary" id="toc-summary">Summary</a></li>
+        </ul></li>
+        <li><a href="#ch:method" id="toc-ch:method">Methodology</a>
+        <ul>
+        <li><a href="#examples-of-the-sections-of-a-methodology-chapter"
+        id="toc-examples-of-the-sections-of-a-methodology-chapter">Examples
+        of the sections of a methodology chapter</a>
+        <ul>
+        <li><a href="#subsec:se_chpters"
+        id="toc-subsec:se_chpters">Example of a software/Web development
+        main text structure</a></li>
+        <li><a
+        href="#example-of-an-algorithm-analysis-main-text-structure"
+        id="toc-example-of-an-algorithm-analysis-main-text-structure">Example
+        of an algorithm analysis main text structure</a></li>
+        <li><a
+        href="#example-of-an-application-type-main-text-structure"
+        id="toc-example-of-an-application-type-main-text-structure">Example
+        of an application type main text structure</a></li>
+        <li><a href="#example-of-a-science-lab-type-main-text-structure"
+        id="toc-example-of-a-science-lab-type-main-text-structure">Example
+        of a science lab-type main text structure</a></li>
+        </ul></li>
+        <li><a href="#example-of-an-equation-in-latex"
+        id="toc-example-of-an-equation-in-latex">Example of an Equation
+        in LaTeX</a></li>
+        <li><a href="#example-of-a-figure-in-latex"
+        id="toc-example-of-a-figure-in-latex">Example of a Figure in
+        LaTeX</a></li>
+        <li><a href="#example-of-an-algorithm-in-latex"
+        id="toc-example-of-an-algorithm-in-latex">Example of an
+        algorithm in LaTeX</a></li>
+        <li><a href="#example-of-code-snippet-in-latex"
+        id="toc-example-of-code-snippet-in-latex">Example of code
+        snippet in LaTeX</a></li>
+        <li><a href="#example-of-in-text-citation-style"
+        id="toc-example-of-in-text-citation-style">Example of in-text
+        citation style</a>
+        <ul>
+        <li><a
+        href="#example-of-the-equations-and-illustrations-placement-and-reference-in-the-text"
+        id="toc-example-of-the-equations-and-illustrations-placement-and-reference-in-the-text">Example
+        of the equations and illustrations placement and reference in
+        the text</a></li>
+        <li><a href="#example-of-the-equations-and-illustrations-style"
+        id="toc-example-of-the-equations-and-illustrations-style">Example
+        of the equations and illustrations style</a></li>
+        </ul></li>
+        <li><a href="#summary-1" id="toc-summary-1">Summary</a></li>
+        </ul></li>
+        <li><a href="#ch:results" id="toc-ch:results">Results</a>
+        <ul>
+        <li><a href="#a-section" id="toc-a-section">A section</a></li>
+        <li><a href="#example-of-a-table-in-latex"
+        id="toc-example-of-a-table-in-latex">Example of a Table in
+        LaTeX</a></li>
+        <li><a href="#example-of-captions-style"
+        id="toc-example-of-captions-style">Example of captions
+        style</a></li>
+        <li><a href="#summary-2" id="toc-summary-2">Summary</a></li>
+        </ul></li>
+        <li><a href="#ch:evaluation" id="toc-ch:evaluation">Discussion
+        and Analysis</a>
+        <ul>
+        <li><a href="#a-section-1" id="toc-a-section-1">A
+        section</a></li>
+        <li><a href="#significance-of-the-findings"
+        id="toc-significance-of-the-findings">Significance of the
+        findings</a></li>
+        <li><a href="#limitations"
+        id="toc-limitations">Limitations</a></li>
+        <li><a href="#summary-3" id="toc-summary-3">Summary</a></li>
+        </ul></li>
+        <li><a href="#ch:con" id="toc-ch:con">Conclusions and Future
+        Work</a>
+        <ul>
+        <li><a href="#conclusions"
+        id="toc-conclusions">Conclusions</a></li>
+        <li><a href="#future-work" id="toc-future-work">Future
+        work</a></li>
+        </ul></li>
+        <li><a href="#ch:reflection"
+        id="toc-ch:reflection">Reflection</a></li>
+        </ul>
+
+        </div>
+      </div>
+            <div class="span9">
+
+      
+      <div class="titlepage">
+<div class="center">
+<p><span>University of Reading<br />
+Department of Computer Science</span><br />
+</p>
+<p>Computer Science Undergraduate Report Template and Report Writing
+Guide</p>
+<p> <br />
+<span> FirstName(s) LastName </span><br />
+<span> <em>Supervisor:</em> Supervisor’s Name</span><br />
+A report submitted in partial fulfilment of the requirements of<br />
+the University of Reading for the degree of<br />
+Bachelor of Science in <em>Computer Science</em><br />
+</p>
+<p>2025-06-22</p>
+</div>
+</div>
+<h1 class="unnumbered" id="declaration">Declaration</h1>
+<p>I, Firstname(s) Lastname, of the Department of Computer Science,
+University of Reading, confirm that this is my own work and figures,
+tables, equations, code snippets, artworks, and illustrations in this
+report are original and have not been taken from any other person’s
+work, except where the works of others have been explicitly
+acknowledged, quoted, and referenced. I understand that if failing to do
+so will be considered a case of plagiarism. Plagiarism is a form of
+academic misconduct and will be penalised accordingly.<br />
+I give consent to a copy of my report being shared with future students
+as an exemplar.<br />
+I give consent for my work to be made available more widely to members
+of UoR and public with interest in teaching, learning and research.
+ <br />
+</p>
+<div class="flushright">
+<p>Firstname(s) Lastname</p>
+<p>2025-06-22</p>
+</div>
+<h1 class="unnumbered" id="abstract">Abstract</h1>
+<p>This is an undergraduate project report template and instruction on
+how to write a report. It also has some useful examples to use LaTeX. Do
+read this template carefully. The number of chapters and their titles
+may vary depending on the type of project and personal preference.
+Section titles in this template are illustrative should be updated
+accordingly. For example, sections named “A section...” and “Example of
+...” should be updated. The number of sections in each chapter may also
+vary. This template may or may not suit your project. Discuss the
+structure of your report with your supervisor.</p>
+<p> <br />
+<strong>Guidance on abstract writing:</strong> An abstract is a summary
+of a report in a single paragraph up to a maximum of 250 words. An
+abstract should be self-contained, and it should not refer to sections,
+figures, tables, equations, or references. An abstract typically
+consists of sentences describing the following four parts: (1)
+introduction (background and purpose of the project), (2) methods, (3)
+results and analysis, and (4) conclusions. The distribution of these
+four parts of the abstract should reflect the relative proportion of
+these parts in the report itself. An abstract starts with a few
+sentences describing the project’s general field, comprehensive
+background and context, the main purpose of the project; and the problem
+statement. A few sentences describe the methods, experiments, and
+implementation of the project. A few sentences describe the main results
+achieved and their significance. The final part of the abstract
+describes the conclusions and the implications of the results to the
+relevant field.</p>
+<p> <br />
+<strong>Keywords:</strong> a maximum of five keywords/keyphrase
+separated by commas</p>
+<p><strong>Report’s total word count:</strong> we expect a maximum of
+20,000 words (excluding reference and appendices) and about 50 - 60
+pages. [A good project report can also be written in approximately
+10,000 words.]</p>
+<h1 class="unnumbered" id="acknowledgements">Acknowledgements</h1>
+<p>An acknowledgements section is optional. You may like to acknowledge
+the support and help of your supervisor(s), friends, or any other
+person(s), department(s), institute(s), etc. If you have been provided
+specific facility from department/school acknowledged so.</p>
+<h2 id="list-of-abbreviations">List of Abbreviations</h2>
+<div class="abbrv">
+<p>School of Mathematical, Physical and Computational Sciences</p>
+</div>
+<h1 id="ch:into">Introduction</h1>
+<p><strong>Guidance on introduction chapter writing:</strong>
+Introductions are written in the following parts:</p>
+<ul>
+<li><p>A brief description of the investigated problem.</p></li>
+<li><p>A summary of the scope and context of the project, i.e., what is
+the background of the
+topic/problem/application/system/algorithm/experiment/research
+question/hypothesis/etc. under investigation/implementation/development
+[whichever is applicable to your project].</p></li>
+<li><p>The aims and objectives of the project.</p></li>
+<li><p>A description of the problem and the methodological approach
+adopted to solve the problem.</p></li>
+<li><p>A summary of the most significant outcomes and their
+interpretations.</p></li>
+<li><p>Organization of the report.</p></li>
+</ul>
+<p>Consult <strong>your supervisor</strong> to check the content of the
+introduction chapter. In this template, we only offer basic sections of
+an introduction chapter. It may not be complete and comprehensive.
+Writing a report is a subjective matter, and a report’s style and
+structure depend on the “type of project” as well as an individual’s
+preference. This template suits the following project paradigms:</p>
+<ol>
+<li><p>software engineering and software/web application
+development;</p></li>
+<li><p>algorithm implementation, analysis and/or application;</p></li>
+<li><p>science lab (experiment); and</p></li>
+<li><p>pure theoretical development (not mention extensively).</p></li>
+</ol>
+<p>Use only a single <strong>font</strong> for the body text. We
+recommend using a clean and electronic document friendly font like
+<strong>Arial</strong> or <strong>Calibri</strong> for MS-word (If you
+create a report in MS word). If you use this template, DO NOT ALTER the
+template’s default font “amsfont default computer modern”. The default
+LaTeX font “computer modern” is also acceptable.</p>
+<p>The recommended body text <strong>font size</strong> is minimum
+<strong>11pt</strong> and minimum one-half line spacing. The recommended
+figure/table caption font size is minimum 10pt. The footnote<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> font size is minimum 8pt. DO NOT
+ALTER the font setting of this template.</p>
+<h2 id="sec:into_back">Background</h2>
+<p>Describe to a reader the context of your project. That is, what is
+your project and what its motivation. Briefly explain the major
+theories, applications, and/or products/systems/algorithms whichever is
+relevant to your project.</p>
+<p><strong>Cautions:</strong> Do not say you choose this project because
+of your interest, or your supervisor proposed/suggested this project, or
+you were assigned this project as your final year project. This all may
+be true, but it is not meant to be written here.</p>
+<h2 id="sec:intro_prob_art">Problem statement</h2>
+<p>This section describes the investigated problem in detail. You can
+also have a separate chapter on “Problem articulation.” For some
+projects, you may have a section like “Research question(s)” or
+“Research Hypothesis” instead of a section on “Problem statement.’</p>
+<h2 id="sec:intro_aims_obj">Aims and objectives</h2>
+<p>Describe the “aims and objectives” of your project.</p>
+<p><strong>Aims:</strong> The aims tell a read what you want/hope to
+achieve at the end of the project. The aims define your intent/purpose
+in general terms.</p>
+<p><strong>Objectives:</strong> The objectives are a set of tasks you
+would perform in order to achieve the defined aims. The objective
+statements have to be specific and measurable through the results and
+outcome of the project.</p>
+<h2 id="sec:intro_sol">Solution approach</h2>
+<p>Briefly describe the solution approach and the methodology applied in
+solving the set aims and objectives.</p>
+<p>Depending on the project, you may like to alter the “heading” of this
+section. Check with you supervisor. Also, check what subsection or any
+other section that can be added in or removed from this template.</p>
+<h3 id="sec:intro_some_sub1">A subsection 1</h3>
+<p>You may or may not need subsections here. Depending on your project’s
+needs, add two or more subsection(s). A section takes at least two
+subsections.</p>
+<h3 id="sec:intro_some_sub2">A subsection 2</h3>
+<p>Depending on your project’s needs, add more section(s) and
+subsection(s).</p>
+<h4 id="sec:intro_some_subsub1">A subsection 1 of a subsection</h4>
+<p>The command \subsubsection{} creates a paragraph heading in
+LaTeX.</p>
+<h4 id="sec:intro_some_subsub2">A subsection 2 of a subsection</h4>
+<p>Write your text here...</p>
+<h2 id="sec:intro_sum_results">Summary of contributions and
+achievements</h2>
+<p>Describe clearly what you have done/created/achieved and what the
+major results and their implications are.</p>
+<h2 id="sec:intro_org">Organization of the report</h2>
+<p>Describe the outline of the rest of the report here. Let the reader
+know what to expect ahead in the report. Describe how you have organized
+your report.</p>
+<p><strong>Example: how to refer a chapter, section,
+subsection</strong>. This report is organised into seven chapters.
+Chapter <a href="#ch:lit_rev" data-reference-type="ref"
+data-reference="ch:lit_rev">2</a> details the literature review of this
+project. In Section <a href="#ch:method" data-reference-type="ref"
+data-reference="ch:method">3</a>...</p>
+<p><strong>Note:</strong> Take care of the word like “Chapter,”
+“Section,” “Figure” etc. before the LaTeXcommand \ref{}. Otherwise, a
+sentence will be confusing. For example, In <a href="#ch:lit_rev"
+data-reference-type="ref" data-reference="ch:lit_rev">2</a> literature
+review is described. In this sentence, the word “Chapter” is missing.
+Therefore, a reader would not know whether 2 is for a Chapter or a
+Section or a Figure.</p>
+<h1 id="ch:lit_rev">Literature Review</h1>
+<p>A literature review chapter can be organized in a few sections with
+appropriate titles. A literature review chapter might contain the
+following:</p>
+<ol>
+<li><p>A review of the state-of-the-art (include theories and solutions)
+of the field of research.</p></li>
+<li><p>A description of the project in the context of existing
+literature and products/systems.</p></li>
+<li><p>An analysis of how the review is relevant to the intended
+application/system/problem.</p></li>
+<li><p>A critique of existing work compared with the intended
+work.</p></li>
+</ol>
+<p>Note that your literature review should demonstrate the significance
+of the project.</p>
+<h2 id="example-of-in-text-citation-of-references-in-latex">Example of
+in-text citation of references in LaTeX</h2>
+<p>The references in a report relate your content with the relevant
+sources, papers, and the works of others. To include references in a
+report, we <em>cite</em> them in the texts. In MS-Word, EndNote, or
+MS-Word references, or plain text as a list can be used. Similarly, in
+LaTeX, you can use the “thebibliography” environment, which is similar
+to the plain text as a list arrangement like the MS word. However, In
+LaTeX, the most convenient way is to use the BibTex, which takes the
+references in a particular format [see references.bib file of this
+template] and lists them in style [APA, Harvard, etc.] as we want with
+the help of proper packages.</p>
+<p>These are the examples of how to <em>cite</em> external sources,
+seminal works, and research papers. In LaTeX, if you use
+“<strong>BibTex</strong>” you do not have to worry much since the proper
+use of a bibliographystyle package like “agsm for the Harvard style” and
+little rectification of the content in a BiBText source file [In this
+template, BibTex are stored in the “references.bib” file], we can
+conveniently generate a reference style.</p>
+<p>Take a note of the commands \cite{} and \citep{}. The command \cite{}
+will write like “Author et al. (2019)” style for Harvard, APA and
+Chicago style. The command \citep{} will write like “(Author et al.,
+2019).” Depending on how you construct a sentence, you need to use them
+smartly. Check the examples of <strong>in-text citation</strong> of
+sources listed here [This template recommends the <strong>Harvard
+style</strong> of referencing.]:</p>
+<ul>
+<li><p><span class="citation" data-cites="lamport1994latex"></span> has
+written a comprehensive guide on writing in LaTeX [Example of \cite{}
+].</p></li>
+<li><p>If LaTeX is used efficiently and effectively, it helps in writing
+a very high-quality project report <span class="citation"
+data-cites="lamport1994latex"></span>  [Example of \citep{} ].</p></li>
+<li><p>A detailed APA, Harvard, and Chicago referencing style guide are
+available in <span class="citation"
+data-cites="uor_refernce_style"></span>.</p></li>
+</ul>
+<p>Example of a numbered list:</p>
+<ol>
+<li><p><span class="citation" data-cites="lamport1994latex"></span> has
+written a comprehensive guide on writing in LaTeX.</p></li>
+<li><p>If LaTeXis used efficiently and effectively, it helps in writing
+a very high-quality project report <span class="citation"
+data-cites="lamport1994latex"></span>.</p></li>
+</ol>
+<h2 id="example-of-risk-of-unintentional-plagiarism">Example of “risk”
+of unintentional plagiarism</h2>
+<p>Using other sources, ideas, and material always bring with it a risk
+of unintentional plagiarism.</p>
+<p><strong>MUST</strong>: do read the university guidelines on the
+definition of plagiarism as well as the guidelines on how to avoid
+plagiarism <span class="citation"
+data-cites="uor_plagiarism"></span>.</p>
+<h2 id="critique-of-the-review">Critique of the review</h2>
+<p>Describe your main findings and evaluation of the literature.  <br />
+</p>
+<h2 id="summary">Summary</h2>
+<p>Write a summary of this chapter <br />
+</p>
+<h1 id="ch:method">Methodology</h1>
+<p>We mentioned in Chapter <a href="#ch:into" data-reference-type="ref"
+data-reference="ch:into">1</a> that a project report’s structure could
+follow a particular paradigm. Hence, the organization of a report
+(effectively the Table of Content of a report) can vary depending on the
+type of project you are doing. Check which of the given examples suit
+your project. Alternatively, follow your supervisor’s advice.</p>
+<h2 id="examples-of-the-sections-of-a-methodology-chapter">Examples of
+the sections of a methodology chapter</h2>
+<p>A general report structure is summarised (suggested) in Table <a
+href="#tab:gen_template" data-reference-type="ref"
+data-reference="tab:gen_template">3.1</a>. Table <a
+href="#tab:gen_template" data-reference-type="ref"
+data-reference="tab:gen_template">3.1</a> describes that, in general, a
+typical report structure has three main parts: (1) front matter, (2)
+main text, and (3) end matter. The structure of the front matter and end
+matter will remain the same for all the undergraduate final year project
+report. However, the main text varies as per the project’s needs.</p>
+<div id="tab:gen_template">
+<table>
+<caption>Undergraduate report template structure</caption>
+<tbody>
+<tr>
+<td rowspan="7" style="text-align: left;">Frontmatter</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Title Page</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Abstract</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Acknowledgements</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Table of Contents</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">List of Figures</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">List of Tables</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">List of Abbreviations</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td rowspan="7" style="text-align: left;">Main text</td>
+<td style="text-align: left;">Chapter 1</td>
+<td style="text-align: left;">Introduction</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 2</td>
+<td style="text-align: left;">Literature Review</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 3</td>
+<td style="text-align: left;">Methodology</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 4</td>
+<td style="text-align: left;">Results</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 5</td>
+<td style="text-align: left;">Discussion and Analysis</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 6</td>
+<td style="text-align: left;">Conclusions and Future Work</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 7</td>
+<td style="text-align: left;">Refection</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td rowspan="2" style="text-align: left;">End matter</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">References</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Appendices (Optional)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Index (Optional)</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="subsec:se_chpters">Example of a software/Web development main
+text structure</h3>
+<p>Notice that the “methodology” Chapter of Software/Web development in
+Table <a href="#tab:soft_eng_temp" data-reference-type="ref"
+data-reference="tab:soft_eng_temp">3.2</a> takes a standard software
+engineering paradigm (approach). Alternatively, these suggested sections
+can be the chapters of their own. Also, notice that “Chapter 5” in
+Table <a href="#tab:soft_eng_temp" data-reference-type="ref"
+data-reference="tab:soft_eng_temp">3.2</a> is “Testing and Validation”
+which is different from the general report template mentioned in
+Table <a href="#tab:gen_template" data-reference-type="ref"
+data-reference="tab:gen_template">3.1</a>. Check with your supervisor if
+in doubt.</p>
+<div id="tab:soft_eng_temp">
+<table>
+<caption>Example of a software engineering-type report
+structure</caption>
+<tbody>
+<tr>
+<td style="text-align: left;">Chapter 1</td>
+<td style="text-align: left;">Introduction</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 2</td>
+<td style="text-align: left;">Literature Review</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 3</td>
+<td style="text-align: left;">Methodology</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Requirements specifications</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Analysis</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Design</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Implementations</td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 4</td>
+<td style="text-align: left;">Testing and Validation</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 5</td>
+<td style="text-align: left;">Results and Discussion</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 6</td>
+<td style="text-align: left;">Conclusions and Future Work</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 7</td>
+<td style="text-align: left;">Reflection</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="example-of-an-algorithm-analysis-main-text-structure">Example of
+an algorithm analysis main text structure</h3>
+<p>Some project might involve the implementation of a state-of-the-art
+algorithm and its performance analysis and comparison with other
+algorithms. In that case, the suggestion in Table <a
+href="#tab:algo_temp" data-reference-type="ref"
+data-reference="tab:algo_temp">3.3</a> may suit you the best.</p>
+<div id="tab:algo_temp">
+<table>
+<caption>Example of an algorithm analysis type report
+structure</caption>
+<tbody>
+<tr>
+<td style="text-align: left;">Chapter 1</td>
+<td style="text-align: left;">Introduction</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 2</td>
+<td style="text-align: left;">Literature Review</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 3</td>
+<td style="text-align: left;">Methodology</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Algorithms descriptions</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Implementations</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Experiments design</td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 4</td>
+<td style="text-align: left;">Results</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 5</td>
+<td style="text-align: left;">Discussion and Analysis</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 6</td>
+<td style="text-align: left;">Conclusion and Future Work</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 7</td>
+<td style="text-align: left;">Reflection</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="example-of-an-application-type-main-text-structure">Example of
+an application type main text structure</h3>
+<p>If you are applying some algorithms/tools/technologies on some
+problems/datasets/etc., you may use the methodology section prescribed
+in Table <a href="#tab:app_temp" data-reference-type="ref"
+data-reference="tab:app_temp">3.4</a>.</p>
+<div id="tab:app_temp">
+<table>
+<caption>Example of an application type report structure</caption>
+<tbody>
+<tr>
+<td style="text-align: left;">Chapter 1</td>
+<td style="text-align: left;">Introduction</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 2</td>
+<td style="text-align: left;">Literature Review</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 3</td>
+<td style="text-align: left;">Methodology</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Problems (tasks) descriptions</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Algorithms/tools/technologies/etc.
+descriptions</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Implementations</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Experiments design and setup</td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 4</td>
+<td style="text-align: left;">Results</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 5</td>
+<td style="text-align: left;">Discussion and Analysis</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 6</td>
+<td style="text-align: left;">Conclusion and Future Work</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 7</td>
+<td style="text-align: left;">Reflection</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="example-of-a-science-lab-type-main-text-structure">Example of a
+science lab-type main text structure</h3>
+<p>If you are doing a science lab experiment type of project, you may
+use the methodology section suggested in Table <a href="#tab:lab_temp"
+data-reference-type="ref" data-reference="tab:lab_temp">3.5</a>. In this
+kind of project, you may refer to the “Methodology” section as
+“Materials and Methods.”</p>
+<div id="tab:lab_temp">
+<table>
+<caption>Example of a science lab experiment-type report
+structure</caption>
+<tbody>
+<tr>
+<td style="text-align: left;">Chapter 1</td>
+<td style="text-align: left;">Introduction</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 2</td>
+<td style="text-align: left;">Literature Review</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 3</td>
+<td style="text-align: left;">Materials and Methods</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Problems (tasks) description</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Materials</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Procedures</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Implementations</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Experiment set-up</td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 4</td>
+<td style="text-align: left;">Results</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 5</td>
+<td style="text-align: left;">Discussion and Analysis</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 6</td>
+<td style="text-align: left;">Conclusion and Future Work</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Chapter 7</td>
+<td style="text-align: left;">Reflection</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="example-of-an-equation-in-latex">Example of an Equation in
+LaTeX</h2>
+<p>Eq. <a href="#eq:eq_example" data-reference-type="ref"
+data-reference="eq:eq_example">[eq:eq_example]</a> [note that this is an
+example of an equation’s in-text citation] is an example of an equation
+in LaTeX. In Eq. <a href="#eq:eq_example" data-reference-type="eqref"
+data-reference="eq:eq_example">[eq:eq_example]</a>, <span
+class="math inline"><em>s</em></span> is the mean of elements <span
+class="math inline"><em>x</em><sub><em>i</em></sub> ∈ <strong>x</strong></span>:</p>
+<p><span class="math display">$$\label{eq:eq_example} % label used to
+refer the eq in text
+s = \frac{1}{N} \sum_{i = 1}^{N} x_i.$$</span></p>
+<p>Have you noticed that all the variables of the equation are defined
+using the <strong>in-text</strong> maths command $.$, and Eq. <a
+href="#eq:eq_example" data-reference-type="eqref"
+data-reference="eq:eq_example">[eq:eq_example]</a> is treated as a part
+of the sentence with proper punctuation? Always treat an equation or
+expression as a part of the sentence.</p>
+<h2 id="example-of-a-figure-in-latex">Example of a Figure in LaTeX</h2>
+<p>Figure <a href="#fig:chart_a" data-reference-type="ref"
+data-reference="fig:chart_a">3.1</a> is an example of a figure in LaTeX.
+For more details, check the link:</p>
+<p><a
+href="https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions">wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions</a>.</p>
+<p>Keep your artwork (graphics, figures, illustrations) clean and
+readable. At least 300dpi is a good resolution of a PNG format artwork.
+However, an SVG format artwork saved as a PDF will produce the best
+quality graphics. There are numerous tools out there that can produce
+vector graphics and let you save that as an SVG file and/or as a PDF
+file. One example of such a tool is the “Flow algorithm software”. Here
+is the link for that: <a
+href="http://www.flowgorithm.org/download/">flowgorithm.org</a>.</p>
+<figure id="fig:chart_a">
+
+<figcaption>Example figure in LaTeX.</figcaption>
+</figure>
+<h2 id="example-of-an-algorithm-in-latex">Example of an algorithm in
+LaTeX</h2>
+<p>Algorithm <a href="#algo:algo_example" data-reference-type="ref"
+data-reference="algo:algo_example">[algo:algo_example]</a> is a good
+example of an algorithm in LaTeX.</p>
+<div class="algorithm">
+<div class="algorithmic">
+<p>check if a number is even?</p>
+</div>
+</div>
+<h2 id="example-of-code-snippet-in-latex">Example of code snippet in
+LaTeX</h2>
+<p>Code Listing <a href="#list:python_code_ex" data-reference-type="ref"
+data-reference="list:python_code_ex">[list:python_code_ex]</a> is a good
+example of including a code snippet in a report. While using code
+snippets, take care of the following:</p>
+<ul>
+<li><p>do not paste your entire code (implementation) or everything you
+have coded. Add code snippets only.</p></li>
+<li><p>The algorithm shown in Algorithm <a href="#algo:algo_example"
+data-reference-type="ref"
+data-reference="algo:algo_example">[algo:algo_example]</a> is usually
+preferred over code snippets in a technical/scientific report.</p></li>
+<li><p>Make sure the entire code snippet or algorithm stays on a single
+page and does not overflow to another page(s).</p></li>
+</ul>
+<p>Here are three examples of code snippets for three different
+languages (Python, Java, and CPP) illustrated in Listings <a
+href="#list:python_code_ex" data-reference-type="ref"
+data-reference="list:python_code_ex">[list:python_code_ex]</a>, <a
+href="#list:java_code_ex" data-reference-type="ref"
+data-reference="list:java_code_ex">[list:java_code_ex]</a>, and <a
+href="#list:cpp_code_ex" data-reference-type="ref"
+data-reference="list:cpp_code_ex">[list:cpp_code_ex]</a>
+respectively.</p>
+<div class="sourceCode" id="list:python_code_ex" data-language="Python"
+data-caption="Code snippet in \LaTeX ~and  this is a Python code example"
+data-label="list:python_code_ex"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="list:python_code_ex-1"><a href="#list:python_code_ex-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="list:python_code_ex-2"><a href="#list:python_code_ex-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="list:python_code_ex-3"><a href="#list:python_code_ex-3" aria-hidden="true" tabindex="-1"></a>x  <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>] <span class="co"># assign values to an array</span></span>
+<span id="list:python_code_ex-4"><a href="#list:python_code_ex-4" aria-hidden="true" tabindex="-1"></a>evenSum <span class="op">=</span> evenSummation(x) <span class="co"># call a function</span></span>
+<span id="list:python_code_ex-5"><a href="#list:python_code_ex-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="list:python_code_ex-6"><a href="#list:python_code_ex-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evenSummation(x):</span>
+<span id="list:python_code_ex-7"><a href="#list:python_code_ex-7" aria-hidden="true" tabindex="-1"></a>    evenSum <span class="op">=</span> <span class="dv">0</span></span>
+<span id="list:python_code_ex-8"><a href="#list:python_code_ex-8" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="list:python_code_ex-9"><a href="#list:python_code_ex-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="list:python_code_ex-10"><a href="#list:python_code_ex-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.mod(x[i],<span class="dv">2</span>) <span class="op">==</span> <span class="dv">0</span>: <span class="co"># check if a number is even?</span></span>
+<span id="list:python_code_ex-11"><a href="#list:python_code_ex-11" aria-hidden="true" tabindex="-1"></a>            evenSum <span class="op">=</span> evenSum <span class="op">+</span> x[i]</span>
+<span id="list:python_code_ex-12"><a href="#list:python_code_ex-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> evenSum</span></code></pre></div>
+<p>Here we used the “\clearpage” command and forced-out the second
+listing example onto the next page.</p>
+<div class="sourceCode" id="list:java_code_ex" data-language="Java"
+data-caption="Code snippet in \LaTeX ~and  this is a Java code example"
+data-label="list:java_code_ex"><pre class="sourceCode java"><code class="sourceCode java"><span id="list:java_code_ex-1"><a href="#list:java_code_ex-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> EvenSum<span class="op">{</span> </span>
+<span id="list:java_code_ex-2"><a href="#list:java_code_ex-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">int</span> <span class="fu">evenSummation</span><span class="op">(</span><span class="dt">int</span><span class="op">[]</span> x<span class="op">){</span></span>
+<span id="list:java_code_ex-3"><a href="#list:java_code_ex-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> evenSum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="list:java_code_ex-4"><a href="#list:java_code_ex-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> n <span class="op">=</span> x<span class="op">.</span><span class="fu">length</span><span class="op">;</span></span>
+<span id="list:java_code_ex-5"><a href="#list:java_code_ex-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++){</span></span>
+<span id="list:java_code_ex-6"><a href="#list:java_code_ex-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span><span class="op">(</span>x<span class="op">[</span>i<span class="op">]%</span><span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span><span class="op">){</span> <span class="co">// check if a number is even?</span></span>
+<span id="list:java_code_ex-7"><a href="#list:java_code_ex-7" aria-hidden="true" tabindex="-1"></a>                evenSum <span class="op">=</span> evenSum <span class="op">+</span> x<span class="op">[</span>i<span class="op">];</span></span>
+<span id="list:java_code_ex-8"><a href="#list:java_code_ex-8" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="list:java_code_ex-9"><a href="#list:java_code_ex-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="list:java_code_ex-10"><a href="#list:java_code_ex-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> evenSum<span class="op">;</span>     </span>
+<span id="list:java_code_ex-11"><a href="#list:java_code_ex-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="list:java_code_ex-12"><a href="#list:java_code_ex-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> args<span class="op">){</span> </span>
+<span id="list:java_code_ex-13"><a href="#list:java_code_ex-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span><span class="op">[]</span> x  <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span><span class="op">};</span> <span class="co">// assign values to an array</span></span>
+<span id="list:java_code_ex-14"><a href="#list:java_code_ex-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> evenSum <span class="op">=</span> <span class="fu">evenSummation</span><span class="op">(</span>x<span class="op">);</span></span>
+<span id="list:java_code_ex-15"><a href="#list:java_code_ex-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>evenSum<span class="op">);</span></span>
+<span id="list:java_code_ex-16"><a href="#list:java_code_ex-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> </span>
+<span id="list:java_code_ex-17"><a href="#list:java_code_ex-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> </span></code></pre></div>
+<div class="sourceCode" id="list:cpp_code_ex" data-language="C"
+data-caption="Code snippet in \LaTeX ~and  this is a C/C++ code example"
+data-label="list:cpp_code_ex"><pre
+class="sourceCode objectivec"><code class="sourceCode objectivec"><span id="list:cpp_code_ex-1"><a href="#list:cpp_code_ex-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> evenSummation<span class="op">(</span><span class="dt">int</span> x<span class="op">[]){</span></span>
+<span id="list:cpp_code_ex-2"><a href="#list:cpp_code_ex-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> evenSum <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="list:cpp_code_ex-3"><a href="#list:cpp_code_ex-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> <span class="kw">sizeof</span><span class="op">(</span>x<span class="op">);</span></span>
+<span id="list:cpp_code_ex-4"><a href="#list:cpp_code_ex-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span><span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++){</span></span>
+<span id="list:cpp_code_ex-5"><a href="#list:cpp_code_ex-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span><span class="op">(</span>x<span class="op">[</span>i<span class="op">]%</span><span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span><span class="op">){</span> <span class="co">// check if a number is even?</span></span>
+<span id="list:cpp_code_ex-6"><a href="#list:cpp_code_ex-6" aria-hidden="true" tabindex="-1"></a>            evenSum <span class="op">=</span> evenSum <span class="op">+</span> x<span class="op">[</span>i<span class="op">];</span></span>
+<span id="list:cpp_code_ex-7"><a href="#list:cpp_code_ex-7" aria-hidden="true" tabindex="-1"></a>    	<span class="op">}</span></span>
+<span id="list:cpp_code_ex-8"><a href="#list:cpp_code_ex-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="list:cpp_code_ex-9"><a href="#list:cpp_code_ex-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> evenSum<span class="op">;</span>     </span>
+<span id="list:cpp_code_ex-10"><a href="#list:cpp_code_ex-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="list:cpp_code_ex-11"><a href="#list:cpp_code_ex-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="list:cpp_code_ex-12"><a href="#list:cpp_code_ex-12" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
+<span id="list:cpp_code_ex-13"><a href="#list:cpp_code_ex-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">[]</span>  <span class="op">=</span> <span class="op">{</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span><span class="op">};</span> <span class="co">// assign values to an array</span></span>
+<span id="list:cpp_code_ex-14"><a href="#list:cpp_code_ex-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> evenSum <span class="op">=</span> evenSummation<span class="op">(</span>x<span class="op">);</span></span>
+<span id="list:cpp_code_ex-15"><a href="#list:cpp_code_ex-15" aria-hidden="true" tabindex="-1"></a>    cout<span class="op">&lt;&lt;</span>evenSum<span class="op">;</span></span>
+<span id="list:cpp_code_ex-16"><a href="#list:cpp_code_ex-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="list:cpp_code_ex-17"><a href="#list:cpp_code_ex-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 id="example-of-in-text-citation-style">Example of in-text citation
+style</h2>
+<h3
+id="example-of-the-equations-and-illustrations-placement-and-reference-in-the-text">Example
+of the equations and illustrations placement and reference in the
+text</h3>
+<p>Make sure whenever you refer to the equations, tables, figures,
+algorithms, and listings for the first time, they also appear (placed)
+somewhere on the same page or in the following page(s). Always make sure
+to refer to the equations, tables and figures used in the report. Do not
+leave them without an <strong>in-text citation</strong>. You can refer
+to equations, tables and figures more them once.</p>
+<h3 id="example-of-the-equations-and-illustrations-style">Example of the
+equations and illustrations style</h3>
+<p>Write <strong>Eq.</strong> with an uppercase “Eq“ for an equation
+before using an equation number with (\eqref{.}). Use “Table” to refer
+to a table, “Figure” to refer to a figure, “Algorithm” to refer to an
+algorithm and “Listing” to refer to listings (code snippets). Note that,
+we do not use the articles “a,” “an,” and “the” before the words Eq.,
+Figure, Table, and Listing, but you may use an article for referring the
+words figure, table, etc. in general.</p>
+<p>For example, the sentence “A report structure is shown in
+<strong>the</strong> Table <a href="#tab:gen_template"
+data-reference-type="ref" data-reference="tab:gen_template">3.1</a>”
+should be written as “A report structure is shown <strong>in</strong>
+Table <a href="#tab:gen_template" data-reference-type="ref"
+data-reference="tab:gen_template">3.1</a>.”</p>
+<h2 id="summary-1">Summary</h2>
+<p>Write a summary of this chapter.</p>
+<p> <br />
+<span><strong>Note:</strong></span> In the case of <strong>software
+engineering</strong> project a Chapter “<strong>Testing and
+Validation</strong>” should precede the “Results” chapter. See
+Section <a href="#subsec:se_chpters" data-reference-type="ref"
+data-reference="subsec:se_chpters">3.1.1</a> for report organization of
+such project.</p>
+<h1 id="ch:results">Results</h1>
+<p>The results chapter tells a reader about your findings based on the
+methodology you have used to solve the investigated problem. For
+example:</p>
+<ul>
+<li><p>If your project aims to develop a software/web application, the
+results may be the developed software/system/performance of the system,
+etc., obtained using a relevant methodological approach in software
+engineering.</p></li>
+<li><p>If your project aims to implement an algorithm for its analysis,
+the results may be the performance of the algorithm obtained using a
+relevant experiment design.</p></li>
+<li><p>If your project aims to solve some problems/research questions
+over a collected dataset, the results may be the findings obtained using
+the applied tools/algorithms/etc.</p></li>
+</ul>
+<p>Arrange your results and findings in a logical sequence.</p>
+<h2 id="a-section">A section</h2>
+<p>...</p>
+<h2 id="example-of-a-table-in-latex">Example of a Table in LaTeX</h2>
+<p>Table <a href="#tab:_ex_tab" data-reference-type="ref"
+data-reference="tab:_ex_tab">4.1</a> is an example of a table created
+using the package LaTeX“booktabs.” do check the link: <a
+href="https://en.wikibooks.org/wiki/LaTeX/Tables">wikibooks.org/wiki/LaTeX/Tables</a>
+for more details. A table should be clean and readable. Unnecessary
+horizontal lines and vertical lines in tables make them unreadable and
+messy. The example in Table <a href="#tab:_ex_tab"
+data-reference-type="ref" data-reference="tab:_ex_tab">4.1</a> uses a
+minimum number of liens (only necessary ones). Make sure that the top
+rule and bottom rule (top and bottom horizontal lines) of a table are
+present.</p>
+<div id="tab:_ex_tab">
+<table>
+<caption>Example of a table in LaTeX</caption>
+<thead>
+<tr>
+<th colspan="2" style="text-align: center;">Bike</th>
+<th style="text-align: right;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span>1-2</span> Type</td>
+<td style="text-align: left;">Color</td>
+<td style="text-align: right;">Price (£)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Electric</td>
+<td style="text-align: left;">black</td>
+<td style="text-align: right;">700</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hybrid</td>
+<td style="text-align: left;">blue</td>
+<td style="text-align: right;">500</td>
+</tr>
+<tr>
+<td style="text-align: left;">Road</td>
+<td style="text-align: left;">blue</td>
+<td style="text-align: right;">300</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mountain</td>
+<td style="text-align: left;">red</td>
+<td style="text-align: right;">300</td>
+</tr>
+<tr>
+<td style="text-align: left;">Folding</td>
+<td style="text-align: left;">black</td>
+<td style="text-align: right;">500</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="example-of-captions-style">Example of captions style</h2>
+<ul>
+<li><p>The <strong>caption of a Figure (artwork) goes below</strong> the
+artwork (Figure/Graphics/illustration). See example artwork in Figure <a
+href="#fig:chart_a" data-reference-type="ref"
+data-reference="fig:chart_a">3.1</a>.</p></li>
+<li><p>The <strong>caption of a Table goes above</strong> the table. See
+the example in Table <a href="#tab:_ex_tab" data-reference-type="ref"
+data-reference="tab:_ex_tab">4.1</a>.</p></li>
+<li><p>The <strong>caption of an Algorithm goes above</strong> the
+algorithm. See the example in Algorithm <a href="#algo:algo_example"
+data-reference-type="ref"
+data-reference="algo:algo_example">[algo:algo_example]</a>.</p></li>
+<li><p>The <strong>caption of a Listing goes below</strong> the Listing
+(Code snippet). See example listing in Listing <a
+href="#list:python_code_ex" data-reference-type="ref"
+data-reference="list:python_code_ex">[list:python_code_ex]</a>.</p></li>
+</ul>
+<h2 id="summary-2">Summary</h2>
+<p>Write a summary of this chapter.</p>
+<h1 id="ch:evaluation">Discussion and Analysis</h1>
+<p>Depending on the type of project you are doing, this chapter can be
+merged with “Results” Chapter as “ Results and Discussion” as suggested
+by your supervisor.</p>
+<p>In the case of software development and the standalone applications,
+describe the significance of the obtained results/performance of the
+system.</p>
+<h2 id="a-section-1">A section</h2>
+<p>Discussion and analysis chapter evaluates and analyses the results.
+It interprets the obtained results.</p>
+<h2 id="significance-of-the-findings">Significance of the findings</h2>
+<p>In this chapter, you should also try to discuss the significance of
+the results and key findings, in order to enhance the reader’s
+understanding of the investigated problem</p>
+<h2 id="limitations">Limitations</h2>
+<p>Discuss the key limitations and potential implications or
+improvements of the findings.</p>
+<h2 id="summary-3">Summary</h2>
+<p>Write a summary of this chapter.</p>
+<h1 id="ch:con">Conclusions and Future Work</h1>
+<h2 id="conclusions">Conclusions</h2>
+<p>Typically a conclusions chapter first summarizes the investigated
+problem and its aims and objectives. It summaries the
+critical/significant/major findings/results about the aims and
+objectives that have been obtained by applying the key
+methods/implementations/experiment set-ups. A conclusions chapter draws
+a picture/outline of your project’s central and the most signification
+contributions and achievements.</p>
+<p>A good conclusions summary could be approximately 300–500 words long,
+but this is just a recommendation.</p>
+<p>A conclusions chapter followed by an abstract is the last things you
+write in your project report.</p>
+<h2 id="future-work">Future work</h2>
+<p>This section should refer to Chapter <a href="#ch:results"
+data-reference-type="ref" data-reference="ch:results">4</a> where the
+author has reflected their criticality about their own solution. The
+future work is then sensibly proposed in this section.</p>
+<p><strong>Guidance on writing future work:</strong> While working on a
+project, you gain experience and learn the potential of your project and
+its future works. Discuss the future work of the project in technical
+terms. This has to be based on what has not been yet achieved in
+comparison to what you had initially planned and what you have learned
+from the project. Describe to a reader what future work(s) can be
+started from the things you have completed. This includes identifying
+what has not been achieved and what could be achieved.</p>
+<p>A good future work summary could be approximately 300–500 words long,
+but this is just a recommendation.</p>
+<h1 id="ch:reflection">Reflection</h1>
+<p>Write a short paragraph on the substantial learning experience. This
+can include your decision-making approach in problem-solving.</p>
+<p><strong>Some hints:</strong> You obviously learned how to use
+different programming languages, write reports in LaTeXand use other
+technical tools. In this section, we are more interested in what you
+thought about the experience. Take some time to think and reflect on
+your individual project as an experience, rather than just a list of
+technical skills and knowledge. You may describe things you have learned
+from the research approach and strategy, the process of identifying and
+solving a problem, the process research inquiry, and the understanding
+of the impact of the project on your learning experience and future
+work.</p>
+<p>Also think in terms of:</p>
+<ul>
+<li><p>what knowledge and skills you have developed</p></li>
+<li><p>what challenges you faced, but was not able to overcome</p></li>
+<li><p>what you could do this project differently if the same or similar
+problem would come</p></li>
+<li><p>rationalize the divisions from your initial planed aims and
+objectives.</p></li>
+</ul>
+<p>A good reflective summary could be approximately 300–500 words long,
+but this is just a recommendation.</p>
+<p> <br />
+<span><strong>Note:</strong></span> The next chapter is
+“<strong>References</strong>,” which will be automatically generated if
+you are using BibTeX referencing method. This template uses BibTeX
+referencing. Also, note that there is difference between “References”
+and “Bibliography.” The list of “References” strictly only contain the
+list of articles, paper, and content you have cited (i.e., refereed) in
+the report. Whereas Bibliography is a list that contains the list of
+articles, paper, and content you have cited in the report plus the list
+of articles, paper, and content you have read in order to gain knowledge
+from. We recommend to use only the list of “References.”</p>
+<div class="appendices">
+<h1 id="appn:A">An Appendix Chapter (Optional)</h1>
+<p>Some lengthy tables, codes, raw data, length proofs, etc. which are
+<strong>very important but not essential part</strong> of the project
+report goes into an Appendix. An appendix is something a reader would
+consult if he/she needs extra information and a more comprehensive
+understating of the report. Also, note that you should use one appendix
+for one idea.</p>
+<p>An appendix is optional. If you feel you do not need to include an
+appendix in your report, avoid including it. Sometime including
+irrelevant and unnecessary materials in the Appendices may unreasonably
+increase the total number of pages in your report and distract the
+reader.</p>
+<h1 id="appn:B">An Appendix Chapter (Optional)</h1>
+<p>...</p>
+</div>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Example footnote: footnotes are useful for adding
+external sources such as links as well as extra information on a topic
+or word or sentence. Use command \footnote{...} next to a word to
+generate a footnote in LaTeX.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>
