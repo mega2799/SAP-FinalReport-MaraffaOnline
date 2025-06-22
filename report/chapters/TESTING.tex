@@ -1,0 +1,98 @@
+\chapter{Testing}
+\label{ch:testing}
+
+TODO ricorda di scrivere per bene integration tests, vedi slide 2.6
+
+Per ogni servizio in questo sistema è stato adottato, ove possibile, il paradigma di programmazione TDD, cioè Test Driven Development. Questo approccio prevede che i test siano scritti prima del codice, in modo da guidare lo sviluppo e garantire che il codice prodotto soddisfi i requisiti specificati.
+Le operazioni di testing sono stata implementate con Jest per quanto riguarda i servizi che usano Node.js, generando di fatto un report abbastanza comprensibile. Il componente middleware, scritto in Java, invece, generava risultati di test non così chiari. Per modificare questo comportamento, è stata introdotta una dipendenza nel build Gradle che permette di avere un report più dettagliato e comprensibile. 
+La libreria \href{https://plugins.gradle.org/plugin/com.adarshr.test-logger}{\underline{Test Logger}}, tramite una piccola configurazione nel file build.gradle come qui riportata, ha soddisfatto le nostre esigenze.
+
+\begin{lstlisting}[language=Java, caption={Test logger}, label=list:gradle_testlogger]
+import com.adarshr.gradle.testlogger.TestLoggerExtension
+import com.adarshr.gradle.testlogger.TestLoggerPlugin
+import com.adarshr.gradle.testlogger.theme.ThemeType
+
+testlogger {
+    theme = ThemeType.MOCHA
+    showExceptions = true
+    showStackTraces = true
+    showFullStackTraces = false
+    showCauses = true
+    slowThreshold = 2000
+    showSummary = true
+    showSimpleNames = false
+    showPassed = true
+    showSkipped = true
+    showFailed = true
+    showOnlySlow = false
+    showStandardStreams = false
+    showPassedStandardStreams = true
+    showSkippedStandardStreams = true
+    showFailedStandardStreams = true
+    logLevel = LogLevel.LIFECYCLE
+}
+\end{lstlisting}
+\vspace{1cm}
+
+L'architettura dei componenti si può riassumere in questo modo:
+\begin{itemize}
+	\item \textbf{Classi controller}: che hanno la funzione di esporre le rotte e di contenere al loro interno classi di servizio.
+	\item \textbf{Classi di servizio}: che contengono la logica di business.
+\end{itemize}
+
+I test vengono quindi eseguiti sulle classi di servizio, andando a testare la logica di business e non le funzioni. Questo approccio permette di avere una copertura maggiore del codice e di garantire che la logica di business sia corretta.
+Un esempio di test su una classe di servizio, prendendo come esempio il componente userManagement, rende chiaro il concetto.
+
+Questo componente di fatto svolge due funzioni ben distinte:
+\begin{itemize}
+	\item Collegarsi a un database MySQL e fare delle operazioni CRUD su tabelle di utenti e le loro rispettive statistiche. 
+	\item Gestire la registrazione e l'autenticazione degli utenti.
+\end{itemize}
+
+La parte di testing quindi non va assolutamente a verificare che la connessione al database funzioni, ma che le operazioni CRUD siano corrette e che la registrazione e l'autenticazione degli utenti avvengano correttamente, così come l'aggiornamento delle statistiche.
+
+\vspace{0.5cm}
+
+Avendo scelto un'architettura a microservizi, è stato necessario testare anche il corretto funzionamento delle comunicazioni tra i servizi. Per fare ciò, è stato necessario creare dei test di integrazione che verificassero il corretto funzionamento delle API esposte dai servizi. 
+Questi test sono stati implementati nel componente middleware che, come sicuramente si ricorderà, ha il compito di mettere in comunicazione i servizi tra di loro e con il frontend.
+
+\subsection{Testing asincrono}
+
+Durante la scrittura dei test all'interno del servizio in Java, alcune operazioni erano asincrone e quindi è stato necessario attendere che queste operazioni terminassero prima di poter eseguire i test e validarli.
+Per fare ciò, la normale struttura di test fornita da Vertx in un primo tentativo non era sufficiente. La classica struttura dei test è la seguente:
+
+\begin{lstlisting}[language=Java, caption={Standard Vertx test}, label=list:test_std_vertx]
+@Test
+public void createGameTest(final VertxTestContext context) {
+    final JsonObject gameResponse = this.gameService.createGame(MARAFFA_PLAYERS, TEST_USER, EXPECTED_SCORE, GAME_MODE.toString(), PASSWORD);
+    Assertions.assertEquals(UUID_SIZE, gameResponse.getString(Constants.GAME_ID).length()); // Assuming UUID is 36
+    context.completeNow();
+}
+\end{lstlisting}
+
+Per risolvere questo problema sono stati utilizzati:
+\begin{itemize}
+    \item il decoratore fornito da JUnit Jupiter \textit{@Timeout}, che permette di aspettare un tempo definito prima di fallire automaticamente il test, per ovviare al problema di asincronicità con servizi esterni al componente stesso che non "rispondono alla chiamata".
+    \item l'utilizzo asincrono del VertxTestContext, che permette di completare il test solo quando tutte le operazioni asincrone sono state completate.
+    \item una struttura di risposta nei servizi con cui il middleware comunica, che permette di individuare errori tramite la chiave "error" in caso di fallimento contenuta all'interno del JSON di risposta. Il test non può accedere alla response di una chiamata HTTP che normalmente avrebbe uno status code 200 in caso di successo e quindi si è ricorso a questo espediente per individuare errori nei dati inviati al servizio.
+\end{itemize}
+
+Come è possibile vedere nel test riportato di seguito, seguendo questi accorgimenti è possibile testare correttamente le operazioni asincrone.
+
+\begin{lstlisting}[language=Java, caption={Vertx test asincrono}, label=list:test_async_vertx]
+@Timeout(value = 10, unit = TimeUnit.SECONDS)
+@Test
+public void testgetShuffledDeckOK(final VertxTestContext context) {
+    final JsonObject gameResponse = this.gameService.createGame(4, TEST_USER, 41,
+            GameMode.CLASSIC.toString(), PASSWORD);
+    this.businessLogicController
+            .getShuffledDeck(UUID.fromString(gameResponse.getString(Constants.GAME_ID)), 4)
+            .whenComplete((res, err) -> {
+                context.verify(() -> {
+                    assertNull(res.getString("error"));
+                    context.completeNow();
+                });
+            });
+}
+\end{lstlisting}
+
