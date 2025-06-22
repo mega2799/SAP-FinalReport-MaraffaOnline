@@ -1,0 +1,407 @@
+
+\chapter{Deployment}
+\label{ch:deployment} % Label for method chapter
+
+
+\section{Continuous Integration}
+Per migliorare la qualità del software e velocizzare il processo di sviluppo, è stata implementata la Continuous Integration.
+Questa pratica permette di integrare il codice frequentemente, evitando possibili rischi d'integrazione e consetendo 
+l'esecuzione di test automatici. Grazie al sistema di notifiche, inoltre, è possibile ricevere feedback immediato sullo stato delle Github Actions,
+per accertarsi che sia sempre tutto funzionante e non siano stati introdotti bug. Mantenendo il sistema continuamente monitorato,
+si migliora anche l'effiicienza e la collaborazione tra i membri del team.
+
+\section{Automated quality assurance}
+\subsection{Testing}
+
+Per ogni servizio in questo sistema è stato adottato, ove possibile, il paradigma di programmazione TDD, cioè Test Driven Development. Questo approccio prevede che i test siano scritti prima del codice, in modo da guidare lo sviluppo e garantire che il codice prodotto soddisfi i requisiti specificati.
+All'interno della CI, la fase di test è stata implementata con Jest per quanto riguarda i servizi che usano Node.js, generando di fatto un report abbastanza comprensibile direttamente nella finestra della CI. Il componente middleware, scritto in Java, invece, generava risultati di test non così chiari. Per modificare questo comportamento, è stata introdotta una dipendenza nel build Gradle che permette di avere un report più dettagliato e comprensibile. 
+La libreria \href{https://plugins.gradle.org/plugin/com.adarshr.test-logger}{\underline{Test Logger}}, tramite una piccola configurazione nel file build.gradle come qui riportata, ha soddisfatto le nostre esigenze.
+
+\begin{lstlisting}[language=Java, caption={Test logger}, label=list:gradle_testlogger]
+import com.adarshr.gradle.testlogger.TestLoggerExtension
+import com.adarshr.gradle.testlogger.TestLoggerPlugin
+import com.adarshr.gradle.testlogger.theme.ThemeType
+
+testlogger {
+    theme = ThemeType.MOCHA
+    showExceptions = true
+    showStackTraces = true
+    showFullStackTraces = false
+    showCauses = true
+    slowThreshold = 2000
+    showSummary = true
+    showSimpleNames = false
+    showPassed = true
+    showSkipped = true
+    showFailed = true
+    showOnlySlow = false
+    showStandardStreams = false
+    showPassedStandardStreams = true
+    showSkippedStandardStreams = true
+    showFailedStandardStreams = true
+    logLevel = LogLevel.LIFECYCLE
+}
+\end{lstlisting}
+
+\subsection{Act per testare CI}
+
+È stato trovato un utilissimo strumento per poter velocizzare il processo di creazione della CI, \href{https://github.com/nektos/act}{\underline{Act}}. Questo strumento permette di eseguire le GitHub Actions localmente senza dover obbligatoriamente fare un push sul repository e quindi senza "sporcare" la cronologia dei commit. Richiede che Docker sia attivo ed è in grado di creare un container che utilizza l'immagine specificata nel file di configurazione della CI e di eseguire i job. Per eseguire Act è stato creato uno script in bash per poter automatizzare ulteriormente il testing delle CI, in cui viene letto il contenuto del file .env.example che popolerà l'environment del container con le variabili d'ambiente necessarie per il corretto funzionamento della CI, e le imposta come variabili d'ambiente della GitHub Action che si sta testando. Per poter usare Act è necessario semplificare leggermente il trigger per i job, che in ambiente di produzione è solitamente la chiusura di una pull request, mentre per testare velocemente è necessario impostarlo su una push.
+
+\section{Containerization}
+
+Data l'architettura del progetto in microservizi, usare Docker per creare un'immagine per ogni servizio è stata una scelta naturale. 
+L'obiettivo finale è avere un sistema facilmente deployabile e scalabile, eseguibile velocemente in un ambiente generico, con uno stack di container Docker che racchiuda tutto il sistema.
+Per fare ciò è stato necessario creare un Dockerfile per ogni servizio, in modo da poter creare un'immagine durante la fase di deploy della continuous integration.
+\vspace{1cm}
+
+La \textbf{strategia di containerizzazione} per tutte le immagini create è stata quella di utilizzare un'immagine base di Alpine, in modo da avere immagini leggere e veloci da scaricare. Per ridurre la dimensione delle immagini,
+si è utilizzata un'immagine di sviluppo per compilare il codice e un'immagine di produzione per eseguire il codice compilato, copiando solo i file necessari.
+
+\begin{figure}[H]
+\caption{Comparazione tra le immagini multi-stage e le immagini tradizionali}
+\centering
+\includegraphics[width=12cm]{report/img/multi_stage.png}\\[4.5cm]
+\end{figure}
+
+\subsection{NodeJS}
+
+I servizi UserManagementMaraffa e BusinessLogic sono stati containerizzati utilizzando un'immagine di Node.js. Nell'esempio sotto, si può notare la distinzione tra i diversi stage.
+\vspace{1cm}
+
+\begin{lstlisting}[language=Python, caption={Dockerfile delle immagini NodeJS}, label=list:dockerfile_nodejs]
+FROM node:20-alpine as base
+WORKDIR /app
+COPY yarn.lock package.json /app/
+RUN yarn install
+COPY . /app
+RUN yarn build
+
+FROM node:20-alpine
+WORKDIR /app    
+COPY --from=base /app/package.json /app/package.json
+COPY --from=base /app/node_modules /app/node_modules
+COPY --from=base /app/dist /app/dist
+EXPOSE 3000
+CMD ["node","dist/main.js"]
+\end{lstlisting}
+
+\subsection{Java}
+
+La containerizzazione del middleware ha richiesto alcuni passaggi aggiuntivi rispetto ai servizi in Node.js.
+È stato necessario adottare immagini diverse per gli stage di build e produzione, quindi usare un'immagine di Gradle per la build, nella quale eseguire i comandi di Gradle, e un'immagine di 
+OpenJDK per l'esecuzione del JAR prodotto dalla build.
+
+Per la compilazione con Gradle, nonostante non sia una pratica corretta, è stato necessario mantenere nella repository il file gradle-wrapper.jar, in quanto non era possibile scaricarlo durante la build all'interno delle GitHub Actions.
+La build non utilizza il classico comando di Gradle per generare il file .jar, ma un task personalizzato che si occupa di generare il fatJar del servizio, poiché le dipendenze non venivano gestite correttamente all'interno del normale file .jar.
+
+\begin{lstlisting}[language=Java, caption={Task del fatJar da includere nel container}, label=list:gradle_fatJar]
+tasks.register<Jar>("fatJar") {
+    archiveBaseName.set("Middleware")
+    manifest {
+        attributes["Main-Class"] = "server.Main"
+    }
+    from(sourceSets.main.get().output)
+    dependsOn(configurations.runtimeClasspath)
+    from({ configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) } })
+    dependsOn("compileJava")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE // Puoi utilizzare altre strategie come DuplicatesStrategy.WARN per avvisare ma non fermare la build
+}
+\end{lstlisting}
+
+\subsection{Angular}
+
+La containerizzazione del frontend ha richiesto l'utilizzo di un'immagine di Node.js per lo stage di build, mentre per l'esecuzione è stata utilizzata un'immagine di Nginx.
+Nginx serve per eseguire l'applicazione all'interno del container e per poterla raggiungere dall'esterno. Per fare ciò è stato necessario configurare Nginx tramite un file di configurazione che ha permesso anche di gestire un'operazione di reverse proxy per indirizzare le chiamate al backend.
+
+\begin{lstlisting}[language=Python, caption={Configurazione Nginx del front-end}, label=list:nginx_frontend]
+server {
+    listen 80;
+    
+    location / {
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/ {
+        proxy_pass "http://${API_HOST}:${API_PORT}/";
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+\end{lstlisting}
+
+L'indirizzo del backend è stato configurato tramite variabili d'ambiente, in modo da poterlo cambiare facilmente in base all'ambiente in cui si trova il container, e queste variabili vengono sostituite a seconda dell'ambiente di deploy in cui l'applicativo Angular viene eseguito.
+
+
+\section{Lettura variabili d'ambiente}
+
+Data la scelta di dockerizzare interamente i servizi, è stato necessario l'utilizzo di variabili d'ambiente. Questo ha permesso di creare un sistema di deploy molto flessibile, in cui è possibile cambiare l'indirizzo del servizio a cui connettersi semplicemente modificando il file di configurazione del Docker Compose. I servizi in NodeJS leggono il contenuto delle variabili d'ambiente tramite il modulo `process.env`, mentre i servizi in Java utilizzano `System.getenv`. Questi comportamenti sono corretti per lo sviluppo locale e per ambienti di produzione in cui le variabili d'ambiente sono settate correttamente.
+
+Per quanto riguarda invece lo sviluppo in CI, è stato necessario creare un file `.env.example` che contenesse tutte le variabili d'ambiente necessarie al funzionamento del servizio, in modo da poterle settare correttamente nel CI/CD, soprattutto per la fase di testing, e metterlo sulla repository. È importante tenere a mente che non dovrebbero mai essere caricati dati sensibili su strumenti di controllo di versione. In questo caso, non ci sono database o account cloud eventualmente raggiungibili dall'esterno.
+
+\section{Monitoraggio}
+
+In un progetto composto da microservizi deployati con container, il monitoraggio è essenziale per garantire il corretto funzionamento e la performance ottimale del sistema. Per realizzare un monitoraggio efficace dei container, sono stati impiegati i container di Grafana, Prometheus e cAdvisor.
+Si ringrazia il lavoro di \href{https://medium.com/@sohammohite/docker-container-monitoring-with-cadvisor-prometheus-and-grafana-using-docker-compose-b47ec78efbc}{\underline{Soham Mohite}} per la configurazione e l'integrazione di questi strumenti.
+
+\includegraphics[width=14cm]{report/img/monitor_schema.jpg}\\[0.5cm]
+
+\subsection{Grafana}
+
+Grafana è uno strumento open-source per la visualizzazione e l'analisi delle metriche raccolte. Viene utilizzato per creare dashboard personalizzate che mostrano lo stato e le performance dei microservizi. Con Grafana, è possibile configurare alert che notificano immediatamente eventuali problemi nel sistema, permettendo una risposta rapida e mirata.
+
+\subsection{Prometheus}
+
+Prometheus è un sistema di monitoraggio e di allarme progettato per raccogliere e memorizzare metriche in serie temporali. È stato configurato per raccogliere metriche dai container dei microservizi e da cAdvisor. Prometheus esegue la raccolta dei dati a intervalli regolari e li memorizza in un database time-series, rendendoli disponibili per l'analisi e la visualizzazione in Grafana.
+
+\subsection{cAdvisor}
+
+cAdvisor (Container Advisor) è uno strumento che fornisce informazioni sulle risorse utilizzate dai container, come CPU, memoria, rete e disco. È stato integrato con Prometheus per raccogliere e esportare le metriche dei container. cAdvisor offre una visione dettagliata delle performance di ogni container, aiutando a identificare e risolvere problemi di utilizzo delle risorse.
+
+\subsection{Integrazione e Configurazione}
+
+L'integrazione di Grafana, Prometheus e cAdvisor ha permesso di creare un sistema di monitoraggio completo. I container di cAdvisor raccolgono le metriche di utilizzo delle risorse dai container dei microservizi e le esportano a Prometheus. Prometheus memorizza queste metriche e le rende disponibili per la visualizzazione in Grafana. Le dashboard di Grafana sono configurate per mostrare le metriche chiave e fornire un'analisi dettagliata dello stato del sistema.
+
+La configurazione di questi strumenti è stata gestita tramite Docker Compose, permettendo una facile implementazione e scalabilità del sistema di monitoraggio. Le variabili d'ambiente e i file di configurazione sono stati impostati per garantire la corretta connessione e funzionamento dei container di monitoraggio.
+
+\begin{lstlisting}[language=Python, caption={Esempio di configurazione Docker Compose}, label=list:docker_compose_monitoring]
+ cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/:/rootfs"
+      - "/var/run:/var/run"
+      - "/sys:/sys"
+      - "/var/lib/docker/:/var/lib/docker"
+      - "/dev/disk/:/dev/disk"
+    privileged: true
+    devices:
+      - "/dev/kmsg"
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    privileged: true
+    depends_on:
+      - cadvisor
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - DS_PROMETHEUS=prometheus
+    volumes:
+      - "grafana-data:/var/lib/grafana"
+      - "./datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml"
+      - "./dashboard.json:/var/lib/grafana/dashboards/dashboard.json"
+      - "./default.yaml:/etc/grafana/provisioning/dashboards/default.yaml"
+    privileged: true
+    depends_on:
+      - prometheus
+\end{lstlisting}
+
+Con questa configurazione, il sistema di monitoraggio offre una visione completa delle performance e dello stato dei microservizi, permettendo di mantenere un'operatività ottimale e di intervenire prontamente in caso di anomalie.
+
+\section{Docker-compose}
+
+Infine il risultato prodotto è stato un file docker-compose che raggruppa tutti i servizi in un unico stack, definendo le dipendenze tra i container e semplificando il deploy
+è stato creato un network interno per poter permettere la comunicazione dei container tra di loro e particolari network, invece, per connettere i database ai servizi che ne fanno uso.
+Sono state inserite anche delle dipendenze tra i servizi, ad esempio lo user service ha come vincolo che il container del database sia avviato prima di esso. 
+\vspace{0.5cm}
+Sono stati inseriti dei servizi che permettono di monitorare i database: 
+\begin{itemize}
+    \item \textbf{Adminer:} un'interfaccia web per la gestione dei database, che permette di visualizzare i dati, creare tabelle, eseguire query e molto altro.
+    \item \textbf{Mongo Express:} un'interfaccia web per la gestione dei database MongoDB.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, caption={Docker Compose di progetto}, label=list:docker_compose]
+version: "3.8"
+
+networks:
+  monitoring:
+  internal:
+  db:
+
+services:
+  mysql:
+    image: mysql:5.7
+    networks:
+      - internal
+      - db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ${MARAFFA_SQL_DB}
+      MYSQL_USER: ${MARAFFA_SQL_USER}
+      MYSQL_PASSWORD: ${MARAFFA_SQL_PWD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_volume:/var/lib/mysql
+
+  mongo:
+    image: mongo:5.0
+    networks:
+      - internal
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PWD}
+      # MONGO_INITDB_DATABASE: your_mongo_database
+    expose:
+      - 27012
+    ports:
+      - 27012:27017
+    volumes:
+      - mongo_volume:/data/db
+
+  adminer:
+    image: adminer:latest
+    networks:
+      - db
+    ports:
+      - "8090:8080"
+    depends_on:
+      - mysql
+
+  mongo-express:
+    image: mongo-express:1.0.2
+    networks:
+      - internal
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PWD}@mongo:27017/
+      ME_CONFIG_MONGODB_AUTH_USERNAME: ${MONGO_USER}
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: ${MONGO_PWD}
+    depends_on:
+      - mongo
+
+  user-service:
+    image: ghcr.io/sofy24/user-management-maraffa:${USER_SERVICE_TAG}
+    # container_name: user_service_container
+    networks:
+      - db
+      - internal
+    ports:
+      - "3001:3001"
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USERNAME: ${MARAFFA_SQL_USER}
+      DB_PASSWORD: ${MARAFFA_SQL_PWD}
+      DB_NAME: ${MARAFFA_SQL_DB}
+      PORT: 3001
+    depends_on:
+      - mysql
+
+  business-logic:
+    image: ghcr.io/sofy24/business-logic-maraffa:${BL_TAG}
+    networks:
+      - internal
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+
+  angular-app:
+    image: ghcr.io/mega2799/maraffa-fe:${FE_TAG}
+    networks:
+      - internal
+    ports:
+      - "80:80"
+    depends_on:
+      - middleware
+    environment:
+      # API_HOST: ${API_HOST}
+      # API_PORT: ${API_PORT}
+      API_HOST: middleware
+      # API_HOST: maraffaonlinepika-api-1
+      API_PORT: 3003
+
+  middleware:
+    image: ghcr.io/sofy24/middleware-maraffa:${MIDDLEWARE_TAG}
+    ports:
+      - 3003:3003
+    networks:
+      - internal
+    depends_on:
+      - mongo
+    environment:
+      # MIDDLEWARE_HOST: 127.0.0.1
+      MIDDLEWARE_PORT: 3003
+      BUSINESS_LOGIC_HOST: business-logic
+      BUSINESS_LOGIC_PORT: 3000
+      USER_HOST: user-service
+      USER_PORT: 3001
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PWD}
+      MONGO_HOST: mongo
+      MONGO_PORT: 27017
+      MONGO_DATABASE: ${MONGO_DB}
+      DEBUG: true
+
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/:/rootfs"
+      - "/var/run:/var/run"
+      - "/sys:/sys"
+      - "/var/lib/docker/:/var/lib/docker"
+      - "/dev/disk/:/dev/disk"
+    privileged: true
+    devices:
+      - "/dev/kmsg"
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    privileged: true
+    depends_on:
+      - cadvisor
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    ports:
+      - "3005:3000"
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - DS_PROMETHEUS=prometheus
+    volumes:
+      - "grafana-data:/var/lib/grafana"
+      - "./datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml"
+      - "./dashboard.json:/var/lib/grafana/dashboards/dashboard.json"
+      - "./default.yaml:/etc/grafana/provisioning/dashboards/default.yaml"
+    privileged: true
+    depends_on:
+      - prometheus
+
+volumes:
+  mysql_volume:
+  mongo_volume:
+  rabbitmq_data:
+  grafana-data:
+
+\end{lstlisting}
+
+
