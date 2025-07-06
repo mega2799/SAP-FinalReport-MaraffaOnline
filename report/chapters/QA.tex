@@ -1,0 +1,84 @@
+\chapter{Quality Attributes}
+\label{chap:QA}
+
+
+In questa sezione vengono analizzati gli attributi di qualità (\textit{quality attributes}) rilevanti per l'architettura del sistema sviluppato. Si tratta di requisiti non funzionali che influenzano profondamente le decisioni progettuali e architetturali.
+
+\section{Operational}
+%% Sono gli attributi di qualità che riguardano il funzionamento del sistema in un contesto reale, come la disponibilità, la resilienza e la sicurezza. Questi attributi sono cruciali per garantire che il sistema possa operare in modo efficace e sicuro una volta distribuito.
+%% Legati soprattutto alla parte di devOPS, dovresti avere abbastanza materiale per scrivere qualcosa di interessante.
+\begin{itemize}
+  \item Robustezza: l'interfaccia limita abbastana le operazione che possono esserer effettuate, rendendo il sistema più robusto.
+  \item Availability/Scalabilità: il sistema è progettato per essere sempre disponibile, la replica di servizi mirati sul nodo swarm garantisce che il sistema possa continuare a funzionare anche in caso di guasti e bilanciarsi.
+  \item Usabilità: l'interfaccia è progettata per essere intuitiva e facile da usare, con un design che facilita l'interazione dell'utente. Non è stato previsto nel progetto la creazione di un tutorial o di una guida, ma si è cercato di rendere l'interfaccia il più semplice possibile. (Conoscere le regole del gioco di carte è stato considerato sufficiente per l'utilizzo del sistema).
+\end{itemize}
+
+
+\section{Structural}
+%% Gli attributi strutturali riguardano l'organizzazione interna del sistema, come la modularità, la coesione e l'accoppiamento. Questi attributi influenzano la manutenibilità e l'estensibilità del sistema, facilitando o complicando le modifiche future.
+%% Quelli rimanenti e dovresti essere in grado di scrivere qualcosa di interessante.
+\begin{itemize}
+    \item Evolvabilità: il sistema è progettato per essere facilmente estendibile e modificabile, con un'architettura modulare che consente l'aggiunta di nuove funzionalità senza impattare le parti esistenti.
+    \item Portabilità: il sistema è progettato per essere facilmente distribuito su diverse piattaforme e ambienti, grazie all'uso di tecnologie containerizzate come Docker..
+\end{itemize}
+
+
+\subsection{Influenza sulle Decisioni Architetturali}
+
+Gli attributi di qualità hanno guidato diverse decisioni architetturali fondamentali, tra cui:
+
+\begin{itemize}
+  \item La scelta del pattern architetturale (es. \textit{layered}, \textit{microservices}, \textit{event-driven}...).
+  \item L’adozione di tecnologie specifiche per garantire determinati attributi.
+  \item Le strategie di distribuzione, caching, bilanciamento del carico, logging, ecc.
+\end{itemize}
+
+\subsection{Conclusioni}
+
+Si riassumono i principali risultati dell’analisi:
+
+\begin{itemize}
+  \item Gli attributi di qualità più critici per il progetto.
+  \item Eventuali trade-off accettati consapevolmente.
+  \item Spunti per futuri miglioramenti architetturali in ottica di qualità.
+\end{itemize}
+
+
+
+% \section{Quality Attributes}
+
+% \subsection{Introduzione}
+
+
+% \subsection{Metodologia di Analisi}
+
+% L'analisi degli attributi di qualità è stata condotta seguendo i seguenti criteri:
+
+% \begin{itemize}
+%   \item Definizione di \textbf{scenari di qualità}, strutturati secondo il template: \textit{stimolo} $\rightarrow$ \textit{ambiente} $\rightarrow$ \textit{risposta del sistema} $\rightarrow$ \textit{misura della risposta}.
+%   \item Identificazione delle \textbf{decisioni architetturali} mirate alla soddisfazione di ciascun attributo.
+%   \item Valutazione di eventuali \textbf{trade-off} tra attributi in conflitto.
+%   \item Assegnazione di una \textbf{priorità} a ciascun attributo, in base agli obiettivi del progetto.
+% \end{itemize}
+
+% \subsection{Analisi degli Attributi di Qualità}
+
+% \subsubsection{[Nome Attributo 1] – ad es. \textit{Performance}}
+
+% \begin{itemize}
+%   \item \textbf{Motivazione}: Breve spiegazione del perché questo attributo è critico per il sistema.
+%   \item \textbf{Scenario di qualità}:
+%     \begin{itemize}
+%       \item \textbf{Stimolo}: [Descrizione dello stimolo]
+%       \item \textbf{Ambiente}: [Contesto in cui avviene lo stimolo]
+%       \item \textbf{Risposta del sistema}: [Comportamento desiderato]
+%       \item \textbf{Misura della risposta}: [Metri oggettivi per valutare la risposta]
+%     \end{itemize}
+%   \item \textbf{Decisioni architetturali correlate}: [Pattern, tecnologie o strategie adottate]
+%   \item \textbf{Compromessi}: [Eventuali impatti su altri attributi]
+% \end{itemize}
+
+% \subsubsection{[Nome Attributo 2] – ad es. \textit{Scalabilità}}
+
+% Ripetere la struttura precedente per ogni attributo considerato
+
