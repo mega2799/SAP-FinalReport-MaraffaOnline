@@ -187,6 +187,19 @@ SAP</span>
         id="toc-design-generale-del-software">Design generale del
         software</a></li>
         </ul></li>
+        <li><a href="#chap:QA" id="toc-chap:QA">Quality Attributes</a>
+        <ul>
+        <li><a href="#operational"
+        id="toc-operational">Operational</a></li>
+        <li><a href="#structural" id="toc-structural">Structural</a>
+        <ul>
+        <li><a href="#influenza-sulle-decisioni-architetturali"
+        id="toc-influenza-sulle-decisioni-architetturali">Influenza
+        sulle Decisioni Architetturali</a></li>
+        <li><a href="#conclusioni"
+        id="toc-conclusioni">Conclusioni</a></li>
+        </ul></li>
+        </ul></li>
         <li><a href="#ch:testing" id="toc-ch:testing">Testing</a>
         <ul>
         <li><a href="#testing-asincrono"
@@ -248,7 +261,7 @@ Department of Computer Science</span><br />
 <span> Matteo Santoro </span><br />
 <span> <em>Supervisor:</em> Alessandro ricci</span><br />
 </p>
-<p>2025-06-22</p>
+<p>2025-07-06</p>
 </div>
 </div>
 <h1 class="unnumbered" id="declaration">Declaration</h1>
@@ -265,7 +278,7 @@ sarà sanzionato di conseguenza.<br />
 </p>
 <div class="flushright">
 <p>Firstname(s) Lastname</p>
-<p>2025-06-22</p>
+<p>2025-07-06</p>
 </div>
 <h1 class="unnumbered" id="abstract">Abstract</h1>
 <p>This is an undergraduate project report template and instruction on
@@ -744,6 +757,56 @@ gioco".</p></li>
 <p><img src="report/img/Architecture.png" style="width:12cm"
 alt="image" /><br />
 </p>
+<h1 id="chap:QA">Quality Attributes</h1>
+<p>In questa sezione vengono analizzati gli attributi di qualità
+(<em>quality attributes</em>) rilevanti per l’architettura del sistema
+sviluppato. Si tratta di requisiti non funzionali che influenzano
+profondamente le decisioni progettuali e architetturali.</p>
+<h2 id="operational">Operational</h2>
+<ul>
+<li><p>Robustezza: l’interfaccia limita abbastana le operazione che
+possono esserer effettuate, rendendo il sistema più robusto.</p></li>
+<li><p>Availability/Scalabilità: il sistema è progettato per essere
+sempre disponibile, la replica di servizi mirati sul nodo swarm
+garantisce che il sistema possa continuare a funzionare anche in caso di
+guasti e bilanciarsi.</p></li>
+<li><p>Usabilità: l’interfaccia è progettata per essere intuitiva e
+facile da usare, con un design che facilita l’interazione dell’utente.
+Non è stato previsto nel progetto la creazione di un tutorial o di una
+guida, ma si è cercato di rendere l’interfaccia il più semplice
+possibile. (Conoscere le regole del gioco di carte è stato considerato
+sufficiente per l’utilizzo del sistema).</p></li>
+</ul>
+<h2 id="structural">Structural</h2>
+<ul>
+<li><p>Evolvabilità: il sistema è progettato per essere facilmente
+estendibile e modificabile, con un’architettura modulare che consente
+l’aggiunta di nuove funzionalità senza impattare le parti
+esistenti.</p></li>
+<li><p>Portabilità: il sistema è progettato per essere facilmente
+distribuito su diverse piattaforme e ambienti, grazie all’uso di
+tecnologie containerizzate come Docker..</p></li>
+</ul>
+<h3 id="influenza-sulle-decisioni-architetturali">Influenza sulle
+Decisioni Architetturali</h3>
+<p>Gli attributi di qualità hanno guidato diverse decisioni
+architetturali fondamentali, tra cui:</p>
+<ul>
+<li><p>La scelta del pattern architetturale (es. <em>layered</em>,
+<em>microservices</em>, <em>event-driven</em>...).</p></li>
+<li><p>L’adozione di tecnologie specifiche per garantire determinati
+attributi.</p></li>
+<li><p>Le strategie di distribuzione, caching, bilanciamento del carico,
+logging, ecc.</p></li>
+</ul>
+<h3 id="conclusioni">Conclusioni</h3>
+<p>Si riassumono i principali risultati dell’analisi:</p>
+<ul>
+<li><p>Gli attributi di qualità più critici per il progetto.</p></li>
+<li><p>Eventuali trade-off accettati consapevolmente.</p></li>
+<li><p>Spunti per futuri miglioramenti architetturali in ottica di
+qualità.</p></li>
+</ul>
 <h1 id="ch:testing">Testing</h1>
 <p>TODO ricorda di scrivere per bene integration tests, vedi slide
 2.6</p>
