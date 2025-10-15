@@ -22,9 +22,19 @@ In ogni servizio creato ad-hoc per il progetto sono state inserite le API per il
 All'interno dello stack, su ogni container, vengono chiamate queste API periodicamente per poter assicurare che non ci siano down di servizi.
 
 \begin{lstlisting}[language=Yaml, caption={Health check API}, label=list:healt_API]
-    %%TODO 
+    healthcheck:
+      test:
+        [
+          "CMD", 
+          "curl", "-f", "http://localhost:3000/actuator/health", "||", 
+          "curl", "-f", "http://localhost:3000/health", "||", 
+          "curl", "-f", "http://localhost:3000/", "||","exit","1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 \end{lstlisting}
-
 
 \subsection{Log aggregation}
 
