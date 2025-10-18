@@ -135,9 +135,7 @@ SAP</span>
         <div class="well toc">
 
         <ul>
-        <li><a href="#declaration"
-        id="toc-declaration">Declaration</a></li>
-        <li><a href="#abstract" id="toc-abstract">Abstract</a>
+        <li><a href="#declaration" id="toc-declaration">Declaration</a>
         <ul>
         <li><a href="#list-of-abbreviations"
         id="toc-list-of-abbreviations">List of Abbreviations</a></li>
@@ -164,40 +162,36 @@ SAP</span>
         <li><a href="#sec:intro_org" id="toc-sec:intro_org">Organization
         of the report</a></li>
         </ul></li>
-        <li><a href="#ch:ddd" id="toc-ch:ddd">Domain Driven Design</a>
+        <li><a href="#ch:decomposition"
+        id="toc-ch:decomposition">Decomoposizione da monolite a
+        micro-servizi(Assignement 5)</a>
+        <ul>
+        <li><a href="#operazioni-di-sistema"
+        id="toc-operazioni-di-sistema">Operazioni di sistema</a>
         <ul>
         <li><a
         href="#knowledge-crunching-session-for-the-exploration-of-the-problem-space"
         id="toc-knowledge-crunching-session-for-the-exploration-of-the-problem-space">Knowledge
         crunching session for the exploration of the problem
         space</a></li>
-        <li><a href="#ubiquitos-language"
-        id="toc-ubiquitos-language">Ubiquitos Language</a></li>
-        <li><a href="#bounded-context" id="toc-bounded-context">Bounded
-        Context</a></li>
-        <li><a href="#requisiti-e-casi-duso"
-        id="toc-requisiti-e-casi-duso">Requisiti e casi d’uso</a>
-        <ul>
-        <li><a href="#requisiti" id="toc-requisiti">Requisiti</a></li>
         <li><a href="#casi-duso" id="toc-casi-duso">Casi d’uso</a></li>
         </ul></li>
-        <li><a href="#pattern-del-ddd" id="toc-pattern-del-ddd">Pattern
-        del DDD</a></li>
-        <li><a href="#design-generale-del-software"
-        id="toc-design-generale-del-software">Design generale del
-        software</a></li>
-        <li><a href="#architettura-del-software"
-        id="toc-architettura-del-software">Architettura del
-        software</a></li>
-        <li><a href="#business-logic-domanin-model"
-        id="toc-business-logic-domanin-model">Business logic domanin
-        model</a></li>
-        <li><a href="#api-gatetway-e-middleware"
-        id="toc-api-gatetway-e-middleware">API gatetway e
-        middleware</a></li>
-        <li><a href="#middleware-event-driven"
-        id="toc-middleware-event-driven">Middleware
-        event-driven</a></li>
+        <li><a href="#decomposizione-in-servizi"
+        id="toc-decomposizione-in-servizi">Decomposizione in servizi</a>
+        <ul>
+        <li><a href="#bounded-context" id="toc-bounded-context">Bounded
+        Context</a></li>
+        <li><a href="#schema-architettura"
+        id="toc-schema-architettura">Schema architettura</a></li>
+        </ul></li>
+        <li><a href="#comunicazione-tra-servizi"
+        id="toc-comunicazione-tra-servizi">Comunicazione tra servizi</a>
+        <ul>
+        <li><a href="#api-gateway" id="toc-api-gateway">API
+        gateway</a></li>
+        <li><a href="#websocket-module"
+        id="toc-websocket-module">Websocket module</a></li>
+        </ul></li>
         </ul></li>
         <li><a href="#chap:QA" id="toc-chap:QA">Quality Attributes</a>
         <ul>
@@ -217,44 +211,25 @@ SAP</span>
         <li><a href="#testing-asincrono"
         id="toc-testing-asincrono">Testing asincrono</a></li>
         </ul></li>
-        <li><a href="#ch:deployment"
-        id="toc-ch:deployment">Deployment</a>
+        <li><a href="#ch:production_ready"
+        id="toc-ch:production_ready">Micro-servizi production
+        ready(Assignement 5)</a>
         <ul>
-        <li><a href="#introduzione"
-        id="toc-introduzione">Introduzione</a></li>
-        <li><a href="#continuous-integration"
-        id="toc-continuous-integration">Continuous Integration</a></li>
-        <li><a href="#automated-quality-assurance"
-        id="toc-automated-quality-assurance">Automated quality
-        assurance</a>
+        <li><a href="#sicurezza" id="toc-sicurezza">Sicurezza</a></li>
+        <li><a href="#configurabilità"
+        id="toc-configurabilità">Configurabilità</a></li>
+        <li><a href="#osservabilità"
+        id="toc-osservabilità">Osservabilità</a>
         <ul>
-        <li><a href="#testing" id="toc-testing">Testing</a></li>
-        <li><a href="#act-per-testare-ci"
-        id="toc-act-per-testare-ci">Act per testare CI</a></li>
+        <li><a href="#health-check-api" id="toc-health-check-api">Health
+        check API</a></li>
+        <li><a href="#log-aggregation" id="toc-log-aggregation">Log
+        aggregation</a></li>
+        <li><a href="#log-tracing" id="toc-log-tracing">Log
+        Tracing</a></li>
+        <li><a href="#tracing-servizi" id="toc-tracing-servizi">Tracing
+        servizi</a></li>
         </ul></li>
-        <li><a href="#containerization"
-        id="toc-containerization">Containerization</a>
-        <ul>
-        <li><a href="#nodejs" id="toc-nodejs">NodeJS</a></li>
-        <li><a href="#java" id="toc-java">Java</a></li>
-        <li><a href="#angular" id="toc-angular">Angular</a></li>
-        </ul></li>
-        <li><a href="#lettura-variabili-dambiente"
-        id="toc-lettura-variabili-dambiente">Lettura variabili
-        d’ambiente</a></li>
-        <li><a href="#monitoraggio"
-        id="toc-monitoraggio">Monitoraggio</a>
-        <ul>
-        <li><a href="#grafana" id="toc-grafana">Grafana</a></li>
-        <li><a href="#prometheus"
-        id="toc-prometheus">Prometheus</a></li>
-        <li><a href="#cadvisor" id="toc-cadvisor">cAdvisor</a></li>
-        <li><a href="#integrazione-e-configurazione"
-        id="toc-integrazione-e-configurazione">Integrazione e
-        Configurazione</a></li>
-        </ul></li>
-        <li><a href="#docker-compose"
-        id="toc-docker-compose">Docker-compose</a></li>
         </ul></li>
         </ul>
 
@@ -273,7 +248,7 @@ Department of Computer Science</span><br />
 <span> Matteo Santoro </span><br />
 <span> <em>Supervisor:</em> Alessandro ricci</span><br />
 </p>
-<p>2025-07-11</p>
+<p>2025-10-18</p>
 </div>
 </div>
 <h1 class="unnumbered" id="declaration">Declaration</h1>
@@ -290,42 +265,8 @@ sarà sanzionato di conseguenza.<br />
 </p>
 <div class="flushright">
 <p>Firstname(s) Lastname</p>
-<p>2025-07-11</p>
+<p>2025-10-18</p>
 </div>
-<h1 class="unnumbered" id="abstract">Abstract</h1>
-<p>This is an undergraduate project report template and instruction on
-how to write a report. It also has some useful examples to use LaTeX. Do
-read this template carefully. The number of chapters and their titles
-may vary depending on the type of project and personal preference.
-Section titles in this template are illustrative should be updated
-accordingly. For example, sections named “A section...” and “Example of
-...” should be updated. The number of sections in each chapter may also
-vary. This template may or may not suit your project. Discuss the
-structure of your report with your supervisor.</p>
-<p> <br />
-<strong>Guidance on abstract writing:</strong> An abstract is a summary
-of a report in a single paragraph up to a maximum of 250 words. An
-abstract should be self-contained, and it should not refer to sections,
-figures, tables, equations, or references. An abstract typically
-consists of sentences describing the following four parts: (1)
-introduction (background and purpose of the project), (2) methods, (3)
-results and analysis, and (4) conclusions. The distribution of these
-four parts of the abstract should reflect the relative proportion of
-these parts in the report itself. An abstract starts with a few
-sentences describing the project’s general field, comprehensive
-background and context, the main purpose of the project; and the problem
-statement. A few sentences describe the methods, experiments, and
-implementation of the project. A few sentences describe the main results
-achieved and their significance. The final part of the abstract
-describes the conclusions and the implications of the results to the
-relevant field.</p>
-<p> <br />
-<strong>Keywords:</strong> a maximum of five keywords/keyphrase
-separated by commas</p>
-<p><strong>Report’s total word count:</strong> we expect a maximum of
-20,000 words (excluding reference and appendices) and about 50 - 60
-pages. [A good project report can also be written in approximately
-10,000 words.]</p>
 <h2 id="list-of-abbreviations">List of Abbreviations</h2>
 <div class="abbrv">
 <p>School of Mathematical, Physical and Computational Sciences</p>
@@ -435,20 +376,32 @@ data-reference-type="ref" data-reference="ch:lit_rev">[ch:lit_rev]</a>
 literature review is described. In this sentence, the word “Chapter” is
 missing. Therefore, a reader would not know whether 2 is for a Chapter
 or a Section or a Figure.</p>
-<h1 id="ch:ddd">Domain Driven Design</h1>
-<h2
+<h1 id="ch:decomposition">Decomoposizione da monolite a
+micro-servizi(Assignement 5)</h1>
+<p>La precedente versione del software era funzionante ma difficile da
+mantenere ed aggiornare, data la struttura monolitica. Esisteva un’unico
+sorgente che conteneva al suo interno logiche di business, nessun tipo
+di persistenza e la view tutti assieme.</p>
+<p>Per poter decomporre questo monolite sono state eseguite le fasi
+di:</p>
+<ul>
+<li><p>Identificazione delle operazioni di sistema.</p></li>
+<li><p>Decomposizione in servizi, in subdomain seguendo DDD.</p></li>
+<li><p>Identificazione di API di comunicazione tra servizi.</p></li>
+</ul>
+<h2 id="operazioni-di-sistema">Operazioni di sistema</h2>
+<h3
 id="knowledge-crunching-session-for-the-exploration-of-the-problem-space">Knowledge
-crunching session for the exploration of the problem space</h2>
-<p>Per ottenere maggior chiarezza sul dominio è stato utilizzato il
-metodo Event Storming. La tecnica consiste nell’individuare degli eventi
-di dominio e riportarli al passato su un post-it arancione. Una volta
-individuati gli eventi, sono stati scritti su post-it blu i comandi che
-l’utente svolge per creare l’evento. In giallo è stato specificato
-l’attore, la persona che esegue il comando, mentre in verde la view,
-l’interfaccia software con la quale l’utente interagisce. Infine, con
-delle label si sono aggregati i post-it in unità di dominio. Si riporta
-di seguito lo screen della lavagna con i post-it e la relativa
-legenda.</p>
+crunching session for the exploration of the problem space</h3>
+<p>E’ stato utilizzato il metodo Event Storming. La tecnica consiste
+nell’individuare degli eventi di dominio e riportarli al passato su un
+post-it arancione. Una volta individuati gli eventi, sono stati scritti
+su post-it blu i comandi che l’utente svolge per creare l’evento. In
+giallo è stato specificato l’attore, la persona che esegue il comando,
+mentre in verde la view, l’interfaccia software con la quale l’utente
+interagisce. Infine, con delle label si sono aggregati i post-it in
+unità di dominio. Si riporta di seguito lo screen della lavagna con i
+post-it e la relativa legenda.</p>
 <figure id="event_storming">
 <img src="report/img/EventStorming.png" />
 <figcaption>Event Storming</figcaption>
@@ -457,213 +410,6 @@ legenda.</p>
 <img src="report/img/event_storming_legend.png" />
 <figcaption>Event Storming Legend</figcaption>
 </figure>
-<h2 id="ubiquitos-language">Ubiquitos Language</h2>
-<div class="adjustbox">
-<p><span>max width=1.1,center</span></p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Nome</th>
-<th style="text-align: left;">Descrizione</th>
-<th style="text-align: left;">Sinonimi</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Mano</td>
-<td style="text-align: left;">Distribuzione delle 40 carte ai 4
-giocatori e la seguente serie di 10 prese</td>
-<td style="text-align: left;">Round</td>
-</tr>
-<tr>
-<td style="text-align: left;">Mano</td>
-<td style="text-align: left;">Carte dei giocatori non ancora
-giocate</td>
-<td style="text-align: left;">Hand</td>
-</tr>
-<tr>
-<td style="text-align: left;">Presa</td>
-<td style="text-align: left;">Quando ogni giocatore, a turno, gioca sul
-tavolo una carta. L’ultima presa della mano vale 1 punto.</td>
-<td style="text-align: left;">Trick</td>
-</tr>
-<tr>
-<td style="text-align: left;">Partita</td>
-<td style="text-align: left;">Insieme di più mani fino al raggiungimento
-del punteggio di 41 punti.</td>
-<td style="text-align: left;">Game</td>
-</tr>
-<tr>
-<td style="text-align: left;">Partita corta</td>
-<td style="text-align: left;">Insieme di più mani fino al raggiungimento
-del punteggio di 31 punti.</td>
-<td style="text-align: left;">Short Game</td>
-</tr>
-<tr>
-<td style="text-align: left;">Tavolo</td>
-<td style="text-align: left;">Raggruppamento di 4 giocatori, suddivisi
-in 2 coppie, i giocatori delle stessa squadra “siedono” in direzione
-opposta</td>
-<td style="text-align: left;">Table</td>
-</tr>
-<tr>
-<td style="text-align: left;">Seme</td>
-<td style="text-align: left;">Tipologia distintiva di carta, ne esistono
-4: Denari, Coppe, Spade, Bastoni</td>
-<td style="text-align: left;">Suit: Coins, Cups, Swords, Clubs </td>
-</tr>
-<tr>
-<td style="text-align: left;">Briscola</td>
-<td style="text-align: left;">Seme con priorita’ piu’ alta.</td>
-<td style="text-align: left;">Trump</td>
-</tr>
-<tr>
-<td style="text-align: left;">Maraffa</td>
-<td style="text-align: left;">Se un giocatore possiede le tre carte di
-valore maggiore (asso, due e tre, dette assieme "Maraffa" o "Cricca")
-del seme di briscola, vince tre punti addizionali. In questo caso deve
-scendere con l’asso di quel seme.</td>
-<td style="text-align: left;">Cricca, Marafon, Tresette con la
-Briscola</td>
-</tr>
-<tr>
-<td style="text-align: left;">Mazzo</td>
-<td style="text-align: left;">40 carte, di 4 semi diversi,
-1,2,3,4,5,6,7, fante, cavallo e re.</td>
-<td style="text-align: left;">Deck</td>
-</tr>
-<tr>
-<td style="text-align: left;">Taglio</td>
-<td style="text-align: left;">Durante una mano in un seme viene giocato
-il seme di briscola, che avendo priorita’ maggiore permette di prendere
-nonostante il seme di gioco</td>
-<td style="text-align: left;">Cut</td>
-</tr>
-<tr>
-<td style="text-align: left;">Busso</td>
-<td style="text-align: left;">Invita il compagno, se possibile, a
-conquistare la presa e ad aprire il turno successivo con lo stesso
-seme</td>
-<td style="text-align: left;">Knock</td>
-</tr>
-<tr>
-<td style="text-align: left;">Striscio corto</td>
-<td style="text-align: left;">Quando si ha ancora in mano un basso
-numero di carte dello stesso seme con cui si è aperto il turno.</td>
-<td style="text-align: left;">Short strip</td>
-</tr>
-<tr>
-<td style="text-align: left;">Striscio lungo</td>
-<td style="text-align: left;">Quando si ha ancora in mano molte carte
-dello stesso seme con cui si è aperto il turno.</td>
-<td style="text-align: left;">Long strip</td>
-</tr>
-<tr>
-<td style="text-align: left;">Volo</td>
-<td style="text-align: left;">Quando non si hanno più carte del seme con
-cui si è aperto il turno.</td>
-<td style="text-align: left;">Fly</td>
-</tr>
-<tr>
-<td style="text-align: left;">Figura</td>
-<td style="text-align: left;">Fante, Cavallo, Re, con punteggio di 1/3
-di punto.</td>
-<td style="text-align: left;">Figure</td>
-</tr>
-<tr>
-<td style="text-align: left;">Asso</td>
-<td style="text-align: left;">Carta con valore di 1 punto.</td>
-<td style="text-align: left;">Ace</td>
-</tr>
-<tr>
-<td style="text-align: left;">Due e Tre</td>
-<td style="text-align: left;">Carte con valore 1/3 di punto.</td>
-<td style="text-align: left;">Two and Three</td>
-</tr>
-<tr>
-<td style="text-align: left;">Carta Liscia</td>
-<td style="text-align: left;">Carte con numeri 4, 5, 6, 7. Sono prive di
-valore</td>
-<td style="text-align: left;">Smooth paper</td>
-</tr>
-<tr>
-<td style="text-align: left;">Squadra</td>
-<td style="text-align: left;">Coppie di giocatori seduti opposti</td>
-<td style="text-align: left;">Team</td>
-</tr>
-<tr>
-<td style="text-align: left;">Giocatore</td>
-<td style="text-align: left;">Persona che interagisce con
-l’applicativo</td>
-<td style="text-align: left;">Player, User</td>
-</tr>
-<tr>
-<td style="text-align: left;">Chiamata fuori</td>
-<td style="text-align: left;">Se un giocatore pensa che la sua squadra
-abbia raggiunto i 41 punti (o 31 punti nella variante "corta" della
-partita), la squadra può dichiarare di avere già nel mazzo delle prese i
-punti per vincere e chiudere in anticipo l’ultima partita. In questo
-modo la mano termina immediatamente, senza che vengano giocate le
-restanti prese e la squadra che si è "chiamata fuori" impedisce
-all’altra squadra di conquistare ulteriori prese. Se una squadra si
-chiama fuori e, dopo aver contato i punti delle prese effettuate ed
-averli sommati ai punti ottenuti nelle mani già giocate, non raggiunge i
-punti per la vittoria (in gergo "sbaglia la chiamata") scatta automatico
-l’11 a 0 per la squadra avversaria</td>
-<td style="text-align: left;">Call out</td>
-</tr>
-<tr>
-<td style="text-align: left;">Modalità di gioco</td>
-<td style="text-align: left;">regole di gioco classiche o varianti che
-influenzano aspetti come il punteggio, condizioni di vittoria/perdita,
-... Ne sono state implementate due: classica, 11 a 0.</td>
-<td style="text-align: left;">Game mode</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="bounded-context">Bounded Context</h2>
-<p>Analizzando il dominio di MaraffaOnline, sono stati identificati tre
-bounded context. Nella figura si può osservare un primo bounded context,
-colorato di azzurro, che modella l’autenticazione dell’utente:</p>
-<ul>
-<li><p><strong>User:</strong> persona che possiede l’account</p></li>
-<li><p><strong>Statistic:</strong> dati dell’utente relativi al gioco
-come numero di vittorie, sconfitte, partite giocate e maraffe</p></li>
-<li><p><strong>Authentication:</strong> accesso all’applicativo
-MaraffaOnline da parte dell’utente</p></li>
-</ul>
-<p>Il secondo bounded context, colorato di verde, modella la
-partita:</p>
-<ul>
-<li><p><strong>Game:</strong> partita</p></li>
-<li><p><strong>Team:</strong> squadra composta da numero di giocatori /
-2</p></li>
-<li><p><strong>Score:</strong> punteggio delle due squadre</p></li>
-<li><p><strong>Statistic:</strong> dati relativi ai game
-giocati</p></li>
-<li><p><strong>Trick:</strong> presa di quattro carte da parte di un
-giocatore</p></li>
-<li><p><strong>Round:</strong> 10 prese</p></li>
-<li><p><strong>Card:</strong> carta</p></li>
-<li><p><strong>Player:</strong> giocatore</p></li>
-<li><p><strong>Deck:</strong> mazzo</p></li>
-<li><p><strong>Hand:</strong> carte che ha in mano un giocatore</p></li>
-</ul>
-<p>Infine l’ultimo, di colore arancione, modella la chat:</p>
-<ul>
-<li><p><strong>Chat:</strong> chat di gioco</p></li>
-<li><p><strong>Message:</strong> messaggio inviato nella chat</p></li>
-<li><p><strong>User:</strong> persona che invia il messaggio</p></li>
-</ul>
-<p>È importante notare che il concetto di user/player è polisemico: vi
-sono tre rappresentazioni diverse per afferire allo stesso concetto.</p>
-<figure id="bounded_context">
-<img src="report/img/BoundedCTX.png" />
-<figcaption>Context Map</figcaption>
-</figure>
-<h2 id="requisiti-e-casi-duso">Requisiti e casi d’uso</h2>
-<h3 id="requisiti">Requisiti</h3>
 <ol>
 <li><p>Account</p>
 <ol>
@@ -713,67 +459,118 @@ l’interazione dell’utente con l’applicazione.</p>
 <img src="report/img/Casi_duso.png" />
 <figcaption>Schema dei casi d’uso</figcaption>
 </figure>
-<h2 id="pattern-del-ddd">Pattern del DDD</h2>
-<p>Per poter mantenere le varie parti di software evolvibili e coerenti
-ai contesti del dominio. L’architettura utilizza un servizio, con il
-ruolo di customer all’interno del pattern
-<strong>Customer-supplier</strong>, che "coordina" ed interroga gli
-altri. Di seguito, si riportano le motivazione secondo le quali è stato
-scelto:</p>
+<h2 id="decomposizione-in-servizi">Decomposizione in servizi</h2>
+<h3 id="bounded-context">Bounded Context</h3>
+<p>Analizzando il dominio di MaraffaOnline, sono stati identificati i
+tre principali bounded context che andranno poi a definire (ad alto
+livello) i servizi e alcune delle loro API all’interno
+dell’architettura. Nella figura si può osservare un primo bounded
+context, colorato di azzurro, che modella l’autenticazione
+dell’utente:</p>
 <ul>
-<li><p>servizi <strong>loosely coupled</strong></p></li>
-<li><p>evoluzione indipendente dei servizi, durante l’aggiornamento del
-sistema.</p></li>
-<li><p>ove possibile, ogni bounded context è stato sviluppato in un
-microservizio separato, ottenendo, così, una distinta separazione della
-business logic e delle responsabilità.</p></li>
-<li><p>La manutenibilità dei singoli componenti che possono,
-ipoteticamente, essere sviluppati da team diversi in modo parallelo,
-definendo al meglio i confini del dominio.</p></li>
+<li><p><strong>User:</strong> persona che possiede l’account</p></li>
+<li><p><strong>Statistic:</strong> dati dell’utente relativi al gioco
+come numero di vittorie, sconfitte, partite giocate e maraffe</p></li>
+<li><p><strong>Authentication:</strong> accesso all’applicativo
+MaraffaOnline da parte dell’utente</p></li>
 </ul>
-<p>Una pratica del DDD è l’Event Sourcing, tuttavia, in questo progetto
-non è stato applicato. Infatti, sebbene possa trarre in inganno il
-salvataggio su <em>MongoDB</em> di tutti gli eventi che si verificano
-nel contesto di una partita e, di conseguenza, la memorizzazione degli
-stati, l’Event Sourcing non è rispettato. Gli stati salvati sono
-mutabili e vengono sovrascritti ad ogni cambiamento grazie ai metodi di
-aggiornamento, senza salvare ogni singola modifica. Inoltre, sebbene sia
-presente un timestamp al momento della creazione del record, non sono
-presenti in fase di aggiornamento. Per evitare di aggiungere ulteriore
-complessità al progetto, anche in termini di performance relativa alle
-interrogazioni articolate per ricostruire lo storico, si è deciso di non
-implementare il pattern. Oltre a una semplificata manutenzione, si va
-anche a ridurre lo spazio di memorizzazione necessario e, pertanto, in
-questa casistica si è ritenuto che un approccio tradizionale fosse più
-che sufficiente.</p>
-<h2 id="design-generale-del-software">Design generale del software</h2>
-<h2 id="architettura-del-software">Architettura del software</h2>
-<h2 id="business-logic-domanin-model">Business logic domanin model</h2>
-<p>slide 2.5 p.9</p>
-<h2 id="api-gatetway-e-middleware">API gatetway e middleware</h2>
-<h2 id="middleware-event-driven">Middleware event-driven</h2>
-<p>L’architettura del software è basata su micro-servizi autonomi e
-indipendenti tra loro, la cui comunicazione avviene tramite API REST.
-Esiste un middleware che si occupa della gestione e dell’orchestrazione
-dei micro-servizi, fungendo da ponte per collegare le varie
-tecnologie.</p>
-<p>I microservizi sviluppati si occupano di varie aree legate alla
-natura del progetto e sono:</p>
+<p>Il secondo bounded context, colorato di verde, modella la
+partita:</p>
 <ul>
-<li><p><strong>UserService</strong>: si occupa della gestione degli
-utenti, quindi la loro registrazione, autenticazione e gestione dei dati
-personali.</p></li>
-<li><p><strong>BusinessLogic</strong>: si occupa di mantenere al proprio
-interno tutte le regole del gioco.</p></li>
-<li><p><strong>Front-End</strong>: si occupa di gestire l’interfaccia
-grafica e la comunicazione con il middleware.</p></li>
-<li><p><strong>Middleware</strong>: si occupa della gestione delle
-comunicazioni tra i vari microservizi e svolge la funzione di "motore di
-gioco".</p></li>
+<li><p><strong>Game:</strong> partita</p></li>
+<li><p><strong>Team:</strong> squadra composta da numero di giocatori /
+2</p></li>
+<li><p><strong>Score:</strong> punteggio delle due squadre</p></li>
+<li><p><strong>Statistic:</strong> dati relativi ai game
+giocati</p></li>
+<li><p><strong>Trick:</strong> presa di quattro carte da parte di un
+giocatore</p></li>
+<li><p><strong>Round:</strong> 10 prese</p></li>
+<li><p><strong>Card:</strong> carta</p></li>
+<li><p><strong>Player:</strong> giocatore</p></li>
+<li><p><strong>Deck:</strong> mazzo</p></li>
+<li><p><strong>Hand:</strong> carte che ha in mano un giocatore</p></li>
 </ul>
-<p><img src="report/img/Architecture.png" style="width:12cm"
+<p>Infine l’ultimo, di colore arancione, modella la chat:</p>
+<ul>
+<li><p><strong>Chat:</strong> chat di gioco</p></li>
+<li><p><strong>Message:</strong> messaggio inviato nella chat</p></li>
+<li><p><strong>User:</strong> persona che invia il messaggio</p></li>
+</ul>
+<p>È importante notare che il concetto di user/player è polisemico: vi
+sono tre rappresentazioni diverse per afferire allo stesso concetto.</p>
+<figure id="bounded_context">
+<img src="report/img/BoundedCTX.png" />
+<figcaption>Context Map</figcaption>
+</figure>
+<h3 id="schema-architettura">Schema architettura</h3>
+<p><img src="report/img/Architecture.png" style="width:16cm"
 alt="image" /><br />
 </p>
+<h2 id="comunicazione-tra-servizi">Comunicazione tra servizi</h2>
+<p>-TODO god class gameservice</p>
+<h3 id="api-gateway">API gateway</h3>
+<p>Sono state implementate diverse forme di comunicazione tra servizi in
+base alle caratteristiche del messaggio che viene scambiato. Si è scelto
+di utilizzare la comunicazione REST nella maggior parte dei servizi,
+visto la sua interoperabilità. Non è stato necessario implementare un
+vero e proprio broker di messaggi, ma è stato implementato un servizio
+denominato middleare che svolge il ruolo di API gatetway delle richieste
+dai client verso il sistema.</p>
+<p>Queste chiamate non sono obbligatoriamente dirette verso il servizio
+interessato, ma possono anche essere routine che effettuano molteplici
+chiamate per ottenere il risultato desiderato. Implementare queste
+chiamate direttamente nel front-end avrebbe reso il codice molto più
+complesso e difficile da mantenere, e la gestione di partite multiple
+sarebbe stata molto più complicata.</p>
+<p>Non è stato implementato nessun meccanismo di discovery per scoprire
+l’indirizzo degli altri servizi, è stato sfruatta la tecnologia built-in
+di docker che permette di poter utilizzare degli alias e nascondere al
+proprio interno i meccaniscmi di registration, questo comunque implica
+che tutto debba essere sempre mantenuto nell’ambiene virtualizzato e
+quindi ogni futueo servizio containerizzato.</p>
+<p>Si è seguito un approccio modulare nello sviluppo di questo
+componente che, in un primo step, conteneva soltanto la logica di
+gestione delle partite, al quale sono stati aggiunti i moduli per la
+comunicazione con il servizio degli utenti e della business logic. Ogni
+modulo segue la stessa struttura, ossia una classe denominata controller
+che si occupa esclusivamente della dichiarazione delle rotte HTTP e che
+a sua volta contiene un service. Ogni servizio contiene poi le logiche
+di calcolo e crea un JSON di risposta che viene passato al controller
+che lo invia come risposta HTTP, questo per poter separare completamente
+e rispettare il principio di single responsibility.</p>
+<p>Nel modulo contenente le logiche di gioco è stato necessario
+aggiungere un ulteriore strato di separazione alla struttura
+controller-service, data la struttura multi-attore della gestione delle
+partite che non permetteva una separazione netta. Quindi è stato
+aggiunto, tra il controller e il service, un componente ibrido per poter
+comunque avere servizi indipendenti.</p>
+<p>Questa separazione, oltre a essere una buona pratica, è stata scelta
+per poter effettuare del testing comodamente soltanto sui servizi,
+testando quindi solamente la parte relativa all’elaborazione di una
+risposta.</p>
+<h3 id="websocket-module">Websocket module</h3>
+<p>L’interazione con il frontend avviene prevalentemente tramite il
+protocollo HTTP, ma per la gestione di alcuni aspetti in tempo reale
+sono state introdotte le WebSocket. Questo componente è stato creato, ad
+esempio, per la gestione delle chat di gioco, in modo che i giocatori
+possano comunicare tra loro in tempo reale. Ogni client, istanziato sul
+computer degli utenti, effettua una connessione WebSocket con il
+middleware utilizzando come endpoint il proprio UUID, che viene
+assegnato automaticamente all’avvio, e lo username del giocatore, dopo
+aver effettuato il login. Il middleware contiene al proprio interno una
+mappa di tutti i client e giocatori connessi con la relativa WebSocket e
+una classe che espone due metodi per inviare messaggi a un singolo
+giocatore o effettuare un messaggio broadcast a tutti i giocatori
+connessi.</p>
+<p>Il modulo di game si occupa di gestire le partite, quindi è l’unico
+che può sapere quali giocatori devono ricevere determinati messaggi
+relativi a una singola partita. Per utilizzare il servizio di WebSocket,
+è stata implementata una semplice interfaccia all’interno dell’attore di
+gioco con la quale si effettuano chiamate "onEvent". Ogni volta che un
+particolare evento si verifica, un’invocazione a queste chiamate
+permette di inviare messaggi alle WebSocket dei giocatori
+interessati.</p>
 <h1 id="chap:QA">Quality Attributes</h1>
 <p>In questa sezione vengono analizzati gli attributi di qualità
 (<em>quality attributes</em>) rilevanti per l’architettura del sistema
@@ -951,494 +748,62 @@ class="sourceCode java"><code class="sourceCode java"><span id="list:test_async_
 <span id="list:test_async_vertx-12"><a href="#list:test_async_vertx-12" aria-hidden="true" tabindex="-1"></a>                <span class="op">});</span></span>
 <span id="list:test_async_vertx-13"><a href="#list:test_async_vertx-13" aria-hidden="true" tabindex="-1"></a>            <span class="op">});</span></span>
 <span id="list:test_async_vertx-14"><a href="#list:test_async_vertx-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<h1 id="ch:deployment">Deployment</h1>
-<h2 id="introduzione">Introduzione</h2>
-<p>Vedi Deployment slide 2.7</p>
-<h2 id="continuous-integration">Continuous Integration</h2>
-<p>Per migliorare la qualità del software e velocizzare il processo di
-sviluppo, è stata implementata la Continuous Integration. Questa pratica
-permette di integrare il codice frequentemente, evitando possibili
-rischi d’integrazione e consetendo l’esecuzione di test automatici.
-Grazie al sistema di notifiche, inoltre, è possibile ricevere feedback
-immediato sullo stato delle Github Actions, per accertarsi che sia
-sempre tutto funzionante e non siano stati introdotti bug. Mantenendo il
-sistema continuamente monitorato, si migliora anche l’effiicienza e la
-collaborazione tra i membri del team.</p>
-<h2 id="automated-quality-assurance">Automated quality assurance</h2>
-<h3 id="testing">Testing</h3>
-<p>Per ogni servizio in questo sistema è stato adottato, ove possibile,
-il paradigma di programmazione TDD, cioè Test Driven Development. Questo
-approccio prevede che i test siano scritti prima del codice, in modo da
-guidare lo sviluppo e garantire che il codice prodotto soddisfi i
-requisiti specificati. All’interno della CI, la fase di test è stata
-implementata con Jest per quanto riguarda i servizi che usano Node.js,
-generando di fatto un report abbastanza comprensibile direttamente nella
-finestra della CI. Il componente middleware, scritto in Java, invece,
-generava risultati di test non così chiari. Per modificare questo
-comportamento, è stata introdotta una dipendenza nel build Gradle che
-permette di avere un report più dettagliato e comprensibile. La libreria
-<a
-href="https://plugins.gradle.org/plugin/com.adarshr.test-logger"><u>Test
-Logger</u></a>, tramite una piccola configurazione nel file build.gradle
-come qui riportata, ha soddisfatto le nostre esigenze.</p>
-<div class="sourceCode" id="list:gradle_testlogger" data-language="Java"
-data-caption="Test logger" data-label="list:gradle_testlogger"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="list:gradle_testlogger-1"><a href="#list:gradle_testlogger-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">com</span><span class="op">.</span><span class="im">adarshr</span><span class="op">.</span><span class="im">gradle</span><span class="op">.</span><span class="im">testlogger</span><span class="op">.</span><span class="im">TestLoggerExtension</span></span>
-<span id="list:gradle_testlogger-2"><a href="#list:gradle_testlogger-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">com</span><span class="op">.</span><span class="im">adarshr</span><span class="op">.</span><span class="im">gradle</span><span class="op">.</span><span class="im">testlogger</span><span class="op">.</span><span class="im">TestLoggerPlugin</span></span>
-<span id="list:gradle_testlogger-3"><a href="#list:gradle_testlogger-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">com</span><span class="op">.</span><span class="im">adarshr</span><span class="op">.</span><span class="im">gradle</span><span class="op">.</span><span class="im">testlogger</span><span class="op">.</span><span class="im">theme</span><span class="op">.</span><span class="im">ThemeType</span></span>
-<span id="list:gradle_testlogger-4"><a href="#list:gradle_testlogger-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:gradle_testlogger-5"><a href="#list:gradle_testlogger-5" aria-hidden="true" tabindex="-1"></a>testlogger <span class="op">{</span></span>
-<span id="list:gradle_testlogger-6"><a href="#list:gradle_testlogger-6" aria-hidden="true" tabindex="-1"></a>    theme <span class="op">=</span> ThemeType<span class="op">.</span><span class="fu">MOCHA</span></span>
-<span id="list:gradle_testlogger-7"><a href="#list:gradle_testlogger-7" aria-hidden="true" tabindex="-1"></a>    showExceptions <span class="op">=</span> <span class="kw">true</span></span>
-<span id="list:gradle_testlogger-8"><a href="#list:gradle_testlogger-8" aria-hidden="true" tabindex="-1"></a>    showStackTraces <span class="op">=</span> <span class="kw">true</span></span>
-<span id="list:gradle_testlogger-9"><a href="#list:gradle_testlogger-9" aria-hidden="true" tabindex="-1"></a>    showFullStackTraces <span class="op">=</span> <span class="kw">false</span></span>
-<span id="list:gradle_testlogger-10"><a href="#list:gradle_testlogger-10" aria-hidden="true" tabindex="-1"></a>    showCauses <span class="op">=</span> <span class="kw">true</span></span>
-<span id="list:gradle_testlogger-11"><a href="#list:gradle_testlogger-11" aria-hidden="true" tabindex="-1"></a>    slowThreshold <span class="op">=</span> <span class="dv">2000</span></span>
-<span id="list:gradle_testlogger-12"><a href="#list:gradle_testlogger-12" aria-hidden="true" tabindex="-1"></a>    showSummary <span class="op">=</span> <span class="kw">true</span></span>
-<span id="list:gradle_testlogger-13"><a href="#list:gradle_testlogger-13" aria-hidden="true" tabindex="-1"></a>    showSimpleNames <span class="op">=</span> <span class="kw">false</span></span>
-<span id="list:gradle_testlogger-14"><a href="#list:gradle_testlogger-14" aria-hidden="true" tabindex="-1"></a>    showPassed <span class="op">=</span> <span class="kw">true</span></span>
-<span id="list:gradle_testlogger-15"><a href="#list:gradle_testlogger-15" aria-hidden="true" tabindex="-1"></a>    showSkipped <span class="op">=</span> <span class="kw">true</span></span>
-<span id="list:gradle_testlogger-16"><a href="#list:gradle_testlogger-16" aria-hidden="true" tabindex="-1"></a>    showFailed <span class="op">=</span> <span class="kw">true</span></span>
-<span id="list:gradle_testlogger-17"><a href="#list:gradle_testlogger-17" aria-hidden="true" tabindex="-1"></a>    showOnlySlow <span class="op">=</span> <span class="kw">false</span></span>
-<span id="list:gradle_testlogger-18"><a href="#list:gradle_testlogger-18" aria-hidden="true" tabindex="-1"></a>    showStandardStreams <span class="op">=</span> <span class="kw">false</span></span>
-<span id="list:gradle_testlogger-19"><a href="#list:gradle_testlogger-19" aria-hidden="true" tabindex="-1"></a>    showPassedStandardStreams <span class="op">=</span> <span class="kw">true</span></span>
-<span id="list:gradle_testlogger-20"><a href="#list:gradle_testlogger-20" aria-hidden="true" tabindex="-1"></a>    showSkippedStandardStreams <span class="op">=</span> <span class="kw">true</span></span>
-<span id="list:gradle_testlogger-21"><a href="#list:gradle_testlogger-21" aria-hidden="true" tabindex="-1"></a>    showFailedStandardStreams <span class="op">=</span> <span class="kw">true</span></span>
-<span id="list:gradle_testlogger-22"><a href="#list:gradle_testlogger-22" aria-hidden="true" tabindex="-1"></a>    logLevel <span class="op">=</span> LogLevel<span class="op">.</span><span class="fu">LIFECYCLE</span></span>
-<span id="list:gradle_testlogger-23"><a href="#list:gradle_testlogger-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<h3 id="act-per-testare-ci">Act per testare CI</h3>
-<p>È stato trovato un utilissimo strumento per poter velocizzare il
-processo di creazione della CI, <a
-href="https://github.com/nektos/act"><u>Act</u></a>. Questo strumento
-permette di eseguire le GitHub Actions localmente senza dover
-obbligatoriamente fare un push sul repository e quindi senza "sporcare"
-la cronologia dei commit. Richiede che Docker sia attivo ed è in grado
-di creare un container che utilizza l’immagine specificata nel file di
-configurazione della CI e di eseguire i job. Per eseguire Act è stato
-creato uno script in bash per poter automatizzare ulteriormente il
-testing delle CI, in cui viene letto il contenuto del file .env.example
-che popolerà l’environment del container con le variabili d’ambiente
-necessarie per il corretto funzionamento della CI, e le imposta come
-variabili d’ambiente della GitHub Action che si sta testando. Per poter
-usare Act è necessario semplificare leggermente il trigger per i job,
-che in ambiente di produzione è solitamente la chiusura di una pull
-request, mentre per testare velocemente è necessario impostarlo su una
-push.</p>
-<h2 id="containerization">Containerization</h2>
-<p>Data l’architettura del progetto in microservizi, usare Docker per
-creare un’immagine per ogni servizio è stata una scelta naturale.
-L’obiettivo finale è avere un sistema facilmente deployabile e
-scalabile, eseguibile velocemente in un ambiente generico, con uno stack
-di container Docker che racchiuda tutto il sistema. Per fare ciò è stato
-necessario creare un Dockerfile per ogni servizio, in modo da poter
-creare un’immagine durante la fase di deploy della continuous
-integration.</p>
-<p>La <strong>strategia di containerizzazione</strong> per tutte le
-immagini create è stata quella di utilizzare un’immagine base di Alpine,
-in modo da avere immagini leggere e veloci da scaricare. Per ridurre la
-dimensione delle immagini, si è utilizzata un’immagine di sviluppo per
-compilare il codice e un’immagine di produzione per eseguire il codice
-compilato, copiando solo i file necessari.</p>
-<figure>
-<p><img src="report/img/multi_stage.png" style="width:12cm"
-alt="image" /><br />
-</p>
-<figcaption>Comparazione tra le immagini multi-stage e le immagini
-tradizionali</figcaption>
+<h1 id="ch:production_ready">Micro-servizi production ready(Assignement
+5)</h1>
+<h2 id="sicurezza">Sicurezza</h2>
+<p>La parte di sicurezza è relativamente semplice nel progetto
+MaraffaOnline, viene utilizzato una form login con utente/passwword e
+questi vengono passati al servizio degli utente che verifica la validatà
+e rilascia un authorization bearer che viene salvato all’interno del
+browser per poter autorizzare tutte le successive chiamate ai servizi,
+che comunque non sono mai dirette ma vengono sempre intercettate dal
+servizio di API gatetway che ne controlla la validità. Dato il dominio
+non ci sono permessi differenti in base alle tipologie di utenti, visto
+che sono tutti giocatori.</p>
+<h2 id="configurabilità">Configurabilità</h2>
+<p>Il sistema è stato studiato per poter essere pienamente configurabile
+sfruttando le funzionalità offerte da docker e in particolare docker
+swarm, ogni servizio è in grado di leggere le proprie configurazioni di
+sistema da un file ’.env’.</p>
+<h2 id="osservabilità">Osservabilità</h2>
+<h3 id="health-check-api">Health check API</h3>
+<p>In ogni servizio creato ad-hoc per il progetto sono state inserite le
+API per il controllo di health, forniscono un test di liveness del
+sistema tramite uno status code 200 e inoltre sono state aggiunte
+metriche di ogni servizio che potrebbero risultare utili in uno scenario
+di deploy in cui è importante conoscere lo spazio su disco utlizzato da
+ogni servizio e che percentuale occupa. All’interno dello stack, su ogni
+container, vengono chiamate queste API periodicamente per poter
+assicurare che non ci siano down di servizi.</p>
+<div class="sourceCode" id="list:healt_API" data-language="Python"
+data-caption="Health check API" data-label="list:healt_API"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="list:healt_API-1"><a href="#list:healt_API-1" aria-hidden="true" tabindex="-1"></a>healthcheck:</span>
+<span id="list:healt_API-2"><a href="#list:healt_API-2" aria-hidden="true" tabindex="-1"></a>      test:</span>
+<span id="list:healt_API-3"><a href="#list:healt_API-3" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="list:healt_API-4"><a href="#list:healt_API-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;CMD&quot;</span>, </span>
+<span id="list:healt_API-5"><a href="#list:healt_API-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;curl&quot;</span>, <span class="st">&quot;-f&quot;</span>, <span class="st">&quot;http://localhost:3000/actuator/health&quot;</span>, <span class="st">&quot;||&quot;</span>, </span>
+<span id="list:healt_API-6"><a href="#list:healt_API-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;curl&quot;</span>, <span class="st">&quot;-f&quot;</span>, <span class="st">&quot;http://localhost:3000/health&quot;</span>, <span class="st">&quot;||&quot;</span>, </span>
+<span id="list:healt_API-7"><a href="#list:healt_API-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;curl&quot;</span>, <span class="st">&quot;-f&quot;</span>, <span class="st">&quot;http://localhost:3000/&quot;</span>, <span class="st">&quot;||&quot;</span>,<span class="st">&quot;exit&quot;</span>,<span class="st">&quot;1&quot;</span>,</span>
+<span id="list:healt_API-8"><a href="#list:healt_API-8" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="list:healt_API-9"><a href="#list:healt_API-9" aria-hidden="true" tabindex="-1"></a>      interval: <span class="dv">30</span><span class="er">s</span></span>
+<span id="list:healt_API-10"><a href="#list:healt_API-10" aria-hidden="true" tabindex="-1"></a>      timeout: <span class="dv">10</span><span class="er">s</span></span>
+<span id="list:healt_API-11"><a href="#list:healt_API-11" aria-hidden="true" tabindex="-1"></a>      retries: <span class="dv">3</span></span>
+<span id="list:healt_API-12"><a href="#list:healt_API-12" aria-hidden="true" tabindex="-1"></a>      start_period: <span class="dv">60</span><span class="er">s</span></span></code></pre></div>
+<h3 id="log-aggregation">Log aggregation</h3>
+<figure id="log_aggregation">
+<img src="report/img/dashboard-aggregate-logging.png" />
+<figcaption aria-hidden="true"></figcaption>
 </figure>
-<h3 id="nodejs">NodeJS</h3>
-<p>I servizi UserManagementMaraffa e BusinessLogic sono stati
-containerizzati utilizzando un’immagine di Node.js. Nell’esempio sotto,
-si può notare la distinzione tra i diversi stage.</p>
-<div class="sourceCode" id="list:dockerfile_nodejs"
-data-language="Python" data-caption="Dockerfile delle immagini NodeJS"
-data-label="list:dockerfile_nodejs"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="list:dockerfile_nodejs-1"><a href="#list:dockerfile_nodejs-1" aria-hidden="true" tabindex="-1"></a>FROM node:<span class="dv">20</span><span class="op">-</span>alpine <span class="im">as</span> base</span>
-<span id="list:dockerfile_nodejs-2"><a href="#list:dockerfile_nodejs-2" aria-hidden="true" tabindex="-1"></a>WORKDIR <span class="op">/</span>app</span>
-<span id="list:dockerfile_nodejs-3"><a href="#list:dockerfile_nodejs-3" aria-hidden="true" tabindex="-1"></a>COPY yarn.lock package.json <span class="op">/</span>app<span class="op">/</span></span>
-<span id="list:dockerfile_nodejs-4"><a href="#list:dockerfile_nodejs-4" aria-hidden="true" tabindex="-1"></a>RUN yarn install</span>
-<span id="list:dockerfile_nodejs-5"><a href="#list:dockerfile_nodejs-5" aria-hidden="true" tabindex="-1"></a>COPY . <span class="op">/</span>app</span>
-<span id="list:dockerfile_nodejs-6"><a href="#list:dockerfile_nodejs-6" aria-hidden="true" tabindex="-1"></a>RUN yarn build</span>
-<span id="list:dockerfile_nodejs-7"><a href="#list:dockerfile_nodejs-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:dockerfile_nodejs-8"><a href="#list:dockerfile_nodejs-8" aria-hidden="true" tabindex="-1"></a>FROM node:<span class="dv">20</span><span class="op">-</span>alpine</span>
-<span id="list:dockerfile_nodejs-9"><a href="#list:dockerfile_nodejs-9" aria-hidden="true" tabindex="-1"></a>WORKDIR <span class="op">/</span>app    </span>
-<span id="list:dockerfile_nodejs-10"><a href="#list:dockerfile_nodejs-10" aria-hidden="true" tabindex="-1"></a>COPY <span class="op">--</span><span class="im">from</span><span class="op">=</span>base <span class="op">/</span>app<span class="op">/</span>package.json <span class="op">/</span>app<span class="op">/</span>package.json</span>
-<span id="list:dockerfile_nodejs-11"><a href="#list:dockerfile_nodejs-11" aria-hidden="true" tabindex="-1"></a>COPY <span class="op">--</span><span class="im">from</span><span class="op">=</span>base <span class="op">/</span>app<span class="op">/</span>node_modules <span class="op">/</span>app<span class="op">/</span>node_modules</span>
-<span id="list:dockerfile_nodejs-12"><a href="#list:dockerfile_nodejs-12" aria-hidden="true" tabindex="-1"></a>COPY <span class="op">--</span><span class="im">from</span><span class="op">=</span>base <span class="op">/</span>app<span class="op">/</span>dist <span class="op">/</span>app<span class="op">/</span>dist</span>
-<span id="list:dockerfile_nodejs-13"><a href="#list:dockerfile_nodejs-13" aria-hidden="true" tabindex="-1"></a>EXPOSE <span class="dv">3000</span></span>
-<span id="list:dockerfile_nodejs-14"><a href="#list:dockerfile_nodejs-14" aria-hidden="true" tabindex="-1"></a>CMD [<span class="st">&quot;node&quot;</span>,<span class="st">&quot;dist/main.js&quot;</span>]</span></code></pre></div>
-<h3 id="java">Java</h3>
-<p>La containerizzazione del middleware ha richiesto alcuni passaggi
-aggiuntivi rispetto ai servizi in Node.js. È stato necessario adottare
-immagini diverse per gli stage di build e produzione, quindi usare
-un’immagine di Gradle per la build, nella quale eseguire i comandi di
-Gradle, e un’immagine di OpenJDK per l’esecuzione del JAR prodotto dalla
-build.</p>
-<p>Per la compilazione con Gradle, nonostante non sia una pratica
-corretta, è stato necessario mantenere nella repository il file
-gradle-wrapper.jar, in quanto non era possibile scaricarlo durante la
-build all’interno delle GitHub Actions. La build non utilizza il
-classico comando di Gradle per generare il file .jar, ma un task
-personalizzato che si occupa di generare il fatJar del servizio, poiché
-le dipendenze non venivano gestite correttamente all’interno del normale
-file .jar.</p>
-<div class="sourceCode" id="list:gradle_fatJar" data-language="Java"
-data-caption="Task del fatJar da includere nel container"
-data-label="list:gradle_fatJar"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="list:gradle_fatJar-1"><a href="#list:gradle_fatJar-1" aria-hidden="true" tabindex="-1"></a>tasks<span class="op">.</span><span class="fu">register</span><span class="op">&lt;</span>Jar<span class="op">&gt;(</span><span class="st">&quot;fatJar&quot;</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="list:gradle_fatJar-2"><a href="#list:gradle_fatJar-2" aria-hidden="true" tabindex="-1"></a>    archiveBaseName<span class="op">.</span><span class="fu">set</span><span class="op">(</span><span class="st">&quot;Middleware&quot;</span><span class="op">)</span></span>
-<span id="list:gradle_fatJar-3"><a href="#list:gradle_fatJar-3" aria-hidden="true" tabindex="-1"></a>    manifest <span class="op">{</span></span>
-<span id="list:gradle_fatJar-4"><a href="#list:gradle_fatJar-4" aria-hidden="true" tabindex="-1"></a>        attributes<span class="op">[</span><span class="st">&quot;Main-Class&quot;</span><span class="op">]</span> <span class="op">=</span> <span class="st">&quot;server.Main&quot;</span></span>
-<span id="list:gradle_fatJar-5"><a href="#list:gradle_fatJar-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="list:gradle_fatJar-6"><a href="#list:gradle_fatJar-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">from</span><span class="op">(</span>sourceSets<span class="op">.</span><span class="fu">main</span><span class="op">.</span><span class="fu">get</span><span class="op">().</span><span class="fu">output</span><span class="op">)</span></span>
-<span id="list:gradle_fatJar-7"><a href="#list:gradle_fatJar-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dependsOn</span><span class="op">(</span>configurations<span class="op">.</span><span class="fu">runtimeClasspath</span><span class="op">)</span></span>
-<span id="list:gradle_fatJar-8"><a href="#list:gradle_fatJar-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">from</span><span class="op">({</span> configurations<span class="op">.</span><span class="fu">runtimeClasspath</span><span class="op">.</span><span class="fu">get</span><span class="op">().</span><span class="fu">filter</span> <span class="op">{</span> it<span class="op">.</span><span class="fu">name</span><span class="op">.</span><span class="fu">endsWith</span><span class="op">(</span><span class="st">&quot;jar&quot;</span><span class="op">)</span> <span class="op">}.</span><span class="fu">map</span> <span class="op">{</span> <span class="fu">zipTree</span><span class="op">(</span>it<span class="op">)</span> <span class="op">}</span> <span class="op">})</span></span>
-<span id="list:gradle_fatJar-9"><a href="#list:gradle_fatJar-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dependsOn</span><span class="op">(</span><span class="st">&quot;compileJava&quot;</span><span class="op">)</span></span>
-<span id="list:gradle_fatJar-10"><a href="#list:gradle_fatJar-10" aria-hidden="true" tabindex="-1"></a>    duplicatesStrategy <span class="op">=</span> DuplicatesStrategy<span class="op">.</span><span class="fu">EXCLUDE</span> <span class="co">// Puoi utilizzare altre strategie come DuplicatesStrategy.WARN per avvisare ma non fermare la build</span></span>
-<span id="list:gradle_fatJar-11"><a href="#list:gradle_fatJar-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<h3 id="angular">Angular</h3>
-<p>La containerizzazione del frontend ha richiesto l’utilizzo di
-un’immagine di Node.js per lo stage di build, mentre per l’esecuzione è
-stata utilizzata un’immagine di Nginx. Nginx serve per eseguire
-l’applicazione all’interno del container e per poterla raggiungere
-dall’esterno. Per fare ciò è stato necessario configurare Nginx tramite
-un file di configurazione che ha permesso anche di gestire un’operazione
-di reverse proxy per indirizzare le chiamate al backend.</p>
-<div class="sourceCode" id="list:nginx_frontend" data-language="Python"
-data-caption="Configurazione Nginx del front-end"
-data-label="list:nginx_frontend"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="list:nginx_frontend-1"><a href="#list:nginx_frontend-1" aria-hidden="true" tabindex="-1"></a>server {</span>
-<span id="list:nginx_frontend-2"><a href="#list:nginx_frontend-2" aria-hidden="true" tabindex="-1"></a>    listen <span class="dv">80</span><span class="op">;</span></span>
-<span id="list:nginx_frontend-3"><a href="#list:nginx_frontend-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="list:nginx_frontend-4"><a href="#list:nginx_frontend-4" aria-hidden="true" tabindex="-1"></a>    location <span class="op">/</span> {</span>
-<span id="list:nginx_frontend-5"><a href="#list:nginx_frontend-5" aria-hidden="true" tabindex="-1"></a>        root <span class="op">/</span>usr<span class="op">/</span>share<span class="op">/</span>nginx<span class="op">/</span>html<span class="op">;</span></span>
-<span id="list:nginx_frontend-6"><a href="#list:nginx_frontend-6" aria-hidden="true" tabindex="-1"></a>        index index.html index.htm<span class="op">;</span></span>
-<span id="list:nginx_frontend-7"><a href="#list:nginx_frontend-7" aria-hidden="true" tabindex="-1"></a>        try_files $uri $uri<span class="op">/</span> <span class="op">/</span>index.html<span class="op">;</span></span>
-<span id="list:nginx_frontend-8"><a href="#list:nginx_frontend-8" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="list:nginx_frontend-9"><a href="#list:nginx_frontend-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:nginx_frontend-10"><a href="#list:nginx_frontend-10" aria-hidden="true" tabindex="-1"></a>    location <span class="op">/</span>api<span class="op">/</span> {</span>
-<span id="list:nginx_frontend-11"><a href="#list:nginx_frontend-11" aria-hidden="true" tabindex="-1"></a>        proxy_pass <span class="st">&quot;http://$</span><span class="sc">{API_HOST}</span><span class="st">:$</span><span class="sc">{API_PORT}</span><span class="st">/&quot;</span><span class="op">;</span></span>
-<span id="list:nginx_frontend-12"><a href="#list:nginx_frontend-12" aria-hidden="true" tabindex="-1"></a>        proxy_http_version <span class="fl">1.1</span><span class="op">;</span></span>
-<span id="list:nginx_frontend-13"><a href="#list:nginx_frontend-13" aria-hidden="true" tabindex="-1"></a>        proxy_set_header Upgrade $http_upgrade<span class="op">;</span></span>
-<span id="list:nginx_frontend-14"><a href="#list:nginx_frontend-14" aria-hidden="true" tabindex="-1"></a>        proxy_set_header Connection <span class="st">&#39;upgrade&#39;</span><span class="op">;</span></span>
-<span id="list:nginx_frontend-15"><a href="#list:nginx_frontend-15" aria-hidden="true" tabindex="-1"></a>        proxy_set_header Host $host<span class="op">;</span></span>
-<span id="list:nginx_frontend-16"><a href="#list:nginx_frontend-16" aria-hidden="true" tabindex="-1"></a>        proxy_cache_bypass $http_upgrade<span class="op">;</span></span>
-<span id="list:nginx_frontend-17"><a href="#list:nginx_frontend-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="list:nginx_frontend-18"><a href="#list:nginx_frontend-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>L’indirizzo del backend è stato configurato tramite variabili
-d’ambiente, in modo da poterlo cambiare facilmente in base all’ambiente
-in cui si trova il container, e queste variabili vengono sostituite a
-seconda dell’ambiente di deploy in cui l’applicativo Angular viene
-eseguito.</p>
-<h2 id="lettura-variabili-dambiente">Lettura variabili d’ambiente</h2>
-<p>Data la scelta di dockerizzare interamente i servizi, è stato
-necessario l’utilizzo di variabili d’ambiente. Questo ha permesso di
-creare un sistema di deploy molto flessibile, in cui è possibile
-cambiare l’indirizzo del servizio a cui connettersi semplicemente
-modificando il file di configurazione del Docker Compose. I servizi in
-NodeJS leggono il contenuto delle variabili d’ambiente tramite il modulo
-‘process.env‘, mentre i servizi in Java utilizzano ‘System.getenv‘.
-Questi comportamenti sono corretti per lo sviluppo locale e per ambienti
-di produzione in cui le variabili d’ambiente sono settate
-correttamente.</p>
-<p>Per quanto riguarda invece lo sviluppo in CI, è stato necessario
-creare un file ‘.env.example‘ che contenesse tutte le variabili
-d’ambiente necessarie al funzionamento del servizio, in modo da poterle
-settare correttamente nel CI/CD, soprattutto per la fase di testing, e
-metterlo sulla repository. È importante tenere a mente che non
-dovrebbero mai essere caricati dati sensibili su strumenti di controllo
-di versione. In questo caso, non ci sono database o account cloud
-eventualmente raggiungibili dall’esterno.</p>
-<h2 id="monitoraggio">Monitoraggio</h2>
-<p>In un progetto composto da microservizi deployati con container, il
-monitoraggio è essenziale per garantire il corretto funzionamento e la
-performance ottimale del sistema. Per realizzare un monitoraggio
-efficace dei container, sono stati impiegati i container di Grafana,
-Prometheus e cAdvisor. Si ringrazia il lavoro di <a
-href="https://medium.com/@sohammohite/docker-container-monitoring-with-cadvisor-prometheus-and-grafana-using-docker-compose-b47ec78efbc"><u>Soham
-Mohite</u></a> per la configurazione e l’integrazione di questi
-strumenti.</p>
-<p><img src="report/img/monitor_schema.jpg" style="width:14cm"
-alt="image" /><br />
-</p>
-<h3 id="grafana">Grafana</h3>
-<p>Grafana è uno strumento open-source per la visualizzazione e
-l’analisi delle metriche raccolte. Viene utilizzato per creare dashboard
-personalizzate che mostrano lo stato e le performance dei microservizi.
-Con Grafana, è possibile configurare alert che notificano immediatamente
-eventuali problemi nel sistema, permettendo una risposta rapida e
-mirata.</p>
-<h3 id="prometheus">Prometheus</h3>
-<p>Prometheus è un sistema di monitoraggio e di allarme progettato per
-raccogliere e memorizzare metriche in serie temporali. È stato
-configurato per raccogliere metriche dai container dei microservizi e da
-cAdvisor. Prometheus esegue la raccolta dei dati a intervalli regolari e
-li memorizza in un database time-series, rendendoli disponibili per
-l’analisi e la visualizzazione in Grafana.</p>
-<h3 id="cadvisor">cAdvisor</h3>
-<p>cAdvisor (Container Advisor) è uno strumento che fornisce
-informazioni sulle risorse utilizzate dai container, come CPU, memoria,
-rete e disco. È stato integrato con Prometheus per raccogliere e
-esportare le metriche dei container. cAdvisor offre una visione
-dettagliata delle performance di ogni container, aiutando a identificare
-e risolvere problemi di utilizzo delle risorse.</p>
-<h3 id="integrazione-e-configurazione">Integrazione e
-Configurazione</h3>
-<p>L’integrazione di Grafana, Prometheus e cAdvisor ha permesso di
-creare un sistema di monitoraggio completo. I container di cAdvisor
-raccolgono le metriche di utilizzo delle risorse dai container dei
-microservizi e le esportano a Prometheus. Prometheus memorizza queste
-metriche e le rende disponibili per la visualizzazione in Grafana. Le
-dashboard di Grafana sono configurate per mostrare le metriche chiave e
-fornire un’analisi dettagliata dello stato del sistema.</p>
-<p>La configurazione di questi strumenti è stata gestita tramite Docker
-Compose, permettendo una facile implementazione e scalabilità del
-sistema di monitoraggio. Le variabili d’ambiente e i file di
-configurazione sono stati impostati per garantire la corretta
-connessione e funzionamento dei container di monitoraggio.</p>
-<div class="sourceCode" id="list:docker_compose_monitoring"
-data-language="Python"
-data-caption="Esempio di configurazione Docker Compose"
-data-label="list:docker_compose_monitoring"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="list:docker_compose_monitoring-1"><a href="#list:docker_compose_monitoring-1" aria-hidden="true" tabindex="-1"></a>cadvisor:</span>
-<span id="list:docker_compose_monitoring-2"><a href="#list:docker_compose_monitoring-2" aria-hidden="true" tabindex="-1"></a>    container_name: cadvisor</span>
-<span id="list:docker_compose_monitoring-3"><a href="#list:docker_compose_monitoring-3" aria-hidden="true" tabindex="-1"></a>    image: gcr.io<span class="op">/</span>cadvisor<span class="op">/</span>cadvisor:latest</span>
-<span id="list:docker_compose_monitoring-4"><a href="#list:docker_compose_monitoring-4" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose_monitoring-5"><a href="#list:docker_compose_monitoring-5" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;8080:8080&quot;</span></span>
-<span id="list:docker_compose_monitoring-6"><a href="#list:docker_compose_monitoring-6" aria-hidden="true" tabindex="-1"></a>    volumes:</span>
-<span id="list:docker_compose_monitoring-7"><a href="#list:docker_compose_monitoring-7" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/:/rootfs&quot;</span></span>
-<span id="list:docker_compose_monitoring-8"><a href="#list:docker_compose_monitoring-8" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/var/run:/var/run&quot;</span></span>
-<span id="list:docker_compose_monitoring-9"><a href="#list:docker_compose_monitoring-9" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/sys:/sys&quot;</span></span>
-<span id="list:docker_compose_monitoring-10"><a href="#list:docker_compose_monitoring-10" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/var/lib/docker/:/var/lib/docker&quot;</span></span>
-<span id="list:docker_compose_monitoring-11"><a href="#list:docker_compose_monitoring-11" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/dev/disk/:/dev/disk&quot;</span></span>
-<span id="list:docker_compose_monitoring-12"><a href="#list:docker_compose_monitoring-12" aria-hidden="true" tabindex="-1"></a>    privileged: true</span>
-<span id="list:docker_compose_monitoring-13"><a href="#list:docker_compose_monitoring-13" aria-hidden="true" tabindex="-1"></a>    devices:</span>
-<span id="list:docker_compose_monitoring-14"><a href="#list:docker_compose_monitoring-14" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/dev/kmsg&quot;</span></span>
-<span id="list:docker_compose_monitoring-15"><a href="#list:docker_compose_monitoring-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose_monitoring-16"><a href="#list:docker_compose_monitoring-16" aria-hidden="true" tabindex="-1"></a>  prometheus:</span>
-<span id="list:docker_compose_monitoring-17"><a href="#list:docker_compose_monitoring-17" aria-hidden="true" tabindex="-1"></a>    container_name: prometheus</span>
-<span id="list:docker_compose_monitoring-18"><a href="#list:docker_compose_monitoring-18" aria-hidden="true" tabindex="-1"></a>    image: prom<span class="op">/</span>prometheus:latest</span>
-<span id="list:docker_compose_monitoring-19"><a href="#list:docker_compose_monitoring-19" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose_monitoring-20"><a href="#list:docker_compose_monitoring-20" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;9090:9090&quot;</span></span>
-<span id="list:docker_compose_monitoring-21"><a href="#list:docker_compose_monitoring-21" aria-hidden="true" tabindex="-1"></a>    volumes:</span>
-<span id="list:docker_compose_monitoring-22"><a href="#list:docker_compose_monitoring-22" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;./prometheus.yml:/etc/prometheus/prometheus.yml&quot;</span></span>
-<span id="list:docker_compose_monitoring-23"><a href="#list:docker_compose_monitoring-23" aria-hidden="true" tabindex="-1"></a>    privileged: true</span>
-<span id="list:docker_compose_monitoring-24"><a href="#list:docker_compose_monitoring-24" aria-hidden="true" tabindex="-1"></a>    depends_on:</span>
-<span id="list:docker_compose_monitoring-25"><a href="#list:docker_compose_monitoring-25" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> cadvisor</span>
-<span id="list:docker_compose_monitoring-26"><a href="#list:docker_compose_monitoring-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose_monitoring-27"><a href="#list:docker_compose_monitoring-27" aria-hidden="true" tabindex="-1"></a>  grafana:</span>
-<span id="list:docker_compose_monitoring-28"><a href="#list:docker_compose_monitoring-28" aria-hidden="true" tabindex="-1"></a>    container_name: grafana</span>
-<span id="list:docker_compose_monitoring-29"><a href="#list:docker_compose_monitoring-29" aria-hidden="true" tabindex="-1"></a>    image: grafana<span class="op">/</span>grafana:latest</span>
-<span id="list:docker_compose_monitoring-30"><a href="#list:docker_compose_monitoring-30" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose_monitoring-31"><a href="#list:docker_compose_monitoring-31" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;3000:3000&quot;</span></span>
-<span id="list:docker_compose_monitoring-32"><a href="#list:docker_compose_monitoring-32" aria-hidden="true" tabindex="-1"></a>    environment:</span>
-<span id="list:docker_compose_monitoring-33"><a href="#list:docker_compose_monitoring-33" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> GF_PATHS_PROVISIONING<span class="op">=/</span>etc<span class="op">/</span>grafana<span class="op">/</span>provisioning</span>
-<span id="list:docker_compose_monitoring-34"><a href="#list:docker_compose_monitoring-34" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> DS_PROMETHEUS<span class="op">=</span>prometheus</span>
-<span id="list:docker_compose_monitoring-35"><a href="#list:docker_compose_monitoring-35" aria-hidden="true" tabindex="-1"></a>    volumes:</span>
-<span id="list:docker_compose_monitoring-36"><a href="#list:docker_compose_monitoring-36" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;grafana-data:/var/lib/grafana&quot;</span></span>
-<span id="list:docker_compose_monitoring-37"><a href="#list:docker_compose_monitoring-37" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;./datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml&quot;</span></span>
-<span id="list:docker_compose_monitoring-38"><a href="#list:docker_compose_monitoring-38" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;./dashboard.json:/var/lib/grafana/dashboards/dashboard.json&quot;</span></span>
-<span id="list:docker_compose_monitoring-39"><a href="#list:docker_compose_monitoring-39" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;./default.yaml:/etc/grafana/provisioning/dashboards/default.yaml&quot;</span></span>
-<span id="list:docker_compose_monitoring-40"><a href="#list:docker_compose_monitoring-40" aria-hidden="true" tabindex="-1"></a>    privileged: true</span>
-<span id="list:docker_compose_monitoring-41"><a href="#list:docker_compose_monitoring-41" aria-hidden="true" tabindex="-1"></a>    depends_on:</span>
-<span id="list:docker_compose_monitoring-42"><a href="#list:docker_compose_monitoring-42" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> prometheus</span></code></pre></div>
-<p>Con questa configurazione, il sistema di monitoraggio offre una
-visione completa delle performance e dello stato dei microservizi,
-permettendo di mantenere un’operatività ottimale e di intervenire
-prontamente in caso di anomalie.</p>
-<h2 id="docker-compose">Docker-compose</h2>
-<p>Infine il risultato prodotto è stato un file docker-compose che
-raggruppa tutti i servizi in un unico stack, definendo le dipendenze tra
-i container e semplificando il deploy è stato creato un network interno
-per poter permettere la comunicazione dei container tra di loro e
-particolari network, invece, per connettere i database ai servizi che ne
-fanno uso. Sono state inserite anche delle dipendenze tra i servizi, ad
-esempio lo user service ha come vincolo che il container del database
-sia avviato prima di esso. Sono stati inseriti dei servizi che
-permettono di monitorare i database:</p>
-<ul>
-<li><p><strong>Adminer:</strong> un’interfaccia web per la gestione dei
-database, che permette di visualizzare i dati, creare tabelle, eseguire
-query e molto altro.</p></li>
-<li><p><strong>Mongo Express:</strong> un’interfaccia web per la
-gestione dei database MongoDB.</p></li>
-</ul>
-<div class="sourceCode" id="list:docker_compose" data-language="Python"
-data-caption="Docker Compose di progetto"
-data-label="list:docker_compose"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="list:docker_compose-1"><a href="#list:docker_compose-1" aria-hidden="true" tabindex="-1"></a>version: <span class="st">&quot;3.8&quot;</span></span>
-<span id="list:docker_compose-2"><a href="#list:docker_compose-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-3"><a href="#list:docker_compose-3" aria-hidden="true" tabindex="-1"></a>networks:</span>
-<span id="list:docker_compose-4"><a href="#list:docker_compose-4" aria-hidden="true" tabindex="-1"></a>  monitoring:</span>
-<span id="list:docker_compose-5"><a href="#list:docker_compose-5" aria-hidden="true" tabindex="-1"></a>  internal:</span>
-<span id="list:docker_compose-6"><a href="#list:docker_compose-6" aria-hidden="true" tabindex="-1"></a>  db:</span>
-<span id="list:docker_compose-7"><a href="#list:docker_compose-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-8"><a href="#list:docker_compose-8" aria-hidden="true" tabindex="-1"></a>services:</span>
-<span id="list:docker_compose-9"><a href="#list:docker_compose-9" aria-hidden="true" tabindex="-1"></a>  mysql:</span>
-<span id="list:docker_compose-10"><a href="#list:docker_compose-10" aria-hidden="true" tabindex="-1"></a>    image: mysql:<span class="fl">5.7</span></span>
-<span id="list:docker_compose-11"><a href="#list:docker_compose-11" aria-hidden="true" tabindex="-1"></a>    networks:</span>
-<span id="list:docker_compose-12"><a href="#list:docker_compose-12" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> internal</span>
-<span id="list:docker_compose-13"><a href="#list:docker_compose-13" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> db</span>
-<span id="list:docker_compose-14"><a href="#list:docker_compose-14" aria-hidden="true" tabindex="-1"></a>    environment:</span>
-<span id="list:docker_compose-15"><a href="#list:docker_compose-15" aria-hidden="true" tabindex="-1"></a>      MYSQL_ROOT_PASSWORD: root_password</span>
-<span id="list:docker_compose-16"><a href="#list:docker_compose-16" aria-hidden="true" tabindex="-1"></a>      MYSQL_DATABASE: ${MARAFFA_SQL_DB}</span>
-<span id="list:docker_compose-17"><a href="#list:docker_compose-17" aria-hidden="true" tabindex="-1"></a>      MYSQL_USER: ${MARAFFA_SQL_USER}</span>
-<span id="list:docker_compose-18"><a href="#list:docker_compose-18" aria-hidden="true" tabindex="-1"></a>      MYSQL_PASSWORD: ${MARAFFA_SQL_PWD}</span>
-<span id="list:docker_compose-19"><a href="#list:docker_compose-19" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-20"><a href="#list:docker_compose-20" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;3306:3306&quot;</span></span>
-<span id="list:docker_compose-21"><a href="#list:docker_compose-21" aria-hidden="true" tabindex="-1"></a>    volumes:</span>
-<span id="list:docker_compose-22"><a href="#list:docker_compose-22" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> mysql_volume:<span class="op">/</span>var<span class="op">/</span>lib<span class="op">/</span>mysql</span>
-<span id="list:docker_compose-23"><a href="#list:docker_compose-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-24"><a href="#list:docker_compose-24" aria-hidden="true" tabindex="-1"></a>  mongo:</span>
-<span id="list:docker_compose-25"><a href="#list:docker_compose-25" aria-hidden="true" tabindex="-1"></a>    image: mongo:<span class="fl">5.0</span></span>
-<span id="list:docker_compose-26"><a href="#list:docker_compose-26" aria-hidden="true" tabindex="-1"></a>    networks:</span>
-<span id="list:docker_compose-27"><a href="#list:docker_compose-27" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> internal</span>
-<span id="list:docker_compose-28"><a href="#list:docker_compose-28" aria-hidden="true" tabindex="-1"></a>    environment:</span>
-<span id="list:docker_compose-29"><a href="#list:docker_compose-29" aria-hidden="true" tabindex="-1"></a>      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}</span>
-<span id="list:docker_compose-30"><a href="#list:docker_compose-30" aria-hidden="true" tabindex="-1"></a>      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PWD}</span>
-<span id="list:docker_compose-31"><a href="#list:docker_compose-31" aria-hidden="true" tabindex="-1"></a>      <span class="co"># MONGO_INITDB_DATABASE: your_mongo_database</span></span>
-<span id="list:docker_compose-32"><a href="#list:docker_compose-32" aria-hidden="true" tabindex="-1"></a>    expose:</span>
-<span id="list:docker_compose-33"><a href="#list:docker_compose-33" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="dv">27012</span></span>
-<span id="list:docker_compose-34"><a href="#list:docker_compose-34" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-35"><a href="#list:docker_compose-35" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="dv">27012</span>:<span class="dv">27017</span></span>
-<span id="list:docker_compose-36"><a href="#list:docker_compose-36" aria-hidden="true" tabindex="-1"></a>    volumes:</span>
-<span id="list:docker_compose-37"><a href="#list:docker_compose-37" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> mongo_volume:<span class="op">/</span>data<span class="op">/</span>db</span>
-<span id="list:docker_compose-38"><a href="#list:docker_compose-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-39"><a href="#list:docker_compose-39" aria-hidden="true" tabindex="-1"></a>  adminer:</span>
-<span id="list:docker_compose-40"><a href="#list:docker_compose-40" aria-hidden="true" tabindex="-1"></a>    image: adminer:latest</span>
-<span id="list:docker_compose-41"><a href="#list:docker_compose-41" aria-hidden="true" tabindex="-1"></a>    networks:</span>
-<span id="list:docker_compose-42"><a href="#list:docker_compose-42" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> db</span>
-<span id="list:docker_compose-43"><a href="#list:docker_compose-43" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-44"><a href="#list:docker_compose-44" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;8090:8080&quot;</span></span>
-<span id="list:docker_compose-45"><a href="#list:docker_compose-45" aria-hidden="true" tabindex="-1"></a>    depends_on:</span>
-<span id="list:docker_compose-46"><a href="#list:docker_compose-46" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> mysql</span>
-<span id="list:docker_compose-47"><a href="#list:docker_compose-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-48"><a href="#list:docker_compose-48" aria-hidden="true" tabindex="-1"></a>  mongo<span class="op">-</span>express:</span>
-<span id="list:docker_compose-49"><a href="#list:docker_compose-49" aria-hidden="true" tabindex="-1"></a>    image: mongo<span class="op">-</span>express:<span class="fl">1.0.2</span></span>
-<span id="list:docker_compose-50"><a href="#list:docker_compose-50" aria-hidden="true" tabindex="-1"></a>    networks:</span>
-<span id="list:docker_compose-51"><a href="#list:docker_compose-51" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> internal</span>
-<span id="list:docker_compose-52"><a href="#list:docker_compose-52" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-53"><a href="#list:docker_compose-53" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;8081:8081&quot;</span></span>
-<span id="list:docker_compose-54"><a href="#list:docker_compose-54" aria-hidden="true" tabindex="-1"></a>    environment:</span>
-<span id="list:docker_compose-55"><a href="#list:docker_compose-55" aria-hidden="true" tabindex="-1"></a>      ME_CONFIG_MONGODB_SERVER: mongo</span>
-<span id="list:docker_compose-56"><a href="#list:docker_compose-56" aria-hidden="true" tabindex="-1"></a>      ME_CONFIG_MONGODB_URL: mongodb:<span class="op">//</span>${MONGO_USER}:${MONGO_PWD}<span class="op">@</span>mongo:<span class="dv">27017</span><span class="op">/</span></span>
-<span id="list:docker_compose-57"><a href="#list:docker_compose-57" aria-hidden="true" tabindex="-1"></a>      ME_CONFIG_MONGODB_AUTH_USERNAME: ${MONGO_USER}</span>
-<span id="list:docker_compose-58"><a href="#list:docker_compose-58" aria-hidden="true" tabindex="-1"></a>      ME_CONFIG_MONGODB_AUTH_PASSWORD: ${MONGO_PWD}</span>
-<span id="list:docker_compose-59"><a href="#list:docker_compose-59" aria-hidden="true" tabindex="-1"></a>    depends_on:</span>
-<span id="list:docker_compose-60"><a href="#list:docker_compose-60" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> mongo</span>
-<span id="list:docker_compose-61"><a href="#list:docker_compose-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-62"><a href="#list:docker_compose-62" aria-hidden="true" tabindex="-1"></a>  user<span class="op">-</span>service:</span>
-<span id="list:docker_compose-63"><a href="#list:docker_compose-63" aria-hidden="true" tabindex="-1"></a>    image: ghcr.io<span class="op">/</span>sofy24<span class="op">/</span>user<span class="op">-</span>management<span class="op">-</span>maraffa:${USER_SERVICE_TAG}</span>
-<span id="list:docker_compose-64"><a href="#list:docker_compose-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># container_name: user_service_container</span></span>
-<span id="list:docker_compose-65"><a href="#list:docker_compose-65" aria-hidden="true" tabindex="-1"></a>    networks:</span>
-<span id="list:docker_compose-66"><a href="#list:docker_compose-66" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> db</span>
-<span id="list:docker_compose-67"><a href="#list:docker_compose-67" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> internal</span>
-<span id="list:docker_compose-68"><a href="#list:docker_compose-68" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-69"><a href="#list:docker_compose-69" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;3001:3001&quot;</span></span>
-<span id="list:docker_compose-70"><a href="#list:docker_compose-70" aria-hidden="true" tabindex="-1"></a>    environment:</span>
-<span id="list:docker_compose-71"><a href="#list:docker_compose-71" aria-hidden="true" tabindex="-1"></a>      DB_HOST: mysql</span>
-<span id="list:docker_compose-72"><a href="#list:docker_compose-72" aria-hidden="true" tabindex="-1"></a>      DB_PORT: <span class="dv">3306</span></span>
-<span id="list:docker_compose-73"><a href="#list:docker_compose-73" aria-hidden="true" tabindex="-1"></a>      DB_USERNAME: ${MARAFFA_SQL_USER}</span>
-<span id="list:docker_compose-74"><a href="#list:docker_compose-74" aria-hidden="true" tabindex="-1"></a>      DB_PASSWORD: ${MARAFFA_SQL_PWD}</span>
-<span id="list:docker_compose-75"><a href="#list:docker_compose-75" aria-hidden="true" tabindex="-1"></a>      DB_NAME: ${MARAFFA_SQL_DB}</span>
-<span id="list:docker_compose-76"><a href="#list:docker_compose-76" aria-hidden="true" tabindex="-1"></a>      PORT: <span class="dv">3001</span></span>
-<span id="list:docker_compose-77"><a href="#list:docker_compose-77" aria-hidden="true" tabindex="-1"></a>    depends_on:</span>
-<span id="list:docker_compose-78"><a href="#list:docker_compose-78" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> mysql</span>
-<span id="list:docker_compose-79"><a href="#list:docker_compose-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-80"><a href="#list:docker_compose-80" aria-hidden="true" tabindex="-1"></a>  business<span class="op">-</span>logic:</span>
-<span id="list:docker_compose-81"><a href="#list:docker_compose-81" aria-hidden="true" tabindex="-1"></a>    image: ghcr.io<span class="op">/</span>sofy24<span class="op">/</span>business<span class="op">-</span>logic<span class="op">-</span>maraffa:${BL_TAG}</span>
-<span id="list:docker_compose-82"><a href="#list:docker_compose-82" aria-hidden="true" tabindex="-1"></a>    networks:</span>
-<span id="list:docker_compose-83"><a href="#list:docker_compose-83" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> internal</span>
-<span id="list:docker_compose-84"><a href="#list:docker_compose-84" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-85"><a href="#list:docker_compose-85" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;3000:3000&quot;</span></span>
-<span id="list:docker_compose-86"><a href="#list:docker_compose-86" aria-hidden="true" tabindex="-1"></a>    depends_on:</span>
-<span id="list:docker_compose-87"><a href="#list:docker_compose-87" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> mysql</span>
-<span id="list:docker_compose-88"><a href="#list:docker_compose-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-89"><a href="#list:docker_compose-89" aria-hidden="true" tabindex="-1"></a>  angular<span class="op">-</span>app:</span>
-<span id="list:docker_compose-90"><a href="#list:docker_compose-90" aria-hidden="true" tabindex="-1"></a>    image: ghcr.io<span class="op">/</span>mega2799<span class="op">/</span>maraffa<span class="op">-</span>fe:${FE_TAG}</span>
-<span id="list:docker_compose-91"><a href="#list:docker_compose-91" aria-hidden="true" tabindex="-1"></a>    networks:</span>
-<span id="list:docker_compose-92"><a href="#list:docker_compose-92" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> internal</span>
-<span id="list:docker_compose-93"><a href="#list:docker_compose-93" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-94"><a href="#list:docker_compose-94" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;80:80&quot;</span></span>
-<span id="list:docker_compose-95"><a href="#list:docker_compose-95" aria-hidden="true" tabindex="-1"></a>    depends_on:</span>
-<span id="list:docker_compose-96"><a href="#list:docker_compose-96" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> middleware</span>
-<span id="list:docker_compose-97"><a href="#list:docker_compose-97" aria-hidden="true" tabindex="-1"></a>    environment:</span>
-<span id="list:docker_compose-98"><a href="#list:docker_compose-98" aria-hidden="true" tabindex="-1"></a>      <span class="co"># API_HOST: ${API_HOST}</span></span>
-<span id="list:docker_compose-99"><a href="#list:docker_compose-99" aria-hidden="true" tabindex="-1"></a>      <span class="co"># API_PORT: ${API_PORT}</span></span>
-<span id="list:docker_compose-100"><a href="#list:docker_compose-100" aria-hidden="true" tabindex="-1"></a>      API_HOST: middleware</span>
-<span id="list:docker_compose-101"><a href="#list:docker_compose-101" aria-hidden="true" tabindex="-1"></a>      <span class="co"># API_HOST: maraffaonlinepika-api-1</span></span>
-<span id="list:docker_compose-102"><a href="#list:docker_compose-102" aria-hidden="true" tabindex="-1"></a>      API_PORT: <span class="dv">3003</span></span>
-<span id="list:docker_compose-103"><a href="#list:docker_compose-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-104"><a href="#list:docker_compose-104" aria-hidden="true" tabindex="-1"></a>  middleware:</span>
-<span id="list:docker_compose-105"><a href="#list:docker_compose-105" aria-hidden="true" tabindex="-1"></a>    image: ghcr.io<span class="op">/</span>sofy24<span class="op">/</span>middleware<span class="op">-</span>maraffa:${MIDDLEWARE_TAG}</span>
-<span id="list:docker_compose-106"><a href="#list:docker_compose-106" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-107"><a href="#list:docker_compose-107" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="dv">3003</span>:<span class="dv">3003</span></span>
-<span id="list:docker_compose-108"><a href="#list:docker_compose-108" aria-hidden="true" tabindex="-1"></a>    networks:</span>
-<span id="list:docker_compose-109"><a href="#list:docker_compose-109" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> internal</span>
-<span id="list:docker_compose-110"><a href="#list:docker_compose-110" aria-hidden="true" tabindex="-1"></a>    depends_on:</span>
-<span id="list:docker_compose-111"><a href="#list:docker_compose-111" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> mongo</span>
-<span id="list:docker_compose-112"><a href="#list:docker_compose-112" aria-hidden="true" tabindex="-1"></a>    environment:</span>
-<span id="list:docker_compose-113"><a href="#list:docker_compose-113" aria-hidden="true" tabindex="-1"></a>      <span class="co"># MIDDLEWARE_HOST: 127.0.0.1</span></span>
-<span id="list:docker_compose-114"><a href="#list:docker_compose-114" aria-hidden="true" tabindex="-1"></a>      MIDDLEWARE_PORT: <span class="dv">3003</span></span>
-<span id="list:docker_compose-115"><a href="#list:docker_compose-115" aria-hidden="true" tabindex="-1"></a>      BUSINESS_LOGIC_HOST: business<span class="op">-</span>logic</span>
-<span id="list:docker_compose-116"><a href="#list:docker_compose-116" aria-hidden="true" tabindex="-1"></a>      BUSINESS_LOGIC_PORT: <span class="dv">3000</span></span>
-<span id="list:docker_compose-117"><a href="#list:docker_compose-117" aria-hidden="true" tabindex="-1"></a>      USER_HOST: user<span class="op">-</span>service</span>
-<span id="list:docker_compose-118"><a href="#list:docker_compose-118" aria-hidden="true" tabindex="-1"></a>      USER_PORT: <span class="dv">3001</span></span>
-<span id="list:docker_compose-119"><a href="#list:docker_compose-119" aria-hidden="true" tabindex="-1"></a>      MONGO_USER: ${MONGO_USER}</span>
-<span id="list:docker_compose-120"><a href="#list:docker_compose-120" aria-hidden="true" tabindex="-1"></a>      MONGO_PASSWORD: ${MONGO_PWD}</span>
-<span id="list:docker_compose-121"><a href="#list:docker_compose-121" aria-hidden="true" tabindex="-1"></a>      MONGO_HOST: mongo</span>
-<span id="list:docker_compose-122"><a href="#list:docker_compose-122" aria-hidden="true" tabindex="-1"></a>      MONGO_PORT: <span class="dv">27017</span></span>
-<span id="list:docker_compose-123"><a href="#list:docker_compose-123" aria-hidden="true" tabindex="-1"></a>      MONGO_DATABASE: ${MONGO_DB}</span>
-<span id="list:docker_compose-124"><a href="#list:docker_compose-124" aria-hidden="true" tabindex="-1"></a>      DEBUG: true</span>
-<span id="list:docker_compose-125"><a href="#list:docker_compose-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-126"><a href="#list:docker_compose-126" aria-hidden="true" tabindex="-1"></a>  cadvisor:</span>
-<span id="list:docker_compose-127"><a href="#list:docker_compose-127" aria-hidden="true" tabindex="-1"></a>    container_name: cadvisor</span>
-<span id="list:docker_compose-128"><a href="#list:docker_compose-128" aria-hidden="true" tabindex="-1"></a>    image: gcr.io<span class="op">/</span>cadvisor<span class="op">/</span>cadvisor:latest</span>
-<span id="list:docker_compose-129"><a href="#list:docker_compose-129" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-130"><a href="#list:docker_compose-130" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;8080:8080&quot;</span></span>
-<span id="list:docker_compose-131"><a href="#list:docker_compose-131" aria-hidden="true" tabindex="-1"></a>    volumes:</span>
-<span id="list:docker_compose-132"><a href="#list:docker_compose-132" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/:/rootfs&quot;</span></span>
-<span id="list:docker_compose-133"><a href="#list:docker_compose-133" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/var/run:/var/run&quot;</span></span>
-<span id="list:docker_compose-134"><a href="#list:docker_compose-134" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/sys:/sys&quot;</span></span>
-<span id="list:docker_compose-135"><a href="#list:docker_compose-135" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/var/lib/docker/:/var/lib/docker&quot;</span></span>
-<span id="list:docker_compose-136"><a href="#list:docker_compose-136" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/dev/disk/:/dev/disk&quot;</span></span>
-<span id="list:docker_compose-137"><a href="#list:docker_compose-137" aria-hidden="true" tabindex="-1"></a>    privileged: true</span>
-<span id="list:docker_compose-138"><a href="#list:docker_compose-138" aria-hidden="true" tabindex="-1"></a>    devices:</span>
-<span id="list:docker_compose-139"><a href="#list:docker_compose-139" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;/dev/kmsg&quot;</span></span>
-<span id="list:docker_compose-140"><a href="#list:docker_compose-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-141"><a href="#list:docker_compose-141" aria-hidden="true" tabindex="-1"></a>  prometheus:</span>
-<span id="list:docker_compose-142"><a href="#list:docker_compose-142" aria-hidden="true" tabindex="-1"></a>    container_name: prometheus</span>
-<span id="list:docker_compose-143"><a href="#list:docker_compose-143" aria-hidden="true" tabindex="-1"></a>    image: prom<span class="op">/</span>prometheus:latest</span>
-<span id="list:docker_compose-144"><a href="#list:docker_compose-144" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-145"><a href="#list:docker_compose-145" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;9090:9090&quot;</span></span>
-<span id="list:docker_compose-146"><a href="#list:docker_compose-146" aria-hidden="true" tabindex="-1"></a>    volumes:</span>
-<span id="list:docker_compose-147"><a href="#list:docker_compose-147" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;./prometheus.yml:/etc/prometheus/prometheus.yml&quot;</span></span>
-<span id="list:docker_compose-148"><a href="#list:docker_compose-148" aria-hidden="true" tabindex="-1"></a>    privileged: true</span>
-<span id="list:docker_compose-149"><a href="#list:docker_compose-149" aria-hidden="true" tabindex="-1"></a>    depends_on:</span>
-<span id="list:docker_compose-150"><a href="#list:docker_compose-150" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> cadvisor</span>
-<span id="list:docker_compose-151"><a href="#list:docker_compose-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-152"><a href="#list:docker_compose-152" aria-hidden="true" tabindex="-1"></a>  grafana:</span>
-<span id="list:docker_compose-153"><a href="#list:docker_compose-153" aria-hidden="true" tabindex="-1"></a>    container_name: grafana</span>
-<span id="list:docker_compose-154"><a href="#list:docker_compose-154" aria-hidden="true" tabindex="-1"></a>    image: grafana<span class="op">/</span>grafana:latest</span>
-<span id="list:docker_compose-155"><a href="#list:docker_compose-155" aria-hidden="true" tabindex="-1"></a>    ports:</span>
-<span id="list:docker_compose-156"><a href="#list:docker_compose-156" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;3005:3000&quot;</span></span>
-<span id="list:docker_compose-157"><a href="#list:docker_compose-157" aria-hidden="true" tabindex="-1"></a>    environment:</span>
-<span id="list:docker_compose-158"><a href="#list:docker_compose-158" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> GF_PATHS_PROVISIONING<span class="op">=/</span>etc<span class="op">/</span>grafana<span class="op">/</span>provisioning</span>
-<span id="list:docker_compose-159"><a href="#list:docker_compose-159" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> DS_PROMETHEUS<span class="op">=</span>prometheus</span>
-<span id="list:docker_compose-160"><a href="#list:docker_compose-160" aria-hidden="true" tabindex="-1"></a>    volumes:</span>
-<span id="list:docker_compose-161"><a href="#list:docker_compose-161" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;grafana-data:/var/lib/grafana&quot;</span></span>
-<span id="list:docker_compose-162"><a href="#list:docker_compose-162" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;./datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml&quot;</span></span>
-<span id="list:docker_compose-163"><a href="#list:docker_compose-163" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;./dashboard.json:/var/lib/grafana/dashboards/dashboard.json&quot;</span></span>
-<span id="list:docker_compose-164"><a href="#list:docker_compose-164" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> <span class="st">&quot;./default.yaml:/etc/grafana/provisioning/dashboards/default.yaml&quot;</span></span>
-<span id="list:docker_compose-165"><a href="#list:docker_compose-165" aria-hidden="true" tabindex="-1"></a>    privileged: true</span>
-<span id="list:docker_compose-166"><a href="#list:docker_compose-166" aria-hidden="true" tabindex="-1"></a>    depends_on:</span>
-<span id="list:docker_compose-167"><a href="#list:docker_compose-167" aria-hidden="true" tabindex="-1"></a>      <span class="op">-</span> prometheus</span>
-<span id="list:docker_compose-168"><a href="#list:docker_compose-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="list:docker_compose-169"><a href="#list:docker_compose-169" aria-hidden="true" tabindex="-1"></a>volumes:</span>
-<span id="list:docker_compose-170"><a href="#list:docker_compose-170" aria-hidden="true" tabindex="-1"></a>  mysql_volume:</span>
-<span id="list:docker_compose-171"><a href="#list:docker_compose-171" aria-hidden="true" tabindex="-1"></a>  mongo_volume:</span>
-<span id="list:docker_compose-172"><a href="#list:docker_compose-172" aria-hidden="true" tabindex="-1"></a>  rabbitmq_data:</span>
-<span id="list:docker_compose-173"><a href="#list:docker_compose-173" aria-hidden="true" tabindex="-1"></a>  grafana<span class="op">-</span>data:</span></code></pre></div>
+<h3 id="log-tracing">Log Tracing</h3>
+<figure id="log_tracing">
+<img src="report/img/logging-service.png" />
+<figcaption aria-hidden="true"></figcaption>
+</figure>
+<h3 id="tracing-servizi">Tracing servizi</h3>
+<figure id="service_tracing">
+<img src="report/img/Jaeger-UI.png" />
+<figcaption aria-hidden="true"></figcaption>
+</figure>
 <div class="appendices">
 <h1 id="appn:A">An Appendix Chapter (Optional)</h1>
 <p>Some lengthy tables, codes, raw data, length proofs, etc. which are
