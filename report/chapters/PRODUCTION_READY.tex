@@ -21,7 +21,7 @@ Il sistema è stato studiato per poter essere pienamente configurabile sfruttand
 In ogni servizio creato ad-hoc per il progetto sono state inserite le API per il controllo di health, forniscono un test di liveness del sistema tramite uno status code 200 e inoltre sono state aggiunte metriche di ogni servizio che potrebbero risultare utili in uno scenario di deploy in cui è importante conoscere lo spazio su disco utlizzato da ogni servizio e che percentuale occupa. 
 All'interno dello stack, su ogni container, vengono chiamate queste API periodicamente per poter assicurare che non ci siano down di servizi.
 
-\begin{lstlisting}[language=Yaml, caption={Health check API}, label=list:healt_API]
+\begin{lstlisting}[language=Python, caption={Health check API}, label=list:healt_API]
     healthcheck:
       test:
         [
@@ -38,7 +38,27 @@ All'interno dello stack, su ogni container, vengono chiamate queste API periodic
 
 \subsection{Log aggregation}
 
+ \begin{figure}[h!]
+    \centering 
+    \includegraphics[scale=0.45]{report/img/dashboard-aggregate-logging.png}
+    \caption{}
+    \label{log_aggregation}
+\end{figure}
+
 \subsection{Log Tracing}
 
+ \begin{figure}[h!]
+    \centering 
+    \includegraphics[scale=0.45]{report/img/logging-service.png}
+    \caption{}
+    \label{log_tracing}
+\end{figure}
 
 \subsection{Tracing servizi}
+
+ \begin{figure}[h!]
+    \centering 
+    \includegraphics[scale=0.45]{report/img/Jaeger-UI.png}
+    \caption{}
+    \label{service_tracing}
+\end{figure}
