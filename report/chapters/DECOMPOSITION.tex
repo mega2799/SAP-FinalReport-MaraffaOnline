@@ -137,11 +137,10 @@ Infine l'ultimo, di colore arancione, modella la chat:
 \newpage
 \section{Comunicazione tra servizi}
 
--TODO god class gameservice
 
 \subsection{API gateway}
 Sono state implementate diverse forme di comunicazione tra servizi in base alle caratteristiche del messaggio che viene scambiato. Si è scelto di utilizzare la comunicazione REST nella maggior parte dei servizi, visto la sua interoperabilità.
-Non è stato necessario implementare un vero e proprio broker di messaggi, ma è stato implementato un servizio denominato middleare che svolge il ruolo di API gatetway delle richieste dai client verso il sistema.
+Non è stato necessario implementare un vero e proprio broker di messaggi, ma è stato implementato un servizio denominato middleware che svolge il ruolo di API gatetway delle richieste dai client verso il sistema.
 
 Queste chiamate non sono obbligatoriamente dirette verso il servizio interessato, ma possono anche essere routine che effettuano molteplici chiamate per ottenere il risultato desiderato. 
 Implementare queste chiamate direttamente nel front-end avrebbe reso il codice molto più complesso e difficile da mantenere, e la gestione di partite multiple sarebbe stata molto più complicata.

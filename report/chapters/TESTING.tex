@@ -1,11 +1,13 @@
 \chapter{Testing}
 \label{ch:testing}
 
-Per ogni servizio in questo sistema è stato adottato, ove possibile, il paradigma di programmazione TDD, cioè Test Driven Development. Questo approccio prevede che i test siano scritti prima del codice, in modo da guidare lo sviluppo e garantire che il codice prodotto soddisfi i requisiti specificati.
-Le operazioni di testing sono stata implementate con Jest per quanto riguarda i servizi che usano Node.js, generando di fatto un report abbastanza comprensibile. Il componente middleware, scritto in Java, invece, generava risultati di test non così chiari. Per modificare questo comportamento, è stata introdotta una dipendenza nel build Gradle che permette di avere un report più dettagliato e comprensibile. 
-La libreria \href{https://plugins.gradle.org/plugin/com.adarshr.test-logger}{\underline{Test Logger}}, tramite una piccola configurazione nel file build.gradle come qui riportata, ha soddisfatto le nostre esigenze.
+Per ogni servizio di questo sistema è stato adottato, ove possibile, il paradigma di programmazione TDD (Test Driven Development). Questo approccio prevede che i test vengano scritti prima del codice, in modo da guidarne lo sviluppo e garantire che il software prodotto soddisfi i requisiti specificati.
 
-\begin{lstlisting}[language=Java, caption={Test logger}, label=list:gradle_testlogger]
+Le operazioni di testing sono state implementate con \textbf{Jest} per quanto riguarda i servizi basati su Node.js, generando report chiari e di facile lettura. Il componente middleware, scritto in Java, produceva invece risultati di test meno comprensibili. Per risolvere questo problema è stata introdotta, nel file di build Gradle, una dipendenza che consente di ottenere report più dettagliati e leggibili.
+
+La libreria \href{https://plugins.gradle.org/plugin/com.adarshr.test-logger}{\underline{Test Logger}}, tramite una semplice configurazione nel file \texttt{build.gradle} riportata di seguito.
+
+\begin{lstlisting}[language=Java, caption={Configurazione del Test Logger}, label=list:gradle_testlogger]
 import com.adarshr.gradle.testlogger.TestLoggerExtension
 import com.adarshr.gradle.testlogger.TestLoggerPlugin
 import com.adarshr.gradle.testlogger.theme.ThemeType
@@ -32,114 +34,108 @@ testlogger {
 \end{lstlisting}
 \vspace{1cm}
 
-L'architettura dei componenti si può riassumere in questo modo:
+L’architettura dei componenti può essere riassunta come segue:
 \begin{itemize}
-	\item \textbf{Classi controller}: che hanno la funzione di esporre le rotte e di contenere al loro interno classi di servizio.
-	\item \textbf{Classi di servizio}: che contengono la logica di business.
+    \item \textbf{Classi controller}: espongono le rotte e contengono al loro interno le classi di servizio.
+    \item \textbf{Classi di servizio}: contengono la logica di business.
 \end{itemize}
 
-Gli unit test vengono eseguiti sulle classi di servizio, andando a testare la logica di business. Questo approccio permette di avere una copertura maggiore del codice e di garantire che la logica di business sia corretta.
+Gli \textit{unit test} vengono eseguiti sulle classi di servizio, verificando la correttezza della logica di business. Questo approccio permette di ottenere una maggiore copertura del codice e di garantire che la logica applicativa sia corretta.
 
 \subsection{Integration Test}
 
-Avendo implementato un'architettura a microservizi, è necessario testare anche il corretto funzionamento delle comunicazioni tra i servizi. Per fare ciò, sono stati implementati dei test di integrazione che verificassero il corretto funzionamento delle API esposte dai servizi. 
-Questi test sono stati implementati nel componente middleware che ha il compito di mettere in comunicazione i servizi tra di loro e il frontend. 
-Testando di fatto i controller degli altri servizi e che i contenuti venissero correttamente deserializzati. Nono sono quindi stati creati unit test sui controller all'interndo dei singoli servizi che testassero i Controller.
+Poiché l’architettura adottata è di tipo \textit{microservices}, è necessario testare anche il corretto funzionamento delle comunicazioni tra i vari servizi. A tal fine sono stati implementati dei test di integrazione, che verificano la corretta esposizione e interazione delle API tra i servizi.
 
-Al di fuori del servizio della Business logic che non ha nessun interazione con un database o dipendenza da altri servizi, sono stati creati Integration test per testare il corretto collegamento tra i servizi che utilizzano un database (relazionale e non).
+Questi test sono stati realizzati principalmente all’interno del componente middleware, che si occupa di mettere in comunicazione i servizi tra loro e con il frontend, verificando così che i controller degli altri servizi rispondessero correttamente e che i contenuti venissero deserializzati in modo corretto.  
+Non sono stati quindi creati \textit{unit test} sui controller interni ai singoli servizi, poiché il loro comportamento viene testato indirettamente attraverso il middleware.
 
-\begin{lstlisting}[language=Java, caption={MongoDB integration Test}, label=list:mongo_test]
-    @TestInstance(Lifecycle.PER_CLASS)
+Ad eccezione del servizio contenente la \textit{business logic} — che non ha interazioni con database né dipendenze da altri servizi — sono stati realizzati test di integrazione per verificare il corretto collegamento tra i servizi che utilizzano database, sia relazionali che non.
+
+\begin{lstlisting}[language=Java, caption={Esempio di test di integrazione per MongoDB}, label=list:mongo_test]
+@TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(VertxExtension.class)
 public class StatisticMongoTest {
-	private static final int TRICKS = 10;
-	private final User userTest = new User("user", UUID.randomUUID(), false);
-	private static final int MARAFFA_PLAYERS = 4;
-	private static final int EXPECTED_SCORE = 11;
-	private static final String PASSWORD = "1234";
-	private static final GameMode GAME_MODE = GameMode.CLASSIC;
-	private Vertx vertx;
-	private GameService gameService;
-	private static final CardSuit UNDEFINED_TRUMP = CardSuit.NONE;
-	private final Card<CardSuit, CardValue> cardTest = new Card<>(CardValue.THREE, CardSuit.CLUBS);
-	private final Boolean isSuitFinished = true;
-	private final MongoStatisticManager mongoStatisticManager = new MongoStatisticManager(
-			Dotenv.configure()
-					.filename("env.example").load().get("MONGO_USER", "user"),
-			Dotenv.configure()
-					.filename("env.example").load().get("MONGO_PASSWORD", "password"),
-			Dotenv.configure()
-					.filename("env.example").load().get("MONGO_HOST", "localhost"),
-			Integer.parseInt(Dotenv.configure()
-					.filename("env.example").load().get("MONGO_PORT", "27127")),
-			Dotenv.configure().filename("env.example").load().get("MONGO_DATABASE", "maraffa-test"));
+    private static final int TRICKS = 10;
+    private final User userTest = new User("user", UUID.randomUUID(), false);
+    private static final int MARAFFA_PLAYERS = 4;
+    private static final int EXPECTED_SCORE = 11;
+    private static final String PASSWORD = "1234";
+    private static final GameMode GAME_MODE = GameMode.CLASSIC;
+    private Vertx vertx;
+    private GameService gameService;
+    private static final CardSuit UNDEFINED_TRUMP = CardSuit.NONE;
+    private final Card<CardSuit, CardValue> cardTest = new Card<>(CardValue.THREE, CardSuit.CLUBS);
+    private final Boolean isSuitFinished = true;
+    private final MongoStatisticManager mongoStatisticManager = new MongoStatisticManager(
+        Dotenv.configure().filename("env.example").load().get("MONGO_USER", "user"),
+        Dotenv.configure().filename("env.example").load().get("MONGO_PASSWORD", "password"),
+        Dotenv.configure().filename("env.example").load().get("MONGO_HOST", "localhost"),
+        Integer.parseInt(Dotenv.configure().filename("env.example").load().get("MONGO_PORT", "27127")),
+        Dotenv.configure().filename("env.example").load().get("MONGO_DATABASE", "maraffa-test")
+    );
 
-	@BeforeAll
-	public void setUp() {
-		this.vertx = Vertx.vertx();
-		this.gameService = new GameService(this.vertx, this.mongoStatisticManager);
-	}
+    @BeforeAll
+    public void setUp() {
+        this.vertx = Vertx.vertx();
+        this.gameService = new GameService(this.vertx, this.mongoStatisticManager);
+    }
 
-	/**
-	 * This method, called after our test, just cleanup everything by closing the
-	 * vert.x instance
-	 */
-	@AfterAll
-	public void tearDown() {
-		this.vertx.close();
-	}
+    @AfterAll
+    public void tearDown() {
+        this.vertx.close();
+    }
 
-	@Test
-	public void prepareGame() {
-		final String gameID = this.gameService
-				.createGame(MARAFFA_PLAYERS, this.userTest, EXPECTED_SCORE, GAME_MODE.toString())
-				.getString(Constants.GAME_ID);
-		final var doc = this.mongoStatisticManager.getRecord(gameID + "-0");
-		assertNotNull(doc);
-	}
+    @Test
+    public void prepareGame() {
+        final String gameID = this.gameService
+            .createGame(MARAFFA_PLAYERS, this.userTest, EXPECTED_SCORE, GAME_MODE.toString())
+            .getString(Constants.GAME_ID);
+        final var doc = this.mongoStatisticManager.getRecord(gameID + "-0");
+        assertNotNull(doc);
+    }
 }
 \end{lstlisting}
 \vspace{1cm}
 
 \subsection{Testing asincrono}
 
-Durante la scrittura dei test all'interno del servizio in Java, alcune operazioni erano asincrone e quindi è stato necessario attendere che queste operazioni terminassero prima di poter eseguire i test e validarli.
-Per fare ciò, la normale struttura di test fornita da Vertx in un primo tentativo non era sufficiente. La classica struttura dei test è la seguente:
+Durante la scrittura dei test del servizio Java, alcune operazioni risultavano asincrone; è stato quindi necessario attendere il completamento di tali operazioni prima di poter validare i test.  
+La struttura di test standard fornita da Vert.x non era sufficiente in un primo momento. La forma classica dei test è la seguente:
 
-\begin{lstlisting}[language=Java, caption={Standard Vertx test}, label=list:test_std_vertx]
+\begin{lstlisting}[language=Java, caption={Esempio di test standard con Vert.x}, label=list:test_std_vertx]
 @Test
 public void createGameTest(final VertxTestContext context) {
-    final JsonObject gameResponse = this.gameService.createGame(MARAFFA_PLAYERS, TEST_USER, EXPECTED_SCORE, GAME_MODE.toString(), PASSWORD);
-    Assertions.assertEquals(UUID_SIZE, gameResponse.getString(Constants.GAME_ID).length()); // Assuming UUID is 36
+    final JsonObject gameResponse = this.gameService.createGame(
+        MARAFFA_PLAYERS, TEST_USER, EXPECTED_SCORE, GAME_MODE.toString(), PASSWORD);
+    Assertions.assertEquals(UUID_SIZE, gameResponse.getString(Constants.GAME_ID).length());
     context.completeNow();
 }
 \end{lstlisting}
 
-Per risolvere questo problema sono stati utilizzati:
+Per gestire correttamente le operazioni asincrone, sono stati adottati i seguenti accorgimenti:
 \begin{itemize}
-    \item il decoratore fornito da JUnit Jupiter \textit{@Timeout}, che permette di aspettare un tempo definito prima di fallire automaticamente il test, per ovviare al problema di asincronicità con servizi esterni al componente stesso che non "rispondono alla chiamata".
-    \item l'utilizzo asincrono del VertxTestContext, che permette di completare il test solo quando tutte le operazioni asincrone sono state completate.
-    \item una struttura di risposta nei servizi con cui il middleware comunica, che permette di individuare errori tramite la chiave "error" in caso di fallimento contenuta all'interno del JSON di risposta. Il test non può accedere alla response di una chiamata HTTP che normalmente avrebbe uno status code 200 in caso di successo e quindi si è ricorso a questo espediente per individuare errori nei dati inviati al servizio.
+    \item utilizzo del decoratore \textit{@Timeout} fornito da JUnit Jupiter, che consente di impostare un limite di tempo oltre il quale il test fallisce automaticamente, utile per gestire servizi esterni che non rispondono;
+    \item uso asincrono del \textit{VertxTestContext}, che consente di completare il test solo quando tutte le operazioni asincrone sono terminate;
+    \item introduzione, nei servizi, di una struttura di risposta che include una chiave \texttt{"error"} in caso di fallimento, poiché il test non può accedere direttamente alla risposta HTTP e quindi allo status code.
 \end{itemize}
 
-Come è possibile vedere nel test riportato di seguito, seguendo questi accorgimenti è possibile testare correttamente le operazioni asincrone.
+Il seguente esempio mostra un test asincrono correttamente strutturato:
 
-\begin{lstlisting}[language=Java, caption={Vertx test asincrono}, label=list:test_async_vertx]
+\begin{lstlisting}[language=Java, caption={Esempio di test asincrono con Vert.x}, label=list:test_async_vertx]
 @Timeout(value = 10, unit = TimeUnit.SECONDS)
 @Test
-public void testgetShuffledDeckOK(final VertxTestContext context) {
-    final JsonObject gameResponse = this.gameService.createGame(4, TEST_USER, 41,
-            GameMode.CLASSIC.toString(), PASSWORD);
+public void testGetShuffledDeckOK(final VertxTestContext context) {
+    final JsonObject gameResponse = this.gameService.createGame(
+        4, TEST_USER, 41, GameMode.CLASSIC.toString(), PASSWORD);
     this.businessLogicController
-            .getShuffledDeck(UUID.fromString(gameResponse.getString(Constants.GAME_ID)), 4)
-            .whenComplete((res, err) -> {
-                context.verify(() -> {
-                    assertNull(res.getString("error"));
-                    context.completeNow();
-                });
+        .getShuffledDeck(UUID.fromString(gameResponse.getString(Constants.GAME_ID)), 4)
+        .whenComplete((res, err) -> {
+            context.verify(() -> {
+                assertNull(res.getString("error"));
+                context.completeNow();
             });
+        });
 }
 \end{lstlisting}
 
-
-Gli ulteriori livelli di testing sono stati accorpati durante il testing dell'applicazione tramite il suo servizio di frontend, da più utenti durante una breve fase di alpha testing.
+Infine, gli ulteriori livelli di testing sono stati accorpati e verificati durante la fase di \textit{alpha testing} dell’applicazione, condotta da più utenti tramite il servizio di frontend.
