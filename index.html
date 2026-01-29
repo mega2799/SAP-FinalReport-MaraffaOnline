@@ -144,9 +144,12 @@ SAP</span>
         </ul></li>
         <li><a href="#ch:into" id="toc-ch:into">Introduction</a></li>
         <li><a href="#ch:decomposition"
-        id="toc-ch:decomposition">Decomoposizione da monolite a
-        micro-servizi(Assignement 5)</a>
+        id="toc-ch:decomposition">Decomposizione da monolite a
+        micro-servizi (Assignment 5)</a>
         <ul>
+        <li><a href="#introduzione-e-contesto"
+        id="toc-introduzione-e-contesto">Introduzione e
+        contesto</a></li>
         <li><a href="#operazioni-di-sistema"
         id="toc-operazioni-di-sistema">Operazioni di sistema</a>
         <ul>
@@ -160,19 +163,71 @@ SAP</span>
         <li><a href="#decomposizione-in-servizi"
         id="toc-decomposizione-in-servizi">Decomposizione in servizi</a>
         <ul>
+        <li><a href="#strategia-decompose-by-subdomain-ddd"
+        id="toc-strategia-decompose-by-subdomain-ddd">Strategia:
+        Decompose by Subdomain (DDD)</a></li>
         <li><a href="#bounded-context" id="toc-bounded-context">Bounded
         Context</a></li>
+        <li><a href="#architettura-dei-microservizi"
+        id="toc-architettura-dei-microservizi">Architettura dei
+        microservizi</a></li>
         <li><a href="#schema-architettura"
         id="toc-schema-architettura">Schema architettura</a></li>
+        </ul></li>
+        <li><a href="#pattern-architetturali-applicati"
+        id="toc-pattern-architetturali-applicati">Pattern architetturali
+        applicati</a>
+        <ul>
+        <li><a href="#api-gateway-pattern"
+        id="toc-api-gateway-pattern">API Gateway Pattern</a></li>
+        <li><a href="#database-per-service-pattern"
+        id="toc-database-per-service-pattern">Database per Service
+        Pattern</a></li>
         </ul></li>
         <li><a href="#comunicazione-tra-servizi"
         id="toc-comunicazione-tra-servizi">Comunicazione tra servizi</a>
         <ul>
         <li><a href="#api-gateway" id="toc-api-gateway">API
-        gateway</a></li>
-        <li><a href="#websocket-module"
-        id="toc-websocket-module">Websocket module</a></li>
+        Gateway</a></li>
+        <li><a href="#websocket-per-comunicazione-real-time"
+        id="toc-websocket-per-comunicazione-real-time">WebSocket per
+        comunicazione Real-Time</a></li>
         </ul></li>
+        <li><a href="#deployment-e-devops"
+        id="toc-deployment-e-devops">Deployment e DevOps</a>
+        <ul>
+        <li><a href="#containerizzazione"
+        id="toc-containerizzazione">Containerizzazione</a></li>
+        <li><a href="#stack-docker-e-reti"
+        id="toc-stack-docker-e-reti">Stack Docker e reti</a></li>
+        <li><a href="#struttura-repository"
+        id="toc-struttura-repository">Struttura repository</a></li>
+        <li><a href="#continuous-integration"
+        id="toc-continuous-integration">Continuous Integration</a></li>
+        <li><a href="#monitoraggio"
+        id="toc-monitoraggio">Monitoraggio</a></li>
+        </ul></li>
+        <li><a href="#documentazione-e-testing"
+        id="toc-documentazione-e-testing">Documentazione e testing</a>
+        <ul>
+        <li><a href="#swagger-openapi" id="toc-swagger-openapi">Swagger
+        / OpenAPI</a></li>
+        <li><a href="#postman-e-testing"
+        id="toc-postman-e-testing">Postman e testing</a></li>
+        <li><a href="#sistema-di-logging"
+        id="toc-sistema-di-logging">Sistema di Logging</a></li>
+        </ul></li>
+        <li><a href="#vantaggi-e-sfide"
+        id="toc-vantaggi-e-sfide">Vantaggi e sfide</a>
+        <ul>
+        <li><a href="#vantaggi-dellarchitettura"
+        id="toc-vantaggi-dellarchitettura">Vantaggi
+        dell’architettura</a></li>
+        <li><a href="#sfide-incontrate" id="toc-sfide-incontrate">Sfide
+        incontrate</a></li>
+        </ul></li>
+        <li><a href="#conclusioni"
+        id="toc-conclusioni">Conclusioni</a></li>
         </ul></li>
         <li><a href="#chap:QA" id="toc-chap:QA">Quality Attributes</a>
         <ul>
@@ -225,7 +280,7 @@ Department of Computer Science</span><br />
 <span> Matteo Santoro </span><br />
 <span> <em>Supervisor:</em> Alessandro ricci</span><br />
 </p>
-<p>2025-10-30</p>
+<p>2026-01-29</p>
 </div>
 </div>
 <h1 class="unnumbered" id="declaration">Declaration</h1>
@@ -242,7 +297,7 @@ sarà sanzionato di conseguenza.<br />
 </p>
 <div class="flushright">
 <p>Firstname(s) Lastname</p>
-<p>2025-10-30</p>
+<p>2026-01-29</p>
 </div>
 <h1 class="unnumbered" id="abstract">Abstract</h1>
 <p>This is an undergraduate project report template and instruction on
@@ -298,32 +353,47 @@ il quale si è approfondito il dominio del gioco.<br />
 È stata posta particolare attenzione alle tecniche di continuos
 integration, alle quali è stato dedicato uno dei capitoli di questo
 report.</p>
-<h1 id="ch:decomposition">Decomoposizione da monolite a
-micro-servizi(Assignement 5)</h1>
+<h1 id="ch:decomposition">Decomposizione da monolite a micro-servizi
+(Assignment 5)</h1>
+<h2 id="introduzione-e-contesto">Introduzione e contesto</h2>
 <p>La precedente versione del software era funzionante ma difficile da
-mantenere ed aggiornare, data la struttura monolitica. Esisteva un’unico
+mantenere ed aggiornare, data la struttura monolitica. Esisteva un unico
 sorgente che conteneva al suo interno logiche di business, nessun tipo
-di persistenza e la view tutti assieme.</p>
+di persistenza e la view tutti insieme.</p>
+<p>Il progetto consiste in una manutenzione evolutiva del gioco di carte
+MaraffaOnline, che introduce diverse novità rispetto alla versione
+precedente:</p>
+<ul>
+<li><p>Architettura a microservizi con almeno due tecnologie
+differenti</p></li>
+<li><p>Formazione personalizzata delle squadre</p></li>
+<li><p>Nuova modalità di gioco (vittoria 11 a 0 in caso di violazione
+regole)</p></li>
+<li><p>Salvataggio statistiche partite e utenti</p></li>
+<li><p>Sistema di chat integrato (globale e di partita)</p></li>
+</ul>
 <p>Per poter decomporre questo monolite sono state eseguite le fasi
 di:</p>
 <ul>
-<li><p>Identificazione delle operazioni di sistema.</p></li>
-<li><p>Decomposizione in servizi, in subdomain seguendo DDD.</p></li>
-<li><p>Identificazione di API di comunicazione tra servizi.</p></li>
+<li><p>Identificazione delle operazioni di sistema</p></li>
+<li><p>Decomposizione in servizi, in subdomain seguendo i principi del
+Domain-Driven Design (DDD)</p></li>
+<li><p>Identificazione di API di comunicazione tra servizi</p></li>
+<li><p>Applicazione di pattern architetturali per microservizi</p></li>
 </ul>
 <h2 id="operazioni-di-sistema">Operazioni di sistema</h2>
 <h3
 id="knowledge-crunching-session-for-the-exploration-of-the-problem-space">Knowledge
 crunching session for the exploration of the problem space</h3>
-<p>E’ stato utilizzato il metodo Event Storming. La tecnica consiste
-nell’individuare degli eventi di dominio e riportarli al passato su un
-post-it arancione. Una volta individuati gli eventi, sono stati scritti
-su post-it blu i comandi che l’utente svolge per creare l’evento. In
-giallo è stato specificato l’attore, la persona che esegue il comando,
-mentre in verde la view, l’interfaccia software con la quale l’utente
-interagisce. Infine, con delle label si sono aggregati i post-it in
-unità di dominio. Si riporta di seguito lo screen della lavagna con i
-post-it e la relativa legenda.</p>
+<p>È stato utilizzato il metodo Event Storming per l’esplorazione del
+dominio. La tecnica consiste nell’individuare degli eventi di dominio e
+riportarli al passato su un post-it arancione. Una volta individuati gli
+eventi, sono stati scritti su post-it blu i comandi che l’utente svolge
+per creare l’evento. In giallo è stato specificato l’attore, la persona
+che esegue il comando, mentre in verde la view, l’interfaccia software
+con la quale l’utente interagisce. Infine, con delle label si sono
+aggregati i post-it in unità di dominio. Si riporta di seguito lo screen
+della lavagna con i post-it e la relativa legenda.</p>
 <figure id="event_storming">
 <p><img src="report/img/EventStorming.png" alt="image" /><br />
 </p>
@@ -348,15 +418,15 @@ login</p></li>
 <ol>
 <li><p>Creazione partita</p></li>
 <li><p>Partecipazione partita</p></li>
-<li><p>gioca carta</p></li>
+<li><p>Gioca carta</p></li>
 <li><p>Inizio partita</p></li>
 <li><p>Fine mano</p></li>
 <li><p>Fine partita</p></li>
 </ol></li>
 <li><p>Chat di gioco</p>
 <ol>
-<li><p>chat globale</p></li>
-<li><p>chat partita</p></li>
+<li><p>Chat globale</p></li>
+<li><p>Chat partita</p></li>
 </ol></li>
 <li><p>Possibilità di scegliere un compagno di squadra</p></li>
 <li><p>Scelta del seme, parole consentite</p></li>
@@ -383,13 +453,24 @@ l’interazione dell’utente con l’applicazione.</p>
 <figcaption>Schema dei casi d’uso</figcaption>
 </figure>
 <h2 id="decomposizione-in-servizi">Decomposizione in servizi</h2>
+<h3 id="strategia-decompose-by-subdomain-ddd">Strategia: Decompose by
+Subdomain (DDD)</h3>
+<p>La decomposizione è stata guidata dall’identificazione dei
+<strong>bounded contexts</strong> secondo i principi del Domain-Driven
+Design. Questo approccio permette di:</p>
+<ul>
+<li><p>Definire confini chiari tra i servizi</p></li>
+<li><p>Minimizzare le dipendenze tra microservizi</p></li>
+<li><p>Allineare l’architettura software al dominio di business</p></li>
+</ul>
 <h3 id="bounded-context">Bounded Context</h3>
 <p>Analizzando il dominio di MaraffaOnline, sono stati identificati i
 tre principali bounded context che andranno poi a definire (ad alto
 livello) i servizi e alcune delle loro API all’interno
-dell’architettura. Nella figura si può osservare un primo bounded
-context, colorato di azzurro, che modella l’autenticazione
-dell’utente:</p>
+dell’architettura.</p>
+<p>Nella figura si può osservare un primo bounded context, colorato di
+azzurro, che modella l’autenticazione dell’utente (<strong>User
+Context</strong>):</p>
 <ul>
 <li><p><strong>User:</strong> persona che possiede l’account</p></li>
 <li><p><strong>Statistic:</strong> dati dell’utente relativi al gioco
@@ -397,8 +478,8 @@ come numero di vittorie, sconfitte, partite giocate e maraffe</p></li>
 <li><p><strong>Authentication:</strong> accesso all’applicativo
 MaraffaOnline da parte dell’utente</p></li>
 </ul>
-<p>Il secondo bounded context, colorato di verde, modella la
-partita:</p>
+<p>Il secondo bounded context, colorato di verde, modella la partita
+(<strong>Game Context</strong>):</p>
 <ul>
 <li><p><strong>Game:</strong> partita</p></li>
 <li><p><strong>Team:</strong> squadra composta da numero di giocatori /
@@ -414,7 +495,8 @@ giocatore</p></li>
 <li><p><strong>Deck:</strong> mazzo</p></li>
 <li><p><strong>Hand:</strong> carte che ha in mano un giocatore</p></li>
 </ul>
-<p>Infine l’ultimo, di colore arancione, modella la chat:</p>
+<p>Infine l’ultimo, di colore arancione, modella la chat
+(<strong>Session Context</strong>):</p>
 <ul>
 <li><p><strong>Chat:</strong> chat di gioco</p></li>
 <li><p><strong>Message:</strong> messaggio inviato nella chat</p></li>
@@ -426,31 +508,92 @@ sono tre rappresentazioni diverse per afferire allo stesso concetto.</p>
 <img src="report/img/BoundedCTX.png" />
 <figcaption>Context Map</figcaption>
 </figure>
+<h3 id="architettura-dei-microservizi">Architettura dei
+microservizi</h3>
+<p>La decomposizione ha portato all’identificazione di tre microservizi
+principali, ciascuno con responsabilità ben definite:</p>
+<h4 id="userservice">UserService</h4>
+<p>Questo servizio gestisce gli utenti, la loro registrazione,
+autenticazione e gestione dei dati personali. È stato implementato
+utilizzando:</p>
+<ul>
+<li><p><strong>Linguaggio:</strong> TypeScript</p></li>
+<li><p><strong>Framework:</strong> NestJS</p></li>
+<li><p><strong>Database:</strong> MySQL con TypeORM</p></li>
+<li><p><strong>Architettura:</strong> Model-Controller-Service</p></li>
+</ul>
+<p>Il middleware delega al servizio di gestione degli utenti le
+operazioni riguardanti gli utenti, per mantenere il middleware il più
+leggero possibile. Il database contiene anche le informazioni
+riguardanti le partite giocate e le statistiche personali di ogni
+utente.</p>
+<p>Le principali responsabilità includono:</p>
+<ul>
+<li><p>Registrazione e autenticazione tramite JWT</p></li>
+<li><p>Gestione dei profili utente</p></li>
+<li><p>Calcolo e memorizzazione delle statistiche di gioco</p></li>
+</ul>
+<h4 id="businesslogic">BusinessLogic</h4>
+<p>Questo servizio mantiene al proprio interno tutte le regole del gioco
+e il calcolo dei punteggi. Ha svariati endpoint che permettono al
+middleware di delegare le operazioni riguardanti il gioco. Questa scelta
+permette in futuro di aggiungere nuovi giochi modificando il meno
+possibile il middleware.</p>
+<p>Implementato con lo stesso stack del UserService (NestJS e
+TypeScript), è completamente <strong>stateless</strong> e si occupa
+esclusivamente di:</p>
+<ul>
+<li><p>Validazione delle mosse secondo le regole della Maraffa</p></li>
+<li><p>Calcolo dei punteggi</p></li>
+<li><p>Verifica della correttezza delle giocate</p></li>
+</ul>
+<h4 id="middleware-api-gateway-game-engine">Middleware (API Gateway +
+Game Engine)</h4>
+<p>Il middleware è il cuore del sistema e svolge molteplici ruoli. È
+stato implementato in Java utilizzando il framework Vert.x, scelto per
+le sue caratteristiche event-driven e reactive, particolarmente adatte
+alla gestione di connessioni concorrenti.</p>
+<p>L’architettura utilizzata per la gestione delle partite è quella di
+un <strong>multi-attore</strong>, in cui ogni attore si occupa di
+gestire una partita e di orchestrare la comunicazione con gli altri
+servizi.</p>
+<p>Al middleware è collegato un database NoSQL su MongoDB, che viene
+aggiornato a ogni trick completato dai giocatori per creare uno storico
+delle partite e salvare le loro decisioni in gioco.</p>
+<p>Le principali funzionalità includono:</p>
+<ul>
+<li><p>Routing delle richieste ai microservizi corretti</p></li>
+<li><p>Validazione dei token JWT</p></li>
+<li><p>Orchestrazione della logica di gioco</p></li>
+<li><p>Gestione delle connessioni WebSocket</p></li>
+<li><p>Coordinamento delle chat (globale e di partita)</p></li>
+</ul>
+<h4 id="frontend">Frontend</h4>
+<p>Il frontend è stato sviluppato in TypeScript utilizzando Angular e
+viene servito tramite Nginx. Quest’ultimo svolge anche il ruolo di
+reverse proxy per mascherare le chiamate al backend e superare eventuali
+problemi di CORS. La comunicazione con il middleware avviene tramite API
+REST e WebSocket per gli aspetti real-time.</p>
 <h3 id="schema-architettura">Schema architettura</h3>
 <p><img src="report/img/Architecture.png" style="width:16cm"
 alt="image" /><br />
 </p>
-<h2 id="comunicazione-tra-servizi">Comunicazione tra servizi</h2>
-<h3 id="api-gateway">API gateway</h3>
-<p>Sono state implementate diverse forme di comunicazione tra servizi in
-base alle caratteristiche del messaggio che viene scambiato. Si è scelto
-di utilizzare la comunicazione REST nella maggior parte dei servizi,
-visto la sua interoperabilità. Non è stato necessario implementare un
-vero e proprio broker di messaggi, ma è stato implementato un servizio
-denominato middleware che svolge il ruolo di API gatetway delle
-richieste dai client verso il sistema.</p>
-<p>Queste chiamate non sono obbligatoriamente dirette verso il servizio
-interessato, ma possono anche essere routine che effettuano molteplici
-chiamate per ottenere il risultato desiderato. Implementare queste
-chiamate direttamente nel front-end avrebbe reso il codice molto più
-complesso e difficile da mantenere, e la gestione di partite multiple
-sarebbe stata molto più complicata.</p>
-<p>Non è stato implementato nessun meccanismo di discovery per scoprire
-l’indirizzo degli altri servizi, è stato sfruatta la tecnologia built-in
-di docker che permette di poter utilizzare degli alias e nascondere al
-proprio interno i meccaniscmi di registration, questo comunque implica
-che tutto debba essere sempre mantenuto nell’ambiene virtualizzato e
-quindi ogni futueo servizio containerizzato.</p>
+<h2 id="pattern-architetturali-applicati">Pattern architetturali
+applicati</h2>
+<h3 id="api-gateway-pattern">API Gateway Pattern</h3>
+<p>Il Middleware implementa il pattern API Gateway, fungendo da unico
+punto di ingresso per tutti i client. Questo approccio centralizza
+diverse funzionalità critiche:</p>
+<ul>
+<li><p><strong>Routing:</strong> smista le richieste ai microservizi
+corretti</p></li>
+<li><p><strong>Authentication:</strong> valida i token JWT prima di
+inoltrare le richieste</p></li>
+<li><p><strong>Game Orchestration:</strong> coordina la logica di gioco
+tra i servizi</p></li>
+<li><p><strong>WebSocket Management:</strong> gestisce le connessioni
+real-time per gioco e chat</p></li>
+</ul>
 <p>Si è seguito un approccio modulare nello sviluppo di questo
 componente che, in un primo step, conteneva soltanto la logica di
 gestione delle partite, al quale sono stati aggiunti i moduli per la
@@ -471,20 +614,73 @@ comunque avere servizi indipendenti.</p>
 per poter effettuare del testing comodamente soltanto sui servizi,
 testando quindi solamente la parte relativa all’elaborazione di una
 risposta.</p>
-<h3 id="websocket-module">Websocket module</h3>
+<h3 id="database-per-service-pattern">Database per Service Pattern</h3>
+<p>È stato applicato parzialmente il pattern "Database per Service" per
+garantire il disaccoppiamento dei dati:</p>
+<ul>
+<li><p><strong>UserService:</strong> utilizza MySQL per dati relazionali
+strutturati (utenti, credenziali, statistiche)</p></li>
+<li><p><strong>Middleware:</strong> utilizza MongoDB per lo storico
+delle partite e dati flessibili</p></li>
+<li><p><strong>BusinessLogic:</strong> servizio completamente stateless,
+non necessita di database</p></li>
+</ul>
+<p>Ogni microservizio gestisce i propri dati in modo indipendente,
+evitando dipendenze dirette sui database di altri servizi.</p>
+<h2 id="comunicazione-tra-servizi">Comunicazione tra servizi</h2>
+<h3 id="api-gateway">API Gateway</h3>
+<p>Sono state implementate diverse forme di comunicazione tra servizi in
+base alle caratteristiche del messaggio che viene scambiato. Si è scelto
+di utilizzare la comunicazione REST nella maggior parte dei servizi,
+vista la sua interoperabilità.</p>
+<p>Non è stato necessario implementare un vero e proprio broker di
+messaggi, ma è stato implementato un servizio denominato middleware che
+svolge il ruolo di API gateway delle richieste dai client verso il
+sistema.</p>
+<p>Queste chiamate non sono obbligatoriamente dirette verso il servizio
+interessato, ma possono anche essere routine che effettuano molteplici
+chiamate per ottenere il risultato desiderato. Implementare queste
+chiamate direttamente nel front-end avrebbe reso il codice molto più
+complesso e difficile da mantenere, e la gestione di partite multiple
+sarebbe stata molto più complicata.</p>
+<p>Non è stato implementato nessun meccanismo di discovery per scoprire
+l’indirizzo degli altri servizi, è stata sfruttata la tecnologia
+built-in di docker che permette di poter utilizzare degli alias e
+nascondere al proprio interno i meccanismi di registration, questo
+comunque implica che tutto debba essere sempre mantenuto nell’ambiente
+virtualizzato e quindi ogni futuro servizio containerizzato.</p>
+<h3 id="websocket-per-comunicazione-real-time">WebSocket per
+comunicazione Real-Time</h3>
 <p>L’interazione con il frontend avviene prevalentemente tramite il
 protocollo HTTP, ma per la gestione di alcuni aspetti in tempo reale
-sono state introdotte le WebSocket. Questo componente è stato creato, ad
-esempio, per la gestione delle chat di gioco, in modo che i giocatori
-possano comunicare tra loro in tempo reale. Ogni client, istanziato sul
-computer degli utenti, effettua una connessione WebSocket con il
-middleware utilizzando come endpoint il proprio UUID, che viene
-assegnato automaticamente all’avvio, e lo username del giocatore, dopo
-aver effettuato il login. Il middleware contiene al proprio interno una
-mappa di tutti i client e giocatori connessi con la relativa WebSocket e
-una classe che espone due metodi per inviare messaggi a un singolo
-giocatore o effettuare un messaggio broadcast a tutti i giocatori
-connessi.</p>
+sono state introdotte le WebSocket.</p>
+<h4 id="dashboard-reattiva">Dashboard reattiva</h4>
+<p>In una prima implementazione era stato utilizzato un polling per
+aggiornare i dati delle partite. Tramite WebSocket, è direttamente il
+middleware che notifica tutti i client della creazione di una nuova
+partita via broadcast, migliorando significativamente la reattività
+dell’interfaccia.</p>
+<h4 id="chat-globale-e-privata">Chat globale e privata</h4>
+<p>Questo componente è stato creato per la gestione delle chat di gioco,
+in modo che i giocatori possano comunicare tra loro in tempo reale. Il
+sistema implementa due tipologie di chat:</p>
+<ul>
+<li><p><strong>Chat globale:</strong> accessibile a tutti gli utenti
+connessi</p></li>
+<li><p><strong>Chat di partita:</strong> accessibile solo ai giocatori
+della partita in corso</p></li>
+</ul>
+<p>Ogni client, istanziato sul computer degli utenti, effettua una
+connessione WebSocket con il middleware utilizzando come endpoint il
+proprio UUID, che viene assegnato automaticamente all’avvio, e lo
+username del giocatore, dopo aver effettuato il login. Il middleware
+contiene al proprio interno una mappa di tutti i client e giocatori
+connessi con la relativa WebSocket e una classe che espone due metodi
+per inviare messaggi a un singolo giocatore o effettuare un messaggio
+broadcast a tutti i giocatori connessi.</p>
+<p>Il middleware si occupa di instradare i messaggi alle giuste chat,
+garantendo la privacy delle conversazioni di partita.</p>
+<h4 id="eventi-di-gioco">Eventi di gioco</h4>
 <p>Il modulo di game si occupa di gestire le partite, quindi è l’unico
 che può sapere quali giocatori devono ricevere determinati messaggi
 relativi a una singola partita. Per utilizzare il servizio di WebSocket,
@@ -493,6 +689,158 @@ gioco con la quale si effettuano chiamate "onEvent". Ogni volta che un
 particolare evento si verifica, un’invocazione a queste chiamate
 permette di inviare messaggi alle WebSocket dei giocatori
 interessati.</p>
+<p>L’interfaccia definisce i principali eventi del ciclo di vita di una
+partita:</p>
+<pre><code>public interface IGameActor {
+    void onCreateGame(User user);
+    void onNewRound();
+    void onJoinGame(User user);
+    void onStartGame();
+    void onPlayCard();
+    void onTrickCompleted(Trick latestTrick);
+    void onEndRound();
+    void onEndGame();
+    // ... altri eventi
+}</code></pre>
+<h2 id="deployment-e-devops">Deployment e DevOps</h2>
+<h3 id="containerizzazione">Containerizzazione</h3>
+<p>Ogni servizio è stato dockerizzato utilizzando <strong>multi-stage
+builds</strong> per ottenere immagini leggere e ottimizzate. Questa
+tecnica permette di separare la fase di build dalla fase di esecuzione,
+includendo nell’immagine finale solo i file strettamente necessari.</p>
+<p>Per i servizi Node.js (UserService e BusinessLogic), il primo stage
+utilizza un’immagine completa per la compilazione, mentre il secondo
+stage copia solo i file compilati e le dipendenze di produzione.</p>
+<p>Il middleware Java utilizza un’immagine Gradle per la build e OpenJDK
+per l’esecuzione, producendo un Fat JAR che include tutte le dipendenze
+necessarie.</p>
+<p>Il frontend Angular viene compilato in un primo stage e poi servito
+tramite Nginx, che gestisce anche il reverse proxy verso i servizi
+backend.</p>
+<h3 id="stack-docker-e-reti">Stack Docker e reti</h3>
+<p>Il sistema utilizza reti Docker interne per la comunicazione tra
+container, con IP privati assegnati automaticamente. I servizi non sono
+esposti direttamente all’esterno, creando un’architettura più sicura.
+Gli indirizzi sono configurati tramite variabili d’ambiente, facilitando
+la gestione di diversi ambienti di deployment.</p>
+<h3 id="struttura-repository">Struttura repository</h3>
+<p>Il progetto utilizza <strong>repository separate</strong> per ogni
+microservizio, collegate tramite git submodules. Questa scelta
+garantisce:</p>
+<ul>
+<li><p>Indipendenza nello sviluppo di ogni componente</p></li>
+<li><p>Possibilità di utilizzare workflow CI/CD specifici per ogni
+servizio</p></li>
+<li><p>Versionamento indipendente dei servizi</p></li>
+</ul>
+<p>La repository principale contiene i file docker-compose per
+l’orchestrazione dei container e i submodules che puntano alle singole
+repository dei servizi.</p>
+<h3 id="continuous-integration">Continuous Integration</h3>
+<p>Ogni repository ha workflow automatizzati tramite GitHub Actions che
+includono:</p>
+<ul>
+<li><p><strong>Build:</strong> compilazione del codice</p></li>
+<li><p><strong>Test:</strong> esecuzione dei test automatici</p></li>
+<li><p><strong>Deploy:</strong> build e push dell’immagine
+Docker</p></li>
+</ul>
+<p>I workflow vengono attivati su pull request verso il branch develop e
+su release manuali sul branch main. Il progetto adotta
+<strong>Conventional Commits</strong> per standardizzare i messaggi di
+commit e facilitare la generazione automatica di changelog.</p>
+<h3 id="monitoraggio">Monitoraggio</h3>
+<p>È stato implementato uno stack completo di monitoraggio basato
+su:</p>
+<ul>
+<li><p><strong>cAdvisor:</strong> raccolta metriche dei container (CPU,
+memoria, rete, disco)</p></li>
+<li><p><strong>Prometheus:</strong> storage delle metriche time-series e
+sistema di alerting</p></li>
+<li><p><strong>Grafana:</strong> dashboard per la visualizzazione e
+analisi delle performance</p></li>
+</ul>
+<p>Questo sistema permette di monitorare in tempo reale lo stato di
+salute dei servizi e identificare eventuali colli di bottiglia o
+anomalie.</p>
+<h2 id="documentazione-e-testing">Documentazione e testing</h2>
+<h3 id="swagger-openapi">Swagger / OpenAPI</h3>
+<p>Per la documentazione delle API è stato utilizzato Swagger, che
+genera automaticamente la documentazione interattiva:</p>
+<ul>
+<li><p>Per i servizi Node.js: libreria che genera documentazione tramite
+decoratori</p></li>
+<li><p>Per i servizi Java: documentazione generata tramite
+annotazioni</p></li>
+</ul>
+<h3 id="postman-e-testing">Postman e testing</h3>
+<p>È stato utilizzato Postman per il testing delle API, con:</p>
+<ul>
+<li><p>Collection di richieste esportate da Swagger</p></li>
+<li><p>Payload parametrizzati con variabili d’ambiente</p></li>
+<li><p><strong>Flows:</strong> diagrammi di flusso delle richieste per
+simulare partite complete end-to-end</p></li>
+</ul>
+<h3 id="sistema-di-logging">Sistema di Logging</h3>
+<p>Il middleware implementa un sistema di log automatici tramite LogBack
+che permette:</p>
+<ul>
+<li><p>Log su file per analisi in caso di problemi</p></li>
+<li><p>Configurazione XML per personalizzazione (package, livelli, log
+rotate)</p></li>
+<li><p>Compressione automatica dei log oltre una certa
+dimensione</p></li>
+</ul>
+<h2 id="vantaggi-e-sfide">Vantaggi e sfide</h2>
+<h3 id="vantaggi-dellarchitettura">Vantaggi dell’architettura</h3>
+<h4 id="fault-tolerance">Fault Tolerance</h4>
+<p>La scelta dell’architettura a microservizi permette di
+<strong>isolare parti del sistema</strong>, evitando che gli errori si
+propaghino. Ogni servizio opera in modo indipendente con le proprie
+risorse. Tuttavia, il middleware rappresenta un Single Point of Failure
+che potrebbe essere mitigato implementando backup dei processi di
+gestione partite o ridondanza con istanze multiple.</p>
+<h4 id="scalabilità">Scalabilità</h4>
+<p>Ogni microservizio può scalare in modo indipendente in base al
+carico. Utilizzando orchestratori come Kubernetes è possibile bilanciare
+il carico tra nodi e scalare orizzontalmente aggiungendo repliche dei
+servizi sotto maggior stress.</p>
+<h4 id="indipendenza-tecnologica">Indipendenza tecnologica</h4>
+<p>L’utilizzo di due stack tecnologici differenti (Java/Vert.x per il
+middleware e NestJS per gli altri servizi) dimostra la flessibilità
+dell’architettura e permette di scegliere la tecnologia più adatta per
+ogni componente.</p>
+<h3 id="sfide-incontrate">Sfide incontrate</h3>
+<p>Durante lo sviluppo sono emerse alcune criticità:</p>
+<ul>
+<li><p>Complessità nella gestione della comunicazione tra
+servizi</p></li>
+<li><p>Necessità di coordinamento per la definizione delle interfacce
+API</p></li>
+<li><p>Overhead di deployment con tecnologie multiple</p></li>
+<li><p>Il middleware come single point of failure richiede attenzione
+particolare</p></li>
+</ul>
+<h2 id="conclusioni">Conclusioni</h2>
+<p>La decomposizione del monolite MaraffaOnline in un’architettura a
+microservizi ha permesso di ottenere significativi vantaggi in termini
+di manutenibilità, scalabilità e fault isolation.</p>
+<p>I pattern applicati con successo includono:</p>
+<ul>
+<li><p><strong>API Gateway</strong> per centralizzare l’accesso ai
+servizi</p></li>
+<li><p><strong>Database per Service</strong> per il disaccoppiamento dei
+dati</p></li>
+<li><p><strong>Decompose by Subdomain</strong> per definire confini
+chiari seguendo DDD</p></li>
+<li><p><strong>WebSocket</strong> per la comunicazione
+real-time</p></li>
+</ul>
+<p>Il sistema risultante è facilmente deployabile tramite Docker,
+monitorabile attraverso strumenti standard (Prometheus/Grafana) e pronto
+per essere scalato in base alle necessità. La separazione in
+microservizi indipendenti facilita inoltre la manutenzione evolutiva e
+l’aggiunta di nuove funzionalità senza impattare l’intero sistema.</p>
 <h1 id="chap:QA">Quality Attributes</h1>
 <p>In questa sezione vengono analizzati gli attributi di qualità
 (<em>quality attributes</em>) rilevanti per l’architettura del sistema
