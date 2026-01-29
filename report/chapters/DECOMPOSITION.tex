@@ -1,27 +1,39 @@
-\chapter{Decomoposizione da monolite a micro-servizi(Assignement 5)}
+\chapter{Decomposizione da monolite a micro-servizi (Assignment 5)}
 \label{ch:decomposition}
 
+\section{Introduzione e contesto}
+
 La precedente versione del software era funzionante ma difficile da mantenere ed aggiornare, data la struttura monolitica.
-Esisteva un'unico sorgente che conteneva al suo interno logiche di business, nessun tipo di persistenza e la view tutti assieme.
+Esisteva un unico sorgente che conteneva al suo interno logiche di business, nessun tipo di persistenza e la view tutti insieme.
+
+Il progetto consiste in una manutenzione evolutiva del gioco di carte MaraffaOnline, che introduce diverse novità rispetto alla versione precedente:
+\begin{itemize}
+    \item Architettura a microservizi con almeno due tecnologie differenti
+    \item Formazione personalizzata delle squadre
+    \item Nuova modalità di gioco (vittoria 11 a 0 in caso di violazione regole)
+    \item Salvataggio statistiche partite e utenti
+    \item Sistema di chat integrato (globale e di partita)
+\end{itemize}
 
 Per poter decomporre questo monolite sono state eseguite le fasi di: 
 \begin{itemize}
-  \item Identificazione delle operazioni di sistema.
-  \item Decomposizione in servizi, in subdomain seguendo DDD.
-  \item Identificazione di API di comunicazione tra servizi.
+  \item Identificazione delle operazioni di sistema
+  \item Decomposizione in servizi, in subdomain seguendo i principi del Domain-Driven Design (DDD)
+  \item Identificazione di API di comunicazione tra servizi
+  \item Applicazione di pattern architetturali per microservizi
 \end{itemize}
 
 \section{Operazioni di sistema}
 
-
 \subsection{Knowledge crunching session for the exploration of the problem space}
-E' stato utilizzato il metodo Event Storming. 
+È stato utilizzato il metodo Event Storming per l'esplorazione del dominio.
 La tecnica consiste nell'individuare degli eventi di dominio e riportarli al passato su un post-it arancione.
 Una volta individuati gli eventi, sono stati scritti su post-it blu i comandi che l'utente svolge per creare l'evento.
 In giallo è stato specificato l'attore, la persona che esegue il comando, mentre in verde la view, l'interfaccia software
  con la quale l'utente interagisce.
  Infine, con delle label si sono aggregati i post-it in unità di dominio.
  Si riporta di seguito lo screen della lavagna con i post-it e la relativa legenda.
+ 
  \begin{figure}[h!]
     \centering 
     \includegraphics[scale=0.45]{report/img/EventStorming.png}\\[8.5cm]
@@ -35,7 +47,6 @@ In giallo è stato specificato l'attore, la persona che esegue il comando, mentr
     \caption{Event Storming Legend}
     \label{legend}
 \end{figure}
-
 
 \begin{enumerate}
     \item Account
@@ -51,15 +62,15 @@ In giallo è stato specificato l'attore, la persona che esegue il comando, mentr
         \begin{enumerate}
             \item Creazione partita
             \item Partecipazione partita
-            \item gioca carta
+            \item Gioca carta
             \item Inizio partita
             \item Fine mano
             \item Fine partita
         \end{enumerate}
     \item Chat di gioco
         \begin{enumerate}
-            \item chat globale
-            \item chat partita
+            \item Chat globale
+            \item Chat partita
         \end{enumerate}
     \item Possibilità di scegliere un compagno di squadra
     \item Scelta del seme, parole consentite
@@ -91,16 +102,26 @@ Si riporta di seguito lo schema dei casi d'uso che modella l'interazione dell'ut
 
 \section{Decomposizione in servizi}
 
+\subsection{Strategia: Decompose by Subdomain (DDD)}
+
+La decomposizione è stata guidata dall'identificazione dei \textbf{bounded contexts} secondo i principi del Domain-Driven Design. Questo approccio permette di:
+\begin{itemize}
+    \item Definire confini chiari tra i servizi
+    \item Minimizzare le dipendenze tra microservizi
+    \item Allineare l'architettura software al dominio di business
+\end{itemize}
 
 \subsection{Bounded Context}
 Analizzando il dominio di MaraffaOnline, sono stati identificati i tre principali bounded context che andranno poi a definire (ad alto livello) i servizi e alcune delle loro API all'interno dell'architettura.
-Nella figura si può osservare un primo bounded context, colorato di azzurro, che modella l'autenticazione dell'utente:
+
+Nella figura si può osservare un primo bounded context, colorato di azzurro, che modella l'autenticazione dell'utente (\textbf{User Context}):
     \begin{itemize}
         \item \textbf{User:} persona che possiede l'account
         \item \textbf{Statistic:} dati dell'utente relativi al gioco come numero di vittorie, sconfitte, partite giocate e maraffe
         \item \textbf{Authentication:} accesso all'applicativo MaraffaOnline da parte dell'utente
     \end{itemize}
-Il secondo bounded context, colorato di verde, modella la partita:
+    
+Il secondo bounded context, colorato di verde, modella la partita (\textbf{Game Context}):
     \begin{itemize}
         \item \textbf{Game:} partita
         \item \textbf{Team:} squadra composta da numero di giocatori / 2
@@ -113,13 +134,16 @@ Il secondo bounded context, colorato di verde, modella la partita:
         \item \textbf{Deck:} mazzo
         \item \textbf{Hand:} carte che ha in mano un giocatore
     \end{itemize}
-Infine l'ultimo, di colore arancione, modella la chat:
+    
+Infine l'ultimo, di colore arancione, modella la chat (\textbf{Session Context}):
     \begin{itemize}
         \item \textbf{Chat:} chat di gioco
         \item \textbf{Message:} messaggio inviato nella chat
         \item \textbf{User:} persona che invia il messaggio
     \end{itemize}
+    
 È importante notare che il concetto di user/player è polisemico: vi sono tre rappresentazioni diverse per afferire allo stesso concetto.
+
 \begin{figure}[h!]
     \centering 
     \includegraphics[scale=0.75]{report/img/BoundedCTX.png}
@@ -128,28 +152,76 @@ Infine l'ultimo, di colore arancione, modella la chat:
 \end{figure}
 \newpage
 
+\subsection{Architettura dei microservizi}
+
+La decomposizione ha portato all'identificazione di tre microservizi principali, ciascuno con responsabilità ben definite:
+
+\subsubsection{UserService}
+Questo servizio gestisce gli utenti, la loro registrazione, autenticazione e gestione dei dati personali. 
+È stato implementato utilizzando:
+\begin{itemize}
+    \item \textbf{Linguaggio:} TypeScript
+    \item \textbf{Framework:} NestJS
+    \item \textbf{Database:} MySQL con TypeORM
+    \item \textbf{Architettura:} Model-Controller-Service
+\end{itemize}
+
+Il middleware delega al servizio di gestione degli utenti le operazioni riguardanti gli utenti, per mantenere il middleware il più leggero possibile. Il database contiene anche le informazioni riguardanti le partite giocate e le statistiche personali di ogni utente.
+
+Le principali responsabilità includono:
+\begin{itemize}
+    \item Registrazione e autenticazione tramite JWT
+    \item Gestione dei profili utente
+    \item Calcolo e memorizzazione delle statistiche di gioco
+\end{itemize}
+
+\subsubsection{BusinessLogic}
+Questo servizio mantiene al proprio interno tutte le regole del gioco e il calcolo dei punteggi. Ha svariati endpoint che permettono al middleware di delegare le operazioni riguardanti il gioco. Questa scelta permette in futuro di aggiungere nuovi giochi modificando il meno possibile il middleware.
+
+Implementato con lo stesso stack del UserService (NestJS e TypeScript), è completamente \textbf{stateless} e si occupa esclusivamente di:
+\begin{itemize}
+    \item Validazione delle mosse secondo le regole della Maraffa
+    \item Calcolo dei punteggi
+    \item Verifica della correttezza delle giocate
+\end{itemize}
+
+\subsubsection{Middleware (API Gateway + Game Engine)}
+Il middleware è il cuore del sistema e svolge molteplici ruoli. È stato implementato in Java utilizzando il framework Vert.x, scelto per le sue caratteristiche event-driven e reactive, particolarmente adatte alla gestione di connessioni concorrenti.
+
+L'architettura utilizzata per la gestione delle partite è quella di un \textbf{multi-attore}, in cui ogni attore si occupa di gestire una partita e di orchestrare la comunicazione con gli altri servizi.
+
+Al middleware è collegato un database NoSQL su MongoDB, che viene aggiornato a ogni trick completato dai giocatori per creare uno storico delle partite e salvare le loro decisioni in gioco.
+
+Le principali funzionalità includono:
+\begin{itemize}
+    \item Routing delle richieste ai microservizi corretti
+    \item Validazione dei token JWT
+    \item Orchestrazione della logica di gioco
+    \item Gestione delle connessioni WebSocket
+    \item Coordinamento delle chat (globale e di partita)
+\end{itemize}
+
+\subsubsection{Frontend}
+Il frontend è stato sviluppato in TypeScript utilizzando Angular e viene servito tramite Nginx. Quest'ultimo svolge anche il ruolo di reverse proxy per mascherare le chiamate al backend e superare eventuali problemi di CORS. La comunicazione con il middleware avviene tramite API REST e WebSocket per gli aspetti real-time.
 
 \subsection{Schema architettura}
 
 \includegraphics[width=16cm]{report/img/Architecture.png}\\[8.5cm]
 
-
 \newpage
-\section{Comunicazione tra servizi}
 
+\section{Pattern architetturali applicati}
 
-\subsection{API gateway}
-Sono state implementate diverse forme di comunicazione tra servizi in base alle caratteristiche del messaggio che viene scambiato. Si è scelto di utilizzare la comunicazione REST nella maggior parte dei servizi, visto la sua interoperabilità.
-Non è stato necessario implementare un vero e proprio broker di messaggi, ma è stato implementato un servizio denominato middleware che svolge il ruolo di API gatetway delle richieste dai client verso il sistema.
+\subsection{API Gateway Pattern}
 
-Queste chiamate non sono obbligatoriamente dirette verso il servizio interessato, ma possono anche essere routine che effettuano molteplici chiamate per ottenere il risultato desiderato. 
-Implementare queste chiamate direttamente nel front-end avrebbe reso il codice molto più complesso e difficile da mantenere, e la gestione di partite multiple sarebbe stata molto più complicata.
+Il Middleware implementa il pattern API Gateway, fungendo da unico punto di ingresso per tutti i client. Questo approccio centralizza diverse funzionalità critiche:
 
-\vspace{1cm}
-
-Non è stato implementato nessun meccanismo di discovery per scoprire l'indirizzo degli altri servizi, è stato sfruatta la tecnologia built-in di docker che permette di poter utilizzare degli alias e nascondere al proprio interno i meccaniscmi di registration, questo comunque implica che tutto debba essere sempre mantenuto nell'ambiene virtualizzato e quindi ogni  futueo servizio containerizzato.
-
-\vspace{1cm}
+\begin{itemize}
+    \item \textbf{Routing:} smista le richieste ai microservizi corretti
+    \item \textbf{Authentication:} valida i token JWT prima di inoltrare le richieste
+    \item \textbf{Game Orchestration:} coordina la logica di gioco tra i servizi
+    \item \textbf{WebSocket Management:} gestisce le connessioni real-time per gioco e chat
+\end{itemize}
 
 Si è seguito un approccio modulare nello sviluppo di questo componente che, in un primo step, conteneva soltanto la logica di gestione delle partite, al quale sono stati aggiunti i moduli per la comunicazione con il servizio degli utenti e della business logic. Ogni modulo segue la stessa struttura, ossia una classe denominata controller che si occupa esclusivamente della dichiarazione delle rotte HTTP e che a sua volta contiene un service. Ogni servizio contiene poi le logiche di calcolo e crea un JSON di risposta che viene passato al controller che lo invia come risposta HTTP, questo per poter separare completamente e rispettare il principio di single responsibility.
 
@@ -157,10 +229,179 @@ Nel modulo contenente le logiche di gioco è stato necessario aggiungere un ulte
 
 Questa separazione, oltre a essere una buona pratica, è stata scelta per poter effettuare del testing comodamente soltanto sui servizi, testando quindi solamente la parte relativa all'elaborazione di una risposta.
 
-\subsection{Websocket module}
+\subsection{Database per Service Pattern}
+
+È stato applicato parzialmente il pattern "Database per Service" per garantire il disaccoppiamento dei dati:
+
+\begin{itemize}
+    \item \textbf{UserService:} utilizza MySQL per dati relazionali strutturati (utenti, credenziali, statistiche)
+    \item \textbf{Middleware:} utilizza MongoDB per lo storico delle partite e dati flessibili
+    \item \textbf{BusinessLogic:} servizio completamente stateless, non necessita di database
+\end{itemize}
+
+Ogni microservizio gestisce i propri dati in modo indipendente, evitando dipendenze dirette sui database di altri servizi.
+
+\section{Comunicazione tra servizi}
+
+\subsection{API Gateway}
+
+Sono state implementate diverse forme di comunicazione tra servizi in base alle caratteristiche del messaggio che viene scambiato. Si è scelto di utilizzare la comunicazione REST nella maggior parte dei servizi, vista la sua interoperabilità.
+
+Non è stato necessario implementare un vero e proprio broker di messaggi, ma è stato implementato un servizio denominato middleware che svolge il ruolo di API gateway delle richieste dai client verso il sistema.
+
+Queste chiamate non sono obbligatoriamente dirette verso il servizio interessato, ma possono anche essere routine che effettuano molteplici chiamate per ottenere il risultato desiderato. 
+Implementare queste chiamate direttamente nel front-end avrebbe reso il codice molto più complesso e difficile da mantenere, e la gestione di partite multiple sarebbe stata molto più complicata.
+
+\vspace{1cm}
+
+Non è stato implementato nessun meccanismo di discovery per scoprire l'indirizzo degli altri servizi, è stata sfruttata la tecnologia built-in di docker che permette di poter utilizzare degli alias e nascondere al proprio interno i meccanismi di registration, questo comunque implica che tutto debba essere sempre mantenuto nell'ambiente virtualizzato e quindi ogni futuro servizio containerizzato.
+
+\subsection{WebSocket per comunicazione Real-Time}
 
 L'interazione con il frontend avviene prevalentemente tramite il protocollo HTTP, ma per la gestione di alcuni aspetti in tempo reale sono state introdotte le WebSocket.
-Questo componente è stato creato, ad esempio, per la gestione delle chat di gioco, in modo che i giocatori possano comunicare tra loro in tempo reale. Ogni client, istanziato sul computer degli utenti, effettua una connessione WebSocket con il middleware utilizzando come endpoint il proprio UUID, che viene assegnato automaticamente all'avvio, e lo username del giocatore, dopo aver effettuato il login. Il middleware contiene al proprio interno una mappa di tutti i client e giocatori connessi con la relativa WebSocket e una classe che espone due metodi per inviare messaggi a un singolo giocatore o effettuare un messaggio broadcast a tutti i giocatori connessi.
 
+\subsubsection{Dashboard reattiva}
+In una prima implementazione era stato utilizzato un polling per aggiornare i dati delle partite. Tramite WebSocket, è direttamente il middleware che notifica tutti i client della creazione di una nuova partita via broadcast, migliorando significativamente la reattività dell'interfaccia.
+
+\subsubsection{Chat globale e privata}
+Questo componente è stato creato per la gestione delle chat di gioco, in modo che i giocatori possano comunicare tra loro in tempo reale. Il sistema implementa due tipologie di chat:
+\begin{itemize}
+    \item \textbf{Chat globale:} accessibile a tutti gli utenti connessi
+    \item \textbf{Chat di partita:} accessibile solo ai giocatori della partita in corso
+\end{itemize}
+
+Ogni client, istanziato sul computer degli utenti, effettua una connessione WebSocket con il middleware utilizzando come endpoint il proprio UUID, che viene assegnato automaticamente all'avvio, e lo username del giocatore, dopo aver effettuato il login. Il middleware contiene al proprio interno una mappa di tutti i client e giocatori connessi con la relativa WebSocket e una classe che espone due metodi per inviare messaggi a un singolo giocatore o effettuare un messaggio broadcast a tutti i giocatori connessi.
+
+Il middleware si occupa di instradare i messaggi alle giuste chat, garantendo la privacy delle conversazioni di partita.
+
+\subsubsection{Eventi di gioco}
 Il modulo di game si occupa di gestire le partite, quindi è l'unico che può sapere quali giocatori devono ricevere determinati messaggi relativi a una singola partita. Per utilizzare il servizio di WebSocket, è stata implementata una semplice interfaccia all'interno dell'attore di gioco con la quale si effettuano chiamate "onEvent". Ogni volta che un particolare evento si verifica, un'invocazione a queste chiamate permette di inviare messaggi alle WebSocket dei giocatori interessati.
 
+L'interfaccia definisce i principali eventi del ciclo di vita di una partita:
+\begin{verbatim}
+public interface IGameActor {
+    void onCreateGame(User user);
+    void onNewRound();
+    void onJoinGame(User user);
+    void onStartGame();
+    void onPlayCard();
+    void onTrickCompleted(Trick latestTrick);
+    void onEndRound();
+    void onEndGame();
+    // ... altri eventi
+}
+\end{verbatim}
+
+\section{Deployment e DevOps}
+
+\subsection{Containerizzazione}
+
+Ogni servizio è stato dockerizzato utilizzando \textbf{multi-stage builds} per ottenere immagini leggere e ottimizzate. Questa tecnica permette di separare la fase di build dalla fase di esecuzione, includendo nell'immagine finale solo i file strettamente necessari.
+
+Per i servizi Node.js (UserService e BusinessLogic), il primo stage utilizza un'immagine completa per la compilazione, mentre il secondo stage copia solo i file compilati e le dipendenze di produzione.
+
+Il middleware Java utilizza un'immagine Gradle per la build e OpenJDK per l'esecuzione, producendo un Fat JAR che include tutte le dipendenze necessarie.
+
+Il frontend Angular viene compilato in un primo stage e poi servito tramite Nginx, che gestisce anche il reverse proxy verso i servizi backend.
+
+\subsection{Stack Docker e reti}
+
+Il sistema utilizza reti Docker interne per la comunicazione tra container, con IP privati assegnati automaticamente. I servizi non sono esposti direttamente all'esterno, creando un'architettura più sicura. Gli indirizzi sono configurati tramite variabili d'ambiente, facilitando la gestione di diversi ambienti di deployment.
+
+\subsection{Struttura repository}
+
+Il progetto utilizza \textbf{repository separate} per ogni microservizio, collegate tramite git submodules. Questa scelta garantisce:
+\begin{itemize}
+    \item Indipendenza nello sviluppo di ogni componente
+    \item Possibilità di utilizzare workflow CI/CD specifici per ogni servizio
+    \item Versionamento indipendente dei servizi
+\end{itemize}
+
+La repository principale contiene i file docker-compose per l'orchestrazione dei container e i submodules che puntano alle singole repository dei servizi.
+
+\subsection{Continuous Integration}
+
+Ogni repository ha workflow automatizzati tramite GitHub Actions che includono:
+\begin{itemize}
+    \item \textbf{Build:} compilazione del codice
+    \item \textbf{Test:} esecuzione dei test automatici
+    \item \textbf{Deploy:} build e push dell'immagine Docker
+\end{itemize}
+
+I workflow vengono attivati su pull request verso il branch develop e su release manuali sul branch main. Il progetto adotta \textbf{Conventional Commits} per standardizzare i messaggi di commit e facilitare la generazione automatica di changelog.
+
+\subsection{Monitoraggio}
+
+È stato implementato uno stack completo di monitoraggio basato su:
+\begin{itemize}
+    \item \textbf{cAdvisor:} raccolta metriche dei container (CPU, memoria, rete, disco)
+    \item \textbf{Prometheus:} storage delle metriche time-series e sistema di alerting
+    \item \textbf{Grafana:} dashboard per la visualizzazione e analisi delle performance
+\end{itemize}
+
+Questo sistema permette di monitorare in tempo reale lo stato di salute dei servizi e identificare eventuali colli di bottiglia o anomalie.
+
+\section{Documentazione e testing}
+
+\subsection{Swagger / OpenAPI}
+
+Per la documentazione delle API è stato utilizzato Swagger, che genera automaticamente la documentazione interattiva:
+\begin{itemize}
+    \item Per i servizi Node.js: libreria che genera documentazione tramite decoratori
+    \item Per i servizi Java: documentazione generata tramite annotazioni
+\end{itemize}
+
+\subsection{Postman e testing}
+
+È stato utilizzato Postman per il testing delle API, con:
+\begin{itemize}
+    \item Collection di richieste esportate da Swagger
+    \item Payload parametrizzati con variabili d'ambiente
+    \item \textbf{Flows:} diagrammi di flusso delle richieste per simulare partite complete end-to-end
+\end{itemize}
+
+\subsection{Sistema di Logging}
+
+Il middleware implementa un sistema di log automatici tramite LogBack che permette:
+\begin{itemize}
+    \item Log su file per analisi in caso di problemi
+    \item Configurazione XML per personalizzazione (package, livelli, log rotate)
+    \item Compressione automatica dei log oltre una certa dimensione
+\end{itemize}
+
+\section{Vantaggi e sfide}
+
+\subsection{Vantaggi dell'architettura}
+
+\subsubsection{Fault Tolerance}
+La scelta dell'architettura a microservizi permette di \textbf{isolare parti del sistema}, evitando che gli errori si propaghino. Ogni servizio opera in modo indipendente con le proprie risorse. Tuttavia, il middleware rappresenta un Single Point of Failure che potrebbe essere mitigato implementando backup dei processi di gestione partite o ridondanza con istanze multiple.
+
+\subsubsection{Scalabilità}
+Ogni microservizio può scalare in modo indipendente in base al carico. Utilizzando orchestratori come Kubernetes è possibile bilanciare il carico tra nodi e scalare orizzontalmente aggiungendo repliche dei servizi sotto maggior stress.
+
+\subsubsection{Indipendenza tecnologica}
+L'utilizzo di due stack tecnologici differenti (Java/Vert.x per il middleware e NestJS per gli altri servizi) dimostra la flessibilità dell'architettura e permette di scegliere la tecnologia più adatta per ogni componente.
+
+\subsection{Sfide incontrate}
+
+Durante lo sviluppo sono emerse alcune criticità:
+\begin{itemize}
+    \item Complessità nella gestione della comunicazione tra servizi
+    \item Necessità di coordinamento per la definizione delle interfacce API
+    \item Overhead di deployment con tecnologie multiple
+    \item Il middleware come single point of failure richiede attenzione particolare
+\end{itemize}
+
+\section{Conclusioni}
+
+La decomposizione del monolite MaraffaOnline in un'architettura a microservizi ha permesso di ottenere significativi vantaggi in termini di manutenibilità, scalabilità e fault isolation. 
+
+I pattern applicati con successo includono:
+\begin{itemize}
+    \item \textbf{API Gateway} per centralizzare l'accesso ai servizi
+    \item \textbf{Database per Service} per il disaccoppiamento dei dati
+    \item \textbf{Decompose by Subdomain} per definire confini chiari seguendo DDD
+    \item \textbf{WebSocket} per la comunicazione real-time
+\end{itemize}
+
+Il sistema risultante è facilmente deployabile tramite Docker, monitorabile attraverso strumenti standard (Prometheus/Grafana) e pronto per essere scalato in base alle necessità. La separazione in microservizi indipendenti facilita inoltre la manutenzione evolutiva e l'aggiunta di nuove funzionalità senza impattare l'intero sistema.
