@@ -1,11 +1,13 @@
 \chapter{Testing}
 \label{ch:testing}
 
-Per ogni servizio di questo sistema è stato adottato, ove possibile, il paradigma di programmazione TDD (Test Driven Development). Questo approccio prevede che i test vengano scritti prima del codice, in modo da guidarne lo sviluppo e garantire che il software prodotto soddisfi i requisiti specificati.
+Per ogni servizio del sistema è stato adottato, ove possibile, il paradigma di programmazione TDD (Test Driven Development). Questo approccio prevede che i test vengano scritti prima del codice, in modo da guidarne lo sviluppo e garantire che il software prodotto soddisfi i requisiti specificati.
 
-Le operazioni di testing sono state implementate con \textbf{Jest} per quanto riguarda i servizi basati su Node.js, generando report chiari e di facile lettura. Il componente middleware, scritto in Java, produceva invece risultati di test meno comprensibili. Per risolvere questo problema è stata introdotta, nel file di build Gradle, una dipendenza che consente di ottenere report più dettagliati e leggibili.
+La strategia di testing adottata si ispira alla \textbf{test pyramid} descritta in \cite{richardson2019}, che prevede una distribuzione dei test su livelli crescenti di granularità: molti \textit{unit test} alla base, un numero inferiore di \textit{integration test}, e pochi test ai livelli superiori.
 
-La libreria \href{https://plugins.gradle.org/plugin/com.adarshr.test-logger}{\underline{Test Logger}}, tramite una semplice configurazione nel file \texttt{build.gradle} riportata di seguito.
+\section{Strumenti di Testing}
+
+Le operazioni di testing sono state implementate con \textbf{Jest} per quanto riguarda i servizi basati su Node.js, generando report chiari e di facile lettura. Il componente middleware, scritto in Java, produceva invece risultati di test meno comprensibili. Per risolvere questo problema è stata introdotta, nel file di build Gradle, la libreria \href{https://plugins.gradle.org/plugin/com.adarshr.test-logger}{\underline{Test Logger}}, tramite la seguente configurazione:
 
 \begin{lstlisting}[language=Java, caption={Configurazione del Test Logger}, label=list:gradle_testlogger]
 import com.adarshr.gradle.testlogger.TestLoggerExtension
@@ -32,26 +34,33 @@ testlogger {
     logLevel = LogLevel.LIFECYCLE
 }
 \end{lstlisting}
-\vspace{1cm}
 
-L’architettura dei componenti può essere riassunta come segue:
+\section{Architettura dei Componenti e Strategia di Testing}
+
+L'architettura interna di ciascun servizio segue una struttura a due livelli:
 \begin{itemize}
-    \item \textbf{Classi controller}: espongono le rotte e contengono al loro interno le classi di servizio.
+    \item \textbf{Classi controller}: espongono le rotte e delegano alle classi di servizio.
     \item \textbf{Classi di servizio}: contengono la logica di business.
 \end{itemize}
 
-Gli \textit{unit test} vengono eseguiti sulle classi di servizio, verificando la correttezza della logica di business. Questo approccio permette di ottenere una maggiore copertura del codice e di garantire che la logica applicativa sia corretta.
+Questa separazione consente di applicare strategie di testing differenziate per ciascun livello, coerentemente con quanto suggerito dall'architettura esagonale \cite{richardson2019}: le classi di servizio vengono testate con \textit{solitary unit test} che ne verificano la logica in isolamento, mentre le interazioni tra servizi e con l'infrastruttura vengono verificate ai livelli superiori della piramide.
 
-\subsection{Integration Test}
+\section{Unit Test}
 
-Poiché l’architettura adottata è di tipo \textit{microservices}, è necessario testare anche il corretto funzionamento delle comunicazioni tra i vari servizi. A tal fine sono stati implementati dei test di integrazione, che verificano la corretta esposizione e interazione delle API tra i servizi.
+Gli \textit{unit test} costituiscono la base della test pyramid e sono orientati alla tecnologia. Nel nostro sistema, sono stati implementati come \textbf{solitary unit test} sulle classi di servizio, verificando la correttezza della logica di business in isolamento dalle dipendenze esterne.
 
-Questi test sono stati realizzati principalmente all’interno del componente middleware, che si occupa di mettere in comunicazione i servizi tra loro e con il frontend, verificando così che i controller degli altri servizi rispondessero correttamente e che i contenuti venissero deserializzati in modo corretto.  
-Non sono stati quindi creati \textit{unit test} sui controller interni ai singoli servizi, poiché il loro comportamento viene testato indirettamente attraverso il middleware.
+Non sono stati realizzati unit test dedicati per le classi controller dei singoli servizi. Secondo la strategia suggerita in \cite{richardson2019}, i controller andrebbero testati con solitary unit test che mockano i servizi sottostanti; nel nostro caso, si è scelto di verificarne il comportamento ai livelli superiori della piramide, tramite i test descritti nella Sezione~\ref{sec:component_test}. Si tratta di una limitazione consapevole, motivata dalla semplicità dei controller che si limitano a delegare alle classi di servizio.
 
-Ad eccezione del servizio contenente la \textit{business logic} — che non ha interazioni con database né dipendenze da altri servizi — sono stati realizzati test di integrazione per verificare il corretto collegamento tra i servizi che utilizzano database, sia relazionali che non.
+\section{Integration Test}
+\label{sec:integration_test}
 
-\begin{lstlisting}[language=Java, caption={Esempio di test di integrazione per MongoDB}, label=list:mongo_test]
+Gli \textit{integration test} si collocano al livello immediatamente superiore agli unit test nella piramide. Il loro scopo è verificare che un servizio possa interagire correttamente con i servizi infrastrutturali da cui dipende, in particolare i database \cite{richardson2019}.
+
+Nel nostro sistema, ad eccezione del servizio contenente la business logic --- che non ha dipendenze verso database né verso altri servizi --- sono stati realizzati \textbf{persistence integration test} per verificare il corretto collegamento tra i servizi e i rispettivi database (MySQL e MongoDB).
+
+L'esempio seguente mostra un persistence integration test che verifica l'interazione tra il servizio di gioco e MongoDB:
+
+\begin{lstlisting}[language=Java, caption={Persistence integration test per MongoDB}, label=list:mongo_test]
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(VertxExtension.class)
 public class StatisticMongoTest {
@@ -95,14 +104,25 @@ public class StatisticMongoTest {
     }
 }
 \end{lstlisting}
-\vspace{1cm}
 
-\subsection{Testing asincrono}
+Il test segue le fasi canoniche: \textbf{setup} (inizializzazione di Vert.x e del servizio con connessione a MongoDB), \textbf{execute} (creazione di una partita e recupero del record), \textbf{verify} (asserzione sulla presenza del documento), \textbf{teardown} (chiusura di Vert.x).
 
-Durante la scrittura dei test del servizio Java, alcune operazioni risultavano asincrone; è stato quindi necessario attendere il completamento di tali operazioni prima di poter validare i test.  
+\section{Component Test}
+\label{sec:component_test}
+
+I \textit{component test} verificano il comportamento di un servizio trattandolo come una \textit{black box} e interagendo con esso attraverso la sua API \cite{richardson2019}.
+
+Nel nostro sistema, il componente middleware svolge il ruolo di API Gateway e si occupa di mettere in comunicazione i servizi tra loro e con il frontend. I test realizzati al suo interno verificano che le API esposte dagli altri servizi rispondano correttamente e che i contenuti vengano deserializzati nel formato atteso.
+
+Questi test, pur non utilizzando un framework di contract testing come Spring Cloud Contract o Pact, svolgono nella pratica un ruolo analogo ai \textbf{consumer-driven contract test}: il middleware agisce come \textit{consumer} delle API degli altri servizi, e i test verificano che il \textit{provider} rispetti il contratto implicito (endpoint corretto, struttura della response attesa, status code).
+
+\section{Testing Asincrono}
+\label{sec:async_test}
+
+Durante la scrittura dei test del servizio Java, alcune operazioni risultavano asincrone; è stato quindi necessario attendere il completamento di tali operazioni prima di poter validare i test.
 La struttura di test standard fornita da Vert.x non era sufficiente in un primo momento. La forma classica dei test è la seguente:
 
-\begin{lstlisting}[language=Java, caption={Esempio di test standard con Vert.x}, label=list:test_std_vertx]
+\begin{lstlisting}[language=Java, caption={Esempio di test sincrono con Vert.x}, label=list:test_std_vertx]
 @Test
 public void createGameTest(final VertxTestContext context) {
     final JsonObject gameResponse = this.gameService.createGame(
@@ -138,4 +158,6 @@ public void testGetShuffledDeckOK(final VertxTestContext context) {
 }
 \end{lstlisting}
 
-Infine, gli ulteriori livelli di testing sono stati accorpati e verificati durante la fase di \textit{alpha testing} dell’applicazione, condotta da più utenti tramite il servizio di frontend.
+\section{Livelli Superiori della Piramide}
+
+I livelli superiori della test pyramid --- in particolare gli \textit{end-to-end test}, che secondo \cite{richardson2019} dovrebbero essere minimizzati data la loro complessità, lentezza e fragilità --- non sono stati implementati in forma automatizzata. La verifica del comportamento complessivo dell'applicazione è stata condotta tramite sessioni di \textit{alpha testing} con più utenti attraverso il frontend, coprendo in modo esplorativo i percorsi principali dell'utente (\textit{user journey}).
