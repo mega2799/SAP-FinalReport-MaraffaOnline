@@ -1,214 +1,162 @@
 \chapter{Decomposizione da monolite a micro-servizi (Assignment 5)}
-\label{ch:decomposition}
 
-\section{Introduzione e contesto}
+La progettazione dell'architettura microservices di MaraffaOnline segue il metodo iterativo, articolato in due passi principali: l'identificazione delle system operations e la decomposizione in servizi tramite l'approccio Domain-Driven Design (DDD).
 
-La precedente versione del software era funzionante ma difficile da mantenere ed aggiornare, data la struttura monolitica.
-Esisteva un unico sorgente che conteneva al suo interno logiche di business, nessun tipo di persistenza e la view tutti insieme.
+\section{Passo 1 -- Identificazione delle System Operations}
 
-Il progetto consiste in una manutenzione evolutiva del gioco di carte MaraffaOnline, che introduce diverse novità rispetto alla versione precedente:
+\subsection{Domain Model di Alto Livello}
+
+Il primo passo consiste nel costruire un domain model di alto livello, derivato dai sostantivi delle user stories principali. Questo modello definisce il vocabolario per descrivere le system operations.
+
+Le classi chiave identificate per MaraffaOnline sono:
 \begin{itemize}
-    \item Architettura a microservizi con almeno due tecnologie differenti
-    \item Formazione personalizzata delle squadre
-    \item Nuova modalità di gioco (vittoria 11 a 0 in caso di violazione regole)
-    \item Salvataggio statistiche partite e utenti
-    \item Sistema di chat integrato (globale e di partita)
+    \item \textbf{Player} -- Giocatore registrato nella piattaforma
+    \item \textbf{User} -- Profilo utente con credenziali e statistiche
+    \item \textbf{Game} -- Partita di Maraffa (4 giocatori, 2 squadre)
+    \item \textbf{Team} -- Coppia di giocatori alleati
+    \item \textbf{Card} -- Carta da gioco del mazzo
+    \item \textbf{Hand} -- Mano di carte di un giocatore
+    \item \textbf{Trick} -- Singola presa (4 carte giocate)
+    \item \textbf{Round} -- Singola mano di gioco (distribuzione carte fino a esaurimento)
+    \item \textbf{ChatMessage} -- Messaggio nella chat di gioco
 \end{itemize}
 
-Per poter decomporre questo monolite sono state eseguite le fasi di: 
+\noindent Si noti come il termine ``Player'' e ``User'' rappresentino lo stesso individuo ma in contesti diversi: \textbf{User} nel contesto di autenticazione e gestione profilo, \textbf{Player} nel contesto della logica di gioco. Questa polisemia è un segnale naturale dell'esistenza di bounded context distinti, dove lo stesso concetto del mondo reale assume significati e attributi diversi in ciascun contesto.
+
+\subsection{Event Storming}
+
+Per raffinare il domain model e identificare le operazioni chiave, è stato utilizzato l'Event Storming. L'analisi ha prodotto i seguenti elementi:
+
+\textbf{Domain Events} (arancione):
 \begin{itemize}
-  \item Identificazione delle operazioni di sistema
-  \item Decomposizione in servizi, in subdomain seguendo i principi del Domain-Driven Design (DDD)
-  \item Identificazione di API di comunicazione tra servizi
-  \item Applicazione di pattern architetturali per microservizi
+    \item \texttt{UserRegistered}, \texttt{UserLoggedIn}, \texttt{UserLoggedOut}
+    \item \texttt{GameCreated}, \texttt{PlayerJoined}, \texttt{GameStarted}
+    \item \texttt{CardsDealt}, \texttt{CardPlayed}, \texttt{TrickWon}
+    \item \texttt{MaraffaDeclared}, \texttt{RoundEnded}, \texttt{GameEnded}
+    \item \texttt{MessageSent}
 \end{itemize}
 
-\section{Operazioni di sistema}
+\textbf{Commands} (blu):
+\begin{itemize}
+    \item \texttt{RegisterUser}, \texttt{Login}, \texttt{Logout}
+    \item \texttt{CreateGame}, \texttt{JoinGame}, \texttt{StartGame}
+    \item \texttt{DealCards}, \texttt{PlayCard}, \texttt{DeclareMaraffa}
+    \item \texttt{SendMessage}
+\end{itemize}
 
-\subsection{Knowledge crunching session for the exploration of the problem space}
-È stato utilizzato il metodo Event Storming per l'esplorazione del dominio.
-La tecnica consiste nell'individuare degli eventi di dominio e riportarli al passato su un post-it arancione.
-Una volta individuati gli eventi, sono stati scritti su post-it blu i comandi che l'utente svolge per creare l'evento.
-In giallo è stato specificato l'attore, la persona che esegue il comando, mentre in verde la view, l'interfaccia software
- con la quale l'utente interagisce.
- Infine, con delle label si sono aggregati i post-it in unità di dominio.
- Si riporta di seguito lo screen della lavagna con i post-it e la relativa legenda.
- 
- \begin{figure}[h!]
-    \centering 
-    \includegraphics[scale=0.45]{report/img/EventStorming.png}\\[8.5cm]
-    \caption{Event Storming}
-    \label{event_storming}
-\end{figure}
+\textbf{Aggregates} (giallo):
+\begin{itemize}
+    \item \texttt{User} -- gestisce registrazione, autenticazione, profilo
+    \item \texttt{Game} -- invariante principale: esattamente 4 giocatori, 2 team; governa il ciclo di vita della partita
+    \item \texttt{Round} -- invariante: distribuzione corretta delle carte, regole della presa, calcolo punteggio
+\end{itemize}
 
-\begin{figure}[h!]
-    \centering 
-    \includegraphics[scale=0.60]{report/img/event_storming_legend.png}
-    \caption{Event Storming Legend}
-    \label{legend}
-\end{figure}
+\subsection{System Operations}
+
+Dall'analisi degli eventi e dei comandi si derivano le system operations, suddivise in \textbf{commands} (operazioni che modificano lo stato) e \textbf{queries} (operazioni di sola lettura):
+
+\textbf{Commands:}
+\begin{itemize}
+    \item \texttt{createUser(username, password, email)} -- Registra un nuovo utente
+    \item \texttt{login(username, password)} $\rightarrow$ token -- Autentica l'utente
+    \item \texttt{createGame(playerId)} $\rightarrow$ gameId -- Crea una nuova partita
+    \item \texttt{joinGame(playerId, gameId)} -- Un giocatore entra nella partita
+    \item \texttt{playCard(playerId, gameId, card)} -- Gioca una carta nel turno corrente
+    \item \texttt{declareMaraffa(playerId, gameId, suit)} -- Dichiara una Maraffa
+    \item \texttt{sendMessage(playerId, gameId, text)} -- Invia un messaggio in chat
+\end{itemize}
+
+\textbf{Queries:}
+\begin{itemize}
+    \item \texttt{getGameState(gameId)} -- Stato corrente della partita
+    \item \texttt{getUserProfile(userId)} -- Profilo e statistiche utente
+    \item \texttt{getUserStats(userId)} -- Statistiche di gioco dell'utente
+    \item \texttt{getActiveGames()} -- Lista partite disponibili
+\end{itemize}
+
+\section{Passo 2 -- Decomposizione in Servizi}
+
+\subsection{Identificazione dei Subdomains}
+
+Seguendo l'approccio DDD, il primo passo della decomposizione consiste nell'analizzare il dominio di business per identificare i \textbf{subdomains}, ossia le diverse aree di competenza dell'applicazione. I subdomains vengono \emph{scoperti} attraverso l'analisi del business, non progettati.
+
+Per MaraffaOnline sono stati identificati tre subdomains:
 
 \begin{enumerate}
-    \item Account
-        \begin{enumerate}
-            \item Login
-            \item Registrazione
-            \item Recupero password
-            \item Visualizzazione profilo
-            \item Modifica password
-            \item Possibilità di scegliere se giocare come ospite o effettuare il login
-        \end{enumerate}
-    \item Realizzazione partita
-        \begin{enumerate}
-            \item Creazione partita
-            \item Partecipazione partita
-            \item Gioca carta
-            \item Inizio partita
-            \item Fine mano
-            \item Fine partita
-        \end{enumerate}
-    \item Chat di gioco
-        \begin{enumerate}
-            \item Chat globale
-            \item Chat partita
-        \end{enumerate}
-    \item Possibilità di scegliere un compagno di squadra
-    \item Scelta del seme, parole consentite
-    \item Modalità di gioco 11 a 0
-    \item Gestione punteggio
-        \begin{enumerate}
-            \item Calcolo totale e parziale (Gestione per ogni mano) del punteggio
-            \item Maraffa/Cricca (+3 punti)
-        \end{enumerate}
-    \item Servizio gestione utenti
-    \item Salvataggio statistiche
-    \item Realizzazione GUI
-        \begin{enumerate}
-            \item Refactor della GUI esistente
-            \item Rinnovamento GUI
-        \end{enumerate}
+    \item \textbf{Game Logic} (\textit{Core Subdomain}) -- Contiene le regole della Maraffa, la gestione delle partite, il calcolo dei punteggi e la logica dei turni. È il subdomain \textbf{core} perché rappresenta ciò che l'applicazione fa \emph{diversamente} da qualsiasi altra piattaforma: implementare correttamente le regole specifiche della Maraffa, un gioco di carte regionale con regole non banali. È naturalmente complesso e rappresenta il vantaggio competitivo dell'applicazione.
+
+    \item \textbf{User Management} (\textit{Generic Subdomain}) -- Comprende registrazione, autenticazione, gestione profili e statistiche. È un subdomain \textbf{generic} perché l'autenticazione e la gestione utenti sono attività che tutte le applicazioni svolgono allo stesso modo, senza fornire vantaggio competitivo. Per questo tipo di subdomain, Richardson suggerisce di adottare soluzioni esistenti quando possibile.
+
+    \item \textbf{Chat} (\textit{Supporting Subdomain}) -- Gestisce la messaggistica in tempo reale durante le partite. È un subdomain \textbf{supporting} perché supporta l'esperienza di gioco ma non fornisce vantaggio competitivo, e la sua business logic è relativamente semplice.
 \end{enumerate}
 
-\subsection{Casi d'uso}
-Si riporta di seguito lo schema dei casi d'uso che modella l'interazione dell'utente con l'applicazione.
-\begin{figure}[h!]
-\centering 
-\includegraphics[scale=0.45]{report/img/Casi_duso.png}
-\caption{Schema dei casi d'uso}
-\label{use_case}
-\end{figure}
+\subsection{Progettazione dei Bounded Contexts}
 
-\newpage 
+Un bounded context definisce il confine entro cui un particular domain model è definito e applicabile, garantendo la consistenza dell'ubiquitous language al suo interno.
 
-\section{Decomposizione in servizi}
+Per MaraffaOnline sono stati progettati due bounded contexts principali, con una corrispondenza quasi uno-a-uno con i subdomains:
 
-\subsection{Strategia: Decompose by Subdomain (DDD)}
+\begin{enumerate}
+    \item \textbf{Game Context} -- Corrisponde al core subdomain \textit{Game Logic}. Il domain model include le entità \texttt{Game}, \texttt{Player}, \texttt{Round}, \texttt{Card}, \texttt{Team}, \texttt{Trick}. In questo contesto, ``Player'' indica un partecipante attivo nella partita, con attributi come la mano di carte, il team di appartenenza e il turno corrente. L'ubiquitous language include termini specifici del gioco: mano, presa, briscola, Maraffa.
 
-La decomposizione è stata guidata dall'identificazione dei \textbf{bounded contexts} secondo i principi del Domain-Driven Design. Questo approccio permette di:
+    \item \textbf{User Context} -- Corrisponde al generic subdomain \textit{User Management}. Il domain model include \texttt{User}, \texttt{Credentials}, \texttt{UserStats}. In questo contesto, ``User'' indica un profilo registrato con credenziali, email e storico partite. L'ubiquitous language è quello standard della gestione utenti: registrazione, login, profilo.
+\end{enumerate}
+
+\noindent Il subdomain \textit{Chat} non è stato implementato come bounded context autonomo: la funzionalità di messaggistica è stata integrata nel middleware, una scelta discussa nella Sezione~\ref{sec:tradeoff-middleware}.
+
+\subsection{Context Map}
+\label{sec:context-map}
+
+La context map rappresenta visivamente le relazioni e i pattern di integrazione tra i bounded contexts del sistema:
+
 \begin{itemize}
-    \item Definire confini chiari tra i servizi
-    \item Minimizzare le dipendenze tra microservizi
-    \item Allineare l'architettura software al dominio di business
+    \item \textbf{Game Context $\leftrightarrow$ User Context}: relazione di tipo \textbf{Customer-Supplier}. Il Game Context (downstream/customer) ha bisogno di verificare l'identità dei giocatori e aggiornare le statistiche. Lo User Context (upstream/supplier) fornisce il servizio di autenticazione e l'accesso ai profili. Il Game Context si conforma al contratto esposto dallo User Context per l'autenticazione (\textbf{Conformist}), accettando il formato del token JWT così com'è.
+
+    \item \textbf{Middleware $\leftrightarrow$ Game Context}: il middleware agisce come API Gateway e instrada le richieste verso il Game Context. Funge da \textbf{Anticorruption Layer} parziale, traducendo le richieste HTTP/WebSocket del frontend nel formato atteso dal servizio di business logic.
+
+    \item \textbf{Middleware $\leftrightarrow$ User Context}: il middleware instrada le richieste di autenticazione e gestione profilo verso lo User Context, operando come semplice proxy (\textbf{Conformist}), senza trasformare il modello.
 \end{itemize}
 
-\subsection{Bounded Context}
-Analizzando il dominio di MaraffaOnline, sono stati identificati i tre principali bounded context che andranno poi a definire (ad alto livello) i servizi e alcune delle loro API all'interno dell'architettura.
+\subsection{Dai Bounded Contexts ai Servizi}
 
-Nella figura si può osservare un primo bounded context, colorato di azzurro, che modella l'autenticazione dell'utente (\textbf{User Context}):
-    \begin{itemize}
-        \item \textbf{User:} persona che possiede l'account
-        \item \textbf{Statistic:} dati dell'utente relativi al gioco come numero di vittorie, sconfitte, partite giocate e maraffe
-        \item \textbf{Authentication:} accesso all'applicativo MaraffaOnline da parte dell'utente
-    \end{itemize}
-    
-Il secondo bounded context, colorato di verde, modella la partita (\textbf{Game Context}):
-    \begin{itemize}
-        \item \textbf{Game:} partita
-        \item \textbf{Team:} squadra composta da numero di giocatori / 2
-        \item \textbf{Score:} punteggio delle due squadre
-        \item \textbf{Statistic:} dati relativi ai game giocati
-        \item \textbf{Trick:} presa di quattro carte da parte di un giocatore
-        \item \textbf{Round:} 10 prese
-        \item \textbf{Card:} carta
-        \item \textbf{Player:} giocatore
-        \item \textbf{Deck:} mazzo
-        \item \textbf{Hand:} carte che ha in mano un giocatore
-    \end{itemize}
-    
-Infine l'ultimo, di colore arancione, modella la chat (\textbf{Session Context}):
-    \begin{itemize}
-        \item \textbf{Chat:} chat di gioco
-        \item \textbf{Message:} messaggio inviato nella chat
-        \item \textbf{User:} persona che invia il messaggio
-    \end{itemize}
-    
-È importante notare che il concetto di user/player è polisemico: vi sono tre rappresentazioni diverse per afferire allo stesso concetto.
+Ogni bounded context è stato mappato a un microservizio indipendente, seguendo l'allineamento naturale tra DDD e architettura microservices:
 
-\begin{figure}[h!]
-    \centering 
-    \includegraphics[scale=0.75]{report/img/BoundedCTX.png}
-    \caption{Context Map}
-    \label{bounded_context}
-\end{figure}
-\newpage
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Subdomain} & \textbf{Tipo} & \textbf{Bounded Context} & \textbf{Servizio} \\
+\hline
+Game Logic & Core & Game Context & business-logic (porta 3000) \\
+\hline
+User Management & Generic & User Context & user-service (porta 3001) \\
+\hline
+Chat & Supporting & (nel middleware) & middleware (porta 3003) \\
+\hline
+\end{tabular}
+\caption{Mappatura subdomains $\rightarrow$ bounded contexts $\rightarrow$ servizi}
+\end{table}
 
-\subsection{Architettura dei microservizi}
+\subsection{Trade-off Architetturale: il Ruolo del Middleware}
+\label{sec:tradeoff-middleware}
 
-La decomposizione ha portato all'identificazione di tre microservizi principali, ciascuno con responsabilità ben definite:
+Il servizio \texttt{middleware} svolge molteplici responsabilità che, in un'architettura microservices ideale, sarebbero separate:
 
-\subsubsection{UserService}
-Questo servizio gestisce gli utenti, la loro registrazione, autenticazione e gestione dei dati personali. 
-È stato implementato utilizzando:
 \begin{itemize}
-    \item \textbf{Linguaggio:} TypeScript
-    \item \textbf{Framework:} NestJS
-    \item \textbf{Database:} MySQL con TypeORM
-    \item \textbf{Architettura:} Model-Controller-Service
+    \item \textbf{API Gateway} -- Routing delle richieste HTTP verso i servizi interni
+    \item \textbf{WebSocket Management} -- Gestione delle connessioni in tempo reale per gli aggiornamenti di gioco
+    \item \textbf{Chat} -- Logica di messaggistica tra giocatori (subdomain \textit{supporting})
+    \item \textbf{Orchestrazione parziale} -- Coordinamento tra user-service e business-logic per alcune operazioni
 \end{itemize}
 
-Il middleware delega al servizio di gestione degli utenti le operazioni riguardanti gli utenti, per mantenere il middleware il più leggero possibile. Il database contiene anche le informazioni riguardanti le partite giocate e le statistiche personali di ogni utente.
+Questa concentrazione di responsabilità rappresenta un \textbf{trade-off consapevole}: in un progetto accademico con un team ridotto, separare ulteriormente il middleware avrebbe introdotto complessità operativa (più container, più configurazioni di rete, più punti di failure) senza un beneficio proporzionale. Tuttavia, è importante riconoscere che questa scelta \textbf{viola parzialmente} il principio di singola responsabilità a livello di servizio e potrebbe rappresentare un ostacolo alla scalabilità indipendente dei componenti in un contesto produttivo.
 
-Le principali responsabilità includono:
+In una evoluzione futura, si potrebbe considerare:
 \begin{itemize}
-    \item Registrazione e autenticazione tramite JWT
-    \item Gestione dei profili utente
-    \item Calcolo e memorizzazione delle statistiche di gioco
+    \item Estrarre la chat in un servizio dedicato (\texttt{chat-service})
+    \item Separare la gestione WebSocket in un servizio di notifiche (\texttt{notification-service})
+    \item Mantenere il middleware come puro API Gateway
 \end{itemize}
-
-\subsubsection{BusinessLogic}
-Questo servizio mantiene al proprio interno tutte le regole del gioco e il calcolo dei punteggi. Ha svariati endpoint che permettono al middleware di delegare le operazioni riguardanti il gioco. Questa scelta permette in futuro di aggiungere nuovi giochi modificando il meno possibile il middleware.
-
-Implementato con lo stesso stack del UserService (NestJS e TypeScript), è completamente \textbf{stateless} e si occupa esclusivamente di:
-\begin{itemize}
-    \item Validazione delle mosse secondo le regole della Maraffa
-    \item Calcolo dei punteggi
-    \item Verifica della correttezza delle giocate
-\end{itemize}
-
-\subsubsection{Middleware (API Gateway + Game Engine)}
-Il middleware è il cuore del sistema e svolge molteplici ruoli. È stato implementato in Java utilizzando il framework Vert.x, scelto per le sue caratteristiche event-driven e reactive, particolarmente adatte alla gestione di connessioni concorrenti.
-
-L'architettura utilizzata per la gestione delle partite è quella di un \textbf{multi-attore}, in cui ogni attore si occupa di gestire una partita e di orchestrare la comunicazione con gli altri servizi.
-
-Al middleware è collegato un database NoSQL su MongoDB, che viene aggiornato a ogni trick completato dai giocatori per creare uno storico delle partite e salvare le loro decisioni in gioco.
-
-Le principali funzionalità includono:
-\begin{itemize}
-    \item Routing delle richieste ai microservizi corretti
-    \item Validazione dei token JWT
-    \item Orchestrazione della logica di gioco
-    \item Gestione delle connessioni WebSocket
-    \item Coordinamento delle chat (globale e di partita)
-\end{itemize}
-
-\subsubsection{Frontend}
-Il frontend è stato sviluppato in TypeScript utilizzando Angular e viene servito tramite Nginx. Quest'ultimo svolge anche il ruolo di reverse proxy per mascherare le chiamate al backend e superare eventuali problemi di CORS. La comunicazione con il middleware avviene tramite API REST e WebSocket per gli aspetti real-time.
-
-\subsection{Schema architettura}
-
-\includegraphics[width=16cm]{report/img/Architecture.png}\\[8.5cm]
-
-\newpage
 
 \section{Pattern architetturali applicati}
 
