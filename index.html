@@ -153,6 +153,7 @@ SAP</span>
         <li><a href="#domain-model-di-alto-livello"
         id="toc-domain-model-di-alto-livello">Domain Model di Alto
         Livello</a></li>
+        <li><a href="#casi-duso" id="toc-casi-duso">Casi d’uso</a></li>
         <li><a href="#event-storming" id="toc-event-storming">Event
         Storming</a></li>
         <li><a href="#system-operations"
@@ -372,11 +373,23 @@ della logica di gioco. Questa polisemia è un segnale naturale
 dell’esistenza di bounded context distinti, dove lo stesso concetto del
 mondo reale assume significati e attributi diversi in ciascun
 contesto.</p>
+<h3 id="casi-duso">Casi d’uso</h3>
+<p>Si riporta di seguito lo schema dei casi d’uso che modella
+l’interazione dell’utente con l’applicazione.</p>
+<figure id="use_case">
+<img src="report/img/Casi_duso.png" />
+<figcaption>Schema dei casi d’uso</figcaption>
+</figure>
 <h3 id="event-storming">Event Storming</h3>
 <p>Per raffinare il domain model e identificare le operazioni chiave, è
 stato utilizzato l’Event Storming. L’analisi ha prodotto i seguenti
 elementi:</p>
-<p><strong>Domain Events</strong> (arancione):</p>
+<figure id="event_storming">
+<p><img src="report/img/EventStorming.png" alt="image" /><br />
+</p>
+<figcaption>Event Storming</figcaption>
+</figure>
+<p><strong>Domain Events</strong>:</p>
 <ul>
 <li><p><code>UserRegistered</code>, <code>UserLoggedIn</code>,
 <code>UserLoggedOut</code></p></li>
@@ -388,7 +401,7 @@ elementi:</p>
 <code>GameEnded</code></p></li>
 <li><p><code>MessageSent</code></p></li>
 </ul>
-<p><strong>Commands</strong> (blu):</p>
+<p><strong>Commands</strong>:</p>
 <ul>
 <li><p><code>RegisterUser</code>, <code>Login</code>,
 <code>Logout</code></p></li>
@@ -397,15 +410,6 @@ elementi:</p>
 <li><p><code>DealCards</code>, <code>PlayCard</code>,
 <code>DeclareMaraffa</code></p></li>
 <li><p><code>SendMessage</code></p></li>
-</ul>
-<p><strong>Aggregates</strong> (giallo):</p>
-<ul>
-<li><p><code>User</code> – gestisce registrazione, autenticazione,
-profilo</p></li>
-<li><p><code>Game</code> – invariante principale: esattamente 4
-giocatori, 2 team; governa il ciclo di vita della partita</p></li>
-<li><p><code>Round</code> – invariante: distribuzione corretta delle
-carte, regole della presa, calcolo punteggio</p></li>
 </ul>
 <h3 id="system-operations">System Operations</h3>
 <p>Dall’analisi degli eventi e dei comandi si derivano le system
