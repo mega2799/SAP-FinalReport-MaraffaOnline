@@ -72,7 +72,6 @@ Dall'analisi degli eventi e dei comandi si derivano le system operations, suddiv
     \item \texttt{createGame(playerId)} $\rightarrow$ gameId -- Crea una nuova partita
     \item \texttt{joinGame(playerId, gameId)} -- Un giocatore entra nella partita
     \item \texttt{playCard(playerId, gameId, card)} -- Gioca una carta nel turno corrente
-    \item \texttt{declareMaraffa(playerId, gameId, suit)} -- Dichiara una Maraffa
     \item \texttt{sendMessage(playerId, gameId, text)} -- Invia un messaggio in chat
 \end{itemize}
 
@@ -93,16 +92,14 @@ Seguendo l'approccio DDD, il primo passo della decomposizione consiste nell'anal
 Per MaraffaOnline sono stati identificati tre subdomains:
 
 \begin{enumerate}
-    \item \textbf{Game Logic} (\textit{Core Subdomain}) -- Contiene le regole della Maraffa, la gestione delle partite, il calcolo dei punteggi e la logica dei turni. È il subdomain \textbf{core} perché rappresenta ciò che l'applicazione fa \emph{diversamente} da qualsiasi altra piattaforma: implementare correttamente le regole specifiche della Maraffa, un gioco di carte regionale con regole non banali. È naturalmente complesso e rappresenta il vantaggio competitivo dell'applicazione.
+    \item \textbf{Game Logic} (\textit{Core Subdomain}) -- Contiene le regole della Maraffa, la gestione delle partite, il calcolo dei punteggi e la logica dei turni. È il subdomain \textbf{core} perché rappresenta ciò che l'applicazione fa \emph{diversamente} da qualsiasi altra piattaforma: implementare correttamente le regole specifiche della Maraffa, un gioco di carte regionale con regole non banali.
 
-    \item \textbf{User Management} (\textit{Generic Subdomain}) -- Comprende registrazione, autenticazione, gestione profili e statistiche. È un subdomain \textbf{generic} perché l'autenticazione e la gestione utenti sono attività che tutte le applicazioni svolgono allo stesso modo, senza fornire vantaggio competitivo. Per questo tipo di subdomain, Richardson suggerisce di adottare soluzioni esistenti quando possibile.
+    \item \textbf{User Management} (\textit{Generic Subdomain}) -- Comprende registrazione, autenticazione, gestione profili e statistiche. È un subdomain \textbf{generic} perché l'autenticazione e la gestione utenti sono attività che tutte le applicazioni svolgono allo stesso modo.
 
-    \item \textbf{Chat} (\textit{Supporting Subdomain}) -- Gestisce la messaggistica in tempo reale durante le partite. È un subdomain \textbf{supporting} perché supporta l'esperienza di gioco ma non fornisce vantaggio competitivo, e la sua business logic è relativamente semplice.
+    \item \textbf{Chat} (\textit{Supporting Subdomain}) -- Gestisce la messaggistica in tempo reale durante le partite. È un subdomain \textbf{supporting} perché supporta l'esperienza di gioco ma non fornisce nessuna funzionalità fondamentale.
 \end{enumerate}
 
 \subsection{Progettazione dei Bounded Contexts}
-
-Un bounded context definisce il confine entro cui un particular domain model è definito e applicabile, garantendo la consistenza dell'ubiquitous language al suo interno.
 
 Per MaraffaOnline sono stati progettati due bounded contexts principali, con una corrispondenza quasi uno-a-uno con i subdomains:
 
@@ -120,11 +117,11 @@ Per MaraffaOnline sono stati progettati due bounded contexts principali, con una
 La context map rappresenta visivamente le relazioni e i pattern di integrazione tra i bounded contexts del sistema:
 
 \begin{itemize}
-    \item \textbf{Game Context $\leftrightarrow$ User Context}: relazione di tipo \textbf{Customer-Supplier}. Il Game Context (downstream/customer) ha bisogno di verificare l'identità dei giocatori e aggiornare le statistiche. Lo User Context (upstream/supplier) fornisce il servizio di autenticazione e l'accesso ai profili. Il Game Context si conforma al contratto esposto dallo User Context per l'autenticazione (\textbf{Conformist}), accettando il formato del token JWT così com'è.
+    \item \textbf{Game Context $\leftrightarrow$ User Context}: relazione di tipo \textbf{Customer-Supplier}. Il Game Context ha bisogno di verificare l'identità dei giocatori e aggiornare le statistiche. Lo User Context (supplier) fornisce il servizio di autenticazione e l'accesso ai profili. Il Game Context si conforma al contratto esposto dallo User Context per l'autenticazione, accettando il formato del token JWT così com'è.
 
-    \item \textbf{Middleware $\leftrightarrow$ Game Context}: il middleware agisce come API Gateway e instrada le richieste verso il Game Context. Funge da \textbf{Anticorruption Layer} parziale, traducendo le richieste HTTP/WebSocket del frontend nel formato atteso dal servizio di business logic.
+    \item \textbf{Middleware $\leftrightarrow$ Game Context}: il middleware agisce come API Gateway e instrada le richieste verso il Game Context. Traducendo le richieste HTTP/WebSocket del frontend nel formato atteso dal servizio di business logic.
 
-    \item \textbf{Middleware $\leftrightarrow$ User Context}: il middleware instrada le richieste di autenticazione e gestione profilo verso lo User Context, operando come semplice proxy (\textbf{Conformist}), senza trasformare il modello.
+    \item \textbf{Middleware $\leftrightarrow$ User Context}: il middleware instrada le richieste di autenticazione e gestione profilo verso lo User Context, operando come semplice proxy, senza trasformare il modello.
 \end{itemize}
 
 \subsection{Dai Bounded Contexts ai Servizi}
