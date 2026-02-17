@@ -43,13 +43,13 @@ L'architettura interna di ciascun servizio segue una struttura a due livelli:
     \item \textbf{Classi di servizio}: contengono la logica di business.
 \end{itemize}
 
-Questa separazione consente di applicare strategie di testing differenziate per ciascun livello, coerentemente con quanto suggerito dall'architettura esagonale \cite{richardson2019}: le classi di servizio vengono testate con \textit{solitary unit test} che ne verificano la logica in isolamento, mentre le interazioni tra servizi e con l'infrastruttura vengono verificate ai livelli superiori della piramide.
+Questa separazione consente di applicare strategie di testing differenziate per ciascun livello, coerentemente con quanto suggerito dall'architettura esagonale: le classi di servizio vengono testate con \textit{solitary unit test} che ne verificano la logica in isolamento, mentre le interazioni tra servizi e con l'infrastruttura vengono verificate ai livelli superiori della piramide.
 
 \section{Unit Test}
 
 Gli \textit{unit test} costituiscono la base della test pyramid e sono orientati alla tecnologia. Nel nostro sistema, sono stati implementati come \textbf{solitary unit test} sulle classi di servizio, verificando la correttezza della logica di business in isolamento dalle dipendenze esterne.
 
-Non sono stati realizzati unit test dedicati per le classi controller dei singoli servizi. Secondo la strategia suggerita in \cite{richardson2019}, i controller andrebbero testati con solitary unit test che mockano i servizi sottostanti; nel nostro caso, si è scelto di verificarne il comportamento ai livelli superiori della piramide, tramite i test descritti nella Sezione~\ref{sec:component_test}. Si tratta di una limitazione consapevole, motivata dalla semplicità dei controller che si limitano a delegare alle classi di servizio.
+Non sono stati realizzati unit test dedicati per le classi controller dei singoli servizi. I controller andrebbero testati con solitary unit test che mockano i servizi sottostanti; nel nostro caso, si è scelto di verificarne il comportamento ai livelli superiori della piramide, tramite i test descritti nella Sezione~\ref{sec:component_test}. Si tratta di una limitazione consapevole, motivata dalla semplicità dei controller che si limitano a delegare alle classi di servizio.
 
 \section{Integration Test}
 \label{sec:integration_test}
@@ -160,4 +160,4 @@ public void testGetShuffledDeckOK(final VertxTestContext context) {
 
 \section{Livelli Superiori della Piramide}
 
-I livelli superiori della test pyramid --- in particolare gli \textit{end-to-end test}, che secondo \cite{richardson2019} dovrebbero essere minimizzati data la loro complessità, lentezza e fragilità --- non sono stati implementati in forma automatizzata. La verifica del comportamento complessivo dell'applicazione è stata condotta tramite sessioni di \textit{alpha testing} con più utenti attraverso il frontend, coprendo in modo esplorativo i percorsi principali dell'utente (\textit{user journey}).
+I livelli superiori della test pyramid --- in particolare gli \textit{end-to-end test}, che dovrebbero essere minimizzati data la loro complessità, lentezza e fragilità --- non sono stati implementati in forma automatizzata. La verifica del comportamento complessivo dell'applicazione è stata condotta tramite sessioni di \textit{alpha testing} con più utenti attraverso il frontend, coprendo in modo esplorativo i percorsi principali dell'utente (\textit{user journey}).
