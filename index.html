@@ -141,36 +141,41 @@ SAP</span>
         id="toc-list-of-abbreviations">List of Abbreviations</a></li>
         </ul></li>
         <li><a href="#ch:into" id="toc-ch:into">Introduction</a></li>
-        <li><a href="#ch:decomposition"
-        id="toc-ch:decomposition">Decomposizione da monolite a
-        micro-servizi (Assignment 5)</a>
-        <ul>
-        <li><a href="#introduzione-e-contesto"
-        id="toc-introduzione-e-contesto">Introduzione e
-        contesto</a></li>
-        <li><a href="#operazioni-di-sistema"
-        id="toc-operazioni-di-sistema">Operazioni di sistema</a>
-        <ul>
         <li><a
-        href="#knowledge-crunching-session-for-the-exploration-of-the-problem-space"
-        id="toc-knowledge-crunching-session-for-the-exploration-of-the-problem-space">Knowledge
-        crunching session for the exploration of the problem
-        space</a></li>
-        <li><a href="#casi-duso" id="toc-casi-duso">Casi d’uso</a></li>
-        </ul></li>
-        <li><a href="#decomposizione-in-servizi"
-        id="toc-decomposizione-in-servizi">Decomposizione in servizi</a>
+        href="#decomposizione-da-monolite-a-micro-servizi-assignment-5"
+        id="toc-decomposizione-da-monolite-a-micro-servizi-assignment-5">Decomposizione
+        da monolite a micro-servizi (Assignment 5)</a>
         <ul>
-        <li><a href="#strategia-decompose-by-subdomain-ddd"
-        id="toc-strategia-decompose-by-subdomain-ddd">Strategia:
-        Decompose by Subdomain (DDD)</a></li>
-        <li><a href="#bounded-context" id="toc-bounded-context">Bounded
-        Context</a></li>
-        <li><a href="#architettura-dei-microservizi"
-        id="toc-architettura-dei-microservizi">Architettura dei
-        microservizi</a></li>
-        <li><a href="#schema-architettura"
-        id="toc-schema-architettura">Schema architettura</a></li>
+        <li><a href="#passo-1-identificazione-delle-system-operations"
+        id="toc-passo-1-identificazione-delle-system-operations">Passo 1
+        – Identificazione delle System Operations</a>
+        <ul>
+        <li><a href="#domain-model-di-alto-livello"
+        id="toc-domain-model-di-alto-livello">Domain Model di Alto
+        Livello</a></li>
+        <li><a href="#event-storming" id="toc-event-storming">Event
+        Storming</a></li>
+        <li><a href="#system-operations"
+        id="toc-system-operations">System Operations</a></li>
+        </ul></li>
+        <li><a href="#passo-2-decomposizione-in-servizi"
+        id="toc-passo-2-decomposizione-in-servizi">Passo 2 –
+        Decomposizione in Servizi</a>
+        <ul>
+        <li><a href="#identificazione-dei-subdomains"
+        id="toc-identificazione-dei-subdomains">Identificazione dei
+        Subdomains</a></li>
+        <li><a href="#progettazione-dei-bounded-contexts"
+        id="toc-progettazione-dei-bounded-contexts">Progettazione dei
+        Bounded Contexts</a></li>
+        <li><a href="#sec:context-map" id="toc-sec:context-map">Context
+        Map</a></li>
+        <li><a href="#dai-bounded-contexts-ai-servizi"
+        id="toc-dai-bounded-contexts-ai-servizi">Dai Bounded Contexts ai
+        Servizi</a></li>
+        <li><a href="#sec:tradeoff-middleware"
+        id="toc-sec:tradeoff-middleware">Trade-off Architetturale: il
+        Ruolo del Middleware</a></li>
         </ul></li>
         <li><a href="#pattern-architetturali-applicati"
         id="toc-pattern-architetturali-applicati">Pattern architetturali
@@ -329,231 +334,262 @@ il quale si è approfondito il dominio del gioco.<br />
 È stata posta particolare attenzione alle tecniche di continuos
 integration, alle quali è stato dedicato uno dei capitoli di questo
 report.</p>
-<h1 id="ch:decomposition">Decomposizione da monolite a micro-servizi
-(Assignment 5)</h1>
-<h2 id="introduzione-e-contesto">Introduzione e contesto</h2>
-<p>La precedente versione del software era funzionante ma difficile da
-mantenere ed aggiornare, data la struttura monolitica. Esisteva un unico
-sorgente che conteneva al suo interno logiche di business, nessun tipo
-di persistenza e la view tutti insieme.</p>
-<p>Il progetto consiste in una manutenzione evolutiva del gioco di carte
-MaraffaOnline, che introduce diverse novità rispetto alla versione
-precedente:</p>
+<h1
+id="decomposizione-da-monolite-a-micro-servizi-assignment-5">Decomposizione
+da monolite a micro-servizi (Assignment 5)</h1>
+<p>La progettazione dell’architettura microservices di MaraffaOnline
+segue il metodo iterativo, articolato in due passi principali:
+l’identificazione delle system operations e la decomposizione in servizi
+tramite l’approccio Domain-Driven Design (DDD).</p>
+<h2 id="passo-1-identificazione-delle-system-operations">Passo 1 –
+Identificazione delle System Operations</h2>
+<h3 id="domain-model-di-alto-livello">Domain Model di Alto Livello</h3>
+<p>Il primo passo consiste nel costruire un domain model di alto
+livello, derivato dai sostantivi delle user stories principali. Questo
+modello definisce il vocabolario per descrivere le system
+operations.</p>
+<p>Le classi chiave identificate per MaraffaOnline sono:</p>
 <ul>
-<li><p>Architettura a microservizi con almeno due tecnologie
-differenti</p></li>
-<li><p>Formazione personalizzata delle squadre</p></li>
-<li><p>Nuova modalità di gioco (vittoria 11 a 0 in caso di violazione
-regole)</p></li>
-<li><p>Salvataggio statistiche partite e utenti</p></li>
-<li><p>Sistema di chat integrato (globale e di partita)</p></li>
+<li><p><strong>Player</strong> – Giocatore registrato nella
+piattaforma</p></li>
+<li><p><strong>User</strong> – Profilo utente con credenziali e
+statistiche</p></li>
+<li><p><strong>Game</strong> – Partita di Maraffa (4 giocatori, 2
+squadre)</p></li>
+<li><p><strong>Team</strong> – Coppia di giocatori alleati</p></li>
+<li><p><strong>Card</strong> – Carta da gioco del mazzo</p></li>
+<li><p><strong>Hand</strong> – Mano di carte di un giocatore</p></li>
+<li><p><strong>Trick</strong> – Singola presa (4 carte giocate)</p></li>
+<li><p><strong>Round</strong> – Singola mano di gioco (distribuzione
+carte fino a esaurimento)</p></li>
+<li><p><strong>ChatMessage</strong> – Messaggio nella chat di
+gioco</p></li>
 </ul>
-<p>Per poter decomporre questo monolite sono state eseguite le fasi
-di:</p>
+<p>Si noti come il termine “Player” e “User” rappresentino lo stesso
+individuo ma in contesti diversi: <strong>User</strong> nel contesto di
+autenticazione e gestione profilo, <strong>Player</strong> nel contesto
+della logica di gioco. Questa polisemia è un segnale naturale
+dell’esistenza di bounded context distinti, dove lo stesso concetto del
+mondo reale assume significati e attributi diversi in ciascun
+contesto.</p>
+<h3 id="event-storming">Event Storming</h3>
+<p>Per raffinare il domain model e identificare le operazioni chiave, è
+stato utilizzato l’Event Storming. L’analisi ha prodotto i seguenti
+elementi:</p>
+<p><strong>Domain Events</strong> (arancione):</p>
 <ul>
-<li><p>Identificazione delle operazioni di sistema</p></li>
-<li><p>Decomposizione in servizi, in subdomain seguendo i principi del
-Domain-Driven Design (DDD)</p></li>
-<li><p>Identificazione di API di comunicazione tra servizi</p></li>
-<li><p>Applicazione di pattern architetturali per microservizi</p></li>
+<li><p><code>UserRegistered</code>, <code>UserLoggedIn</code>,
+<code>UserLoggedOut</code></p></li>
+<li><p><code>GameCreated</code>, <code>PlayerJoined</code>,
+<code>GameStarted</code></p></li>
+<li><p><code>CardsDealt</code>, <code>CardPlayed</code>,
+<code>TrickWon</code></p></li>
+<li><p><code>MaraffaDeclared</code>, <code>RoundEnded</code>,
+<code>GameEnded</code></p></li>
+<li><p><code>MessageSent</code></p></li>
 </ul>
-<h2 id="operazioni-di-sistema">Operazioni di sistema</h2>
-<h3
-id="knowledge-crunching-session-for-the-exploration-of-the-problem-space">Knowledge
-crunching session for the exploration of the problem space</h3>
-<p>È stato utilizzato il metodo Event Storming per l’esplorazione del
-dominio. La tecnica consiste nell’individuare degli eventi di dominio e
-riportarli al passato su un post-it arancione. Una volta individuati gli
-eventi, sono stati scritti su post-it blu i comandi che l’utente svolge
-per creare l’evento. In giallo è stato specificato l’attore, la persona
-che esegue il comando, mentre in verde la view, l’interfaccia software
-con la quale l’utente interagisce. Infine, con delle label si sono
-aggregati i post-it in unità di dominio. Si riporta di seguito lo screen
-della lavagna con i post-it e la relativa legenda.</p>
-<figure id="event_storming">
-<p><img src="report/img/EventStorming.png" alt="image" /><br />
-</p>
-<figcaption>Event Storming</figcaption>
-</figure>
-<figure id="legend">
-<img src="report/img/event_storming_legend.png" />
-<figcaption>Event Storming Legend</figcaption>
-</figure>
+<p><strong>Commands</strong> (blu):</p>
+<ul>
+<li><p><code>RegisterUser</code>, <code>Login</code>,
+<code>Logout</code></p></li>
+<li><p><code>CreateGame</code>, <code>JoinGame</code>,
+<code>StartGame</code></p></li>
+<li><p><code>DealCards</code>, <code>PlayCard</code>,
+<code>DeclareMaraffa</code></p></li>
+<li><p><code>SendMessage</code></p></li>
+</ul>
+<p><strong>Aggregates</strong> (giallo):</p>
+<ul>
+<li><p><code>User</code> – gestisce registrazione, autenticazione,
+profilo</p></li>
+<li><p><code>Game</code> – invariante principale: esattamente 4
+giocatori, 2 team; governa il ciclo di vita della partita</p></li>
+<li><p><code>Round</code> – invariante: distribuzione corretta delle
+carte, regole della presa, calcolo punteggio</p></li>
+</ul>
+<h3 id="system-operations">System Operations</h3>
+<p>Dall’analisi degli eventi e dei comandi si derivano le system
+operations, suddivise in <strong>commands</strong> (operazioni che
+modificano lo stato) e <strong>queries</strong> (operazioni di sola
+lettura):</p>
+<p><strong>Commands:</strong></p>
+<ul>
+<li><p><code>createUser(username, password, email)</code> – Registra un
+nuovo utente</p></li>
+<li><p><code>login(username, password)</code> <span
+class="math inline">→</span> token – Autentica l’utente</p></li>
+<li><p><code>createGame(playerId)</code> <span
+class="math inline">→</span> gameId – Crea una nuova partita</p></li>
+<li><p><code>joinGame(playerId, gameId)</code> – Un giocatore entra
+nella partita</p></li>
+<li><p><code>playCard(playerId, gameId, card)</code> – Gioca una carta
+nel turno corrente</p></li>
+<li><p><code>declareMaraffa(playerId, gameId, suit)</code> – Dichiara
+una Maraffa</p></li>
+<li><p><code>sendMessage(playerId, gameId, text)</code> – Invia un
+messaggio in chat</p></li>
+</ul>
+<p><strong>Queries:</strong></p>
+<ul>
+<li><p><code>getGameState(gameId)</code> – Stato corrente della
+partita</p></li>
+<li><p><code>getUserProfile(userId)</code> – Profilo e statistiche
+utente</p></li>
+<li><p><code>getUserStats(userId)</code> – Statistiche di gioco
+dell’utente</p></li>
+<li><p><code>getActiveGames()</code> – Lista partite
+disponibili</p></li>
+</ul>
+<h2 id="passo-2-decomposizione-in-servizi">Passo 2 – Decomposizione in
+Servizi</h2>
+<h3 id="identificazione-dei-subdomains">Identificazione dei
+Subdomains</h3>
+<p>Seguendo l’approccio DDD, il primo passo della decomposizione
+consiste nell’analizzare il dominio di business per identificare i
+<strong>subdomains</strong>, ossia le diverse aree di competenza
+dell’applicazione. I subdomains vengono <em>scoperti</em> attraverso
+l’analisi del business, non progettati.</p>
+<p>Per MaraffaOnline sono stati identificati tre subdomains:</p>
 <ol>
-<li><p>Account</p>
-<ol>
-<li><p>Login</p></li>
-<li><p>Registrazione</p></li>
-<li><p>Recupero password</p></li>
-<li><p>Visualizzazione profilo</p></li>
-<li><p>Modifica password</p></li>
-<li><p>Possibilità di scegliere se giocare come ospite o effettuare il
-login</p></li>
-</ol></li>
-<li><p>Realizzazione partita</p>
-<ol>
-<li><p>Creazione partita</p></li>
-<li><p>Partecipazione partita</p></li>
-<li><p>Gioca carta</p></li>
-<li><p>Inizio partita</p></li>
-<li><p>Fine mano</p></li>
-<li><p>Fine partita</p></li>
-</ol></li>
-<li><p>Chat di gioco</p>
-<ol>
-<li><p>Chat globale</p></li>
-<li><p>Chat partita</p></li>
-</ol></li>
-<li><p>Possibilità di scegliere un compagno di squadra</p></li>
-<li><p>Scelta del seme, parole consentite</p></li>
-<li><p>Modalità di gioco 11 a 0</p></li>
-<li><p>Gestione punteggio</p>
-<ol>
-<li><p>Calcolo totale e parziale (Gestione per ogni mano) del
-punteggio</p></li>
-<li><p>Maraffa/Cricca (+3 punti)</p></li>
-</ol></li>
-<li><p>Servizio gestione utenti</p></li>
-<li><p>Salvataggio statistiche</p></li>
-<li><p>Realizzazione GUI</p>
-<ol>
-<li><p>Refactor della GUI esistente</p></li>
-<li><p>Rinnovamento GUI</p></li>
-</ol></li>
+<li><p><strong>Game Logic</strong> (<em>Core Subdomain</em>) – Contiene
+le regole della Maraffa, la gestione delle partite, il calcolo dei
+punteggi e la logica dei turni. È il subdomain <strong>core</strong>
+perché rappresenta ciò che l’applicazione fa <em>diversamente</em> da
+qualsiasi altra piattaforma: implementare correttamente le regole
+specifiche della Maraffa, un gioco di carte regionale con regole non
+banali. È naturalmente complesso e rappresenta il vantaggio competitivo
+dell’applicazione.</p></li>
+<li><p><strong>User Management</strong> (<em>Generic Subdomain</em>) –
+Comprende registrazione, autenticazione, gestione profili e statistiche.
+È un subdomain <strong>generic</strong> perché l’autenticazione e la
+gestione utenti sono attività che tutte le applicazioni svolgono allo
+stesso modo, senza fornire vantaggio competitivo. Per questo tipo di
+subdomain, Richardson suggerisce di adottare soluzioni esistenti quando
+possibile.</p></li>
+<li><p><strong>Chat</strong> (<em>Supporting Subdomain</em>) – Gestisce
+la messaggistica in tempo reale durante le partite. È un subdomain
+<strong>supporting</strong> perché supporta l’esperienza di gioco ma non
+fornisce vantaggio competitivo, e la sua business logic è relativamente
+semplice.</p></li>
 </ol>
-<h3 id="casi-duso">Casi d’uso</h3>
-<p>Si riporta di seguito lo schema dei casi d’uso che modella
-l’interazione dell’utente con l’applicazione.</p>
-<figure id="use_case">
-<img src="report/img/Casi_duso.png" />
-<figcaption>Schema dei casi d’uso</figcaption>
-</figure>
-<h2 id="decomposizione-in-servizi">Decomposizione in servizi</h2>
-<h3 id="strategia-decompose-by-subdomain-ddd">Strategia: Decompose by
-Subdomain (DDD)</h3>
-<p>La decomposizione è stata guidata dall’identificazione dei
-<strong>bounded contexts</strong> secondo i principi del Domain-Driven
-Design. Questo approccio permette di:</p>
+<h3 id="progettazione-dei-bounded-contexts">Progettazione dei Bounded
+Contexts</h3>
+<p>Un bounded context definisce il confine entro cui un particular
+domain model è definito e applicabile, garantendo la consistenza
+dell’ubiquitous language al suo interno.</p>
+<p>Per MaraffaOnline sono stati progettati due bounded contexts
+principali, con una corrispondenza quasi uno-a-uno con i subdomains:</p>
+<ol>
+<li><p><strong>Game Context</strong> – Corrisponde al core subdomain
+<em>Game Logic</em>. Il domain model include le entità
+<code>Game</code>, <code>Player</code>, <code>Round</code>,
+<code>Card</code>, <code>Team</code>, <code>Trick</code>. In questo
+contesto, “Player” indica un partecipante attivo nella partita, con
+attributi come la mano di carte, il team di appartenenza e il turno
+corrente. L’ubiquitous language include termini specifici del gioco:
+mano, presa, briscola, Maraffa.</p></li>
+<li><p><strong>User Context</strong> – Corrisponde al generic subdomain
+<em>User Management</em>. Il domain model include <code>User</code>,
+<code>Credentials</code>, <code>UserStats</code>. In questo contesto,
+“User” indica un profilo registrato con credenziali, email e storico
+partite. L’ubiquitous language è quello standard della gestione utenti:
+registrazione, login, profilo.</p></li>
+</ol>
+<p>Il subdomain <em>Chat</em> non è stato implementato come bounded
+context autonomo: la funzionalità di messaggistica è stata integrata nel
+middleware, una scelta discussa nella Sezione <a
+href="#sec:tradeoff-middleware" data-reference-type="ref"
+data-reference="sec:tradeoff-middleware">2.2.5</a>.</p>
+<h3 id="sec:context-map">Context Map</h3>
+<p>La context map rappresenta visivamente le relazioni e i pattern di
+integrazione tra i bounded contexts del sistema:</p>
 <ul>
-<li><p>Definire confini chiari tra i servizi</p></li>
-<li><p>Minimizzare le dipendenze tra microservizi</p></li>
-<li><p>Allineare l’architettura software al dominio di business</p></li>
+<li><p><strong>Game Context <span class="math inline">↔︎</span> User
+Context</strong>: relazione di tipo <strong>Customer-Supplier</strong>.
+Il Game Context (downstream/customer) ha bisogno di verificare
+l’identità dei giocatori e aggiornare le statistiche. Lo User Context
+(upstream/supplier) fornisce il servizio di autenticazione e l’accesso
+ai profili. Il Game Context si conforma al contratto esposto dallo User
+Context per l’autenticazione (<strong>Conformist</strong>), accettando
+il formato del token JWT così com’è.</p></li>
+<li><p><strong>Middleware <span class="math inline">↔︎</span> Game
+Context</strong>: il middleware agisce come API Gateway e instrada le
+richieste verso il Game Context. Funge da <strong>Anticorruption
+Layer</strong> parziale, traducendo le richieste HTTP/WebSocket del
+frontend nel formato atteso dal servizio di business logic.</p></li>
+<li><p><strong>Middleware <span class="math inline">↔︎</span> User
+Context</strong>: il middleware instrada le richieste di autenticazione
+e gestione profilo verso lo User Context, operando come semplice proxy
+(<strong>Conformist</strong>), senza trasformare il modello.</p></li>
 </ul>
-<h3 id="bounded-context">Bounded Context</h3>
-<p>Analizzando il dominio di MaraffaOnline, sono stati identificati i
-tre principali bounded context che andranno poi a definire (ad alto
-livello) i servizi e alcune delle loro API all’interno
-dell’architettura.</p>
-<p>Nella figura si può osservare un primo bounded context, colorato di
-azzurro, che modella l’autenticazione dell’utente (<strong>User
-Context</strong>):</p>
+<h3 id="dai-bounded-contexts-ai-servizi">Dai Bounded Contexts ai
+Servizi</h3>
+<p>Ogni bounded context è stato mappato a un microservizio indipendente,
+seguendo l’allineamento naturale tra DDD e architettura
+microservices:</p>
+<table>
+<caption>Mappatura subdomains <span class="math inline">→</span> bounded
+contexts <span class="math inline">→</span> servizi</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Subdomain</strong></th>
+<th style="text-align: left;"><strong>Tipo</strong></th>
+<th style="text-align: left;"><strong>Bounded Context</strong></th>
+<th style="text-align: left;"><strong>Servizio</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Game Logic</td>
+<td style="text-align: left;">Core</td>
+<td style="text-align: left;">Game Context</td>
+<td style="text-align: left;">business-logic (porta 3000)</td>
+</tr>
+<tr>
+<td style="text-align: left;">User Management</td>
+<td style="text-align: left;">Generic</td>
+<td style="text-align: left;">User Context</td>
+<td style="text-align: left;">user-service (porta 3001)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Chat</td>
+<td style="text-align: left;">Supporting</td>
+<td style="text-align: left;">(nel middleware)</td>
+<td style="text-align: left;">middleware (porta 3003)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sec:tradeoff-middleware">Trade-off Architetturale: il Ruolo del
+Middleware</h3>
+<p>Il servizio <code>middleware</code> svolge molteplici responsabilità
+che, in un’architettura microservices ideale, sarebbero separate:</p>
 <ul>
-<li><p><strong>User:</strong> persona che possiede l’account</p></li>
-<li><p><strong>Statistic:</strong> dati dell’utente relativi al gioco
-come numero di vittorie, sconfitte, partite giocate e maraffe</p></li>
-<li><p><strong>Authentication:</strong> accesso all’applicativo
-MaraffaOnline da parte dell’utente</p></li>
+<li><p><strong>API Gateway</strong> – Routing delle richieste HTTP verso
+i servizi interni</p></li>
+<li><p><strong>WebSocket Management</strong> – Gestione delle
+connessioni in tempo reale per gli aggiornamenti di gioco</p></li>
+<li><p><strong>Chat</strong> – Logica di messaggistica tra giocatori
+(subdomain <em>supporting</em>)</p></li>
+<li><p><strong>Orchestrazione parziale</strong> – Coordinamento tra
+user-service e business-logic per alcune operazioni</p></li>
 </ul>
-<p>Il secondo bounded context, colorato di verde, modella la partita
-(<strong>Game Context</strong>):</p>
+<p>Questa concentrazione di responsabilità rappresenta un
+<strong>trade-off consapevole</strong>: in un progetto accademico con un
+team ridotto, separare ulteriormente il middleware avrebbe introdotto
+complessità operativa (più container, più configurazioni di rete, più
+punti di failure) senza un beneficio proporzionale. Tuttavia, è
+importante riconoscere che questa scelta <strong>viola
+parzialmente</strong> il principio di singola responsabilità a livello
+di servizio e potrebbe rappresentare un ostacolo alla scalabilità
+indipendente dei componenti in un contesto produttivo.</p>
+<p>In una evoluzione futura, si potrebbe considerare:</p>
 <ul>
-<li><p><strong>Game:</strong> partita</p></li>
-<li><p><strong>Team:</strong> squadra composta da numero di giocatori /
-2</p></li>
-<li><p><strong>Score:</strong> punteggio delle due squadre</p></li>
-<li><p><strong>Statistic:</strong> dati relativi ai game
-giocati</p></li>
-<li><p><strong>Trick:</strong> presa di quattro carte da parte di un
-giocatore</p></li>
-<li><p><strong>Round:</strong> 10 prese</p></li>
-<li><p><strong>Card:</strong> carta</p></li>
-<li><p><strong>Player:</strong> giocatore</p></li>
-<li><p><strong>Deck:</strong> mazzo</p></li>
-<li><p><strong>Hand:</strong> carte che ha in mano un giocatore</p></li>
+<li><p>Estrarre la chat in un servizio dedicato
+(<code>chat-service</code>)</p></li>
+<li><p>Separare la gestione WebSocket in un servizio di notifiche
+(<code>notification-service</code>)</p></li>
+<li><p>Mantenere il middleware come puro API Gateway</p></li>
 </ul>
-<p>Infine l’ultimo, di colore arancione, modella la chat
-(<strong>Session Context</strong>):</p>
-<ul>
-<li><p><strong>Chat:</strong> chat di gioco</p></li>
-<li><p><strong>Message:</strong> messaggio inviato nella chat</p></li>
-<li><p><strong>User:</strong> persona che invia il messaggio</p></li>
-</ul>
-<p>È importante notare che il concetto di user/player è polisemico: vi
-sono tre rappresentazioni diverse per afferire allo stesso concetto.</p>
-<figure id="bounded_context">
-<img src="report/img/BoundedCTX.png" />
-<figcaption>Context Map</figcaption>
-</figure>
-<h3 id="architettura-dei-microservizi">Architettura dei
-microservizi</h3>
-<p>La decomposizione ha portato all’identificazione di tre microservizi
-principali, ciascuno con responsabilità ben definite:</p>
-<h4 id="userservice">UserService</h4>
-<p>Questo servizio gestisce gli utenti, la loro registrazione,
-autenticazione e gestione dei dati personali. È stato implementato
-utilizzando:</p>
-<ul>
-<li><p><strong>Linguaggio:</strong> TypeScript</p></li>
-<li><p><strong>Framework:</strong> NestJS</p></li>
-<li><p><strong>Database:</strong> MySQL con TypeORM</p></li>
-<li><p><strong>Architettura:</strong> Model-Controller-Service</p></li>
-</ul>
-<p>Il middleware delega al servizio di gestione degli utenti le
-operazioni riguardanti gli utenti, per mantenere il middleware il più
-leggero possibile. Il database contiene anche le informazioni
-riguardanti le partite giocate e le statistiche personali di ogni
-utente.</p>
-<p>Le principali responsabilità includono:</p>
-<ul>
-<li><p>Registrazione e autenticazione tramite JWT</p></li>
-<li><p>Gestione dei profili utente</p></li>
-<li><p>Calcolo e memorizzazione delle statistiche di gioco</p></li>
-</ul>
-<h4 id="businesslogic">BusinessLogic</h4>
-<p>Questo servizio mantiene al proprio interno tutte le regole del gioco
-e il calcolo dei punteggi. Ha svariati endpoint che permettono al
-middleware di delegare le operazioni riguardanti il gioco. Questa scelta
-permette in futuro di aggiungere nuovi giochi modificando il meno
-possibile il middleware.</p>
-<p>Implementato con lo stesso stack del UserService (NestJS e
-TypeScript), è completamente <strong>stateless</strong> e si occupa
-esclusivamente di:</p>
-<ul>
-<li><p>Validazione delle mosse secondo le regole della Maraffa</p></li>
-<li><p>Calcolo dei punteggi</p></li>
-<li><p>Verifica della correttezza delle giocate</p></li>
-</ul>
-<h4 id="middleware-api-gateway-game-engine">Middleware (API Gateway +
-Game Engine)</h4>
-<p>Il middleware è il cuore del sistema e svolge molteplici ruoli. È
-stato implementato in Java utilizzando il framework Vert.x, scelto per
-le sue caratteristiche event-driven e reactive, particolarmente adatte
-alla gestione di connessioni concorrenti.</p>
-<p>L’architettura utilizzata per la gestione delle partite è quella di
-un <strong>multi-attore</strong>, in cui ogni attore si occupa di
-gestire una partita e di orchestrare la comunicazione con gli altri
-servizi.</p>
-<p>Al middleware è collegato un database NoSQL su MongoDB, che viene
-aggiornato a ogni trick completato dai giocatori per creare uno storico
-delle partite e salvare le loro decisioni in gioco.</p>
-<p>Le principali funzionalità includono:</p>
-<ul>
-<li><p>Routing delle richieste ai microservizi corretti</p></li>
-<li><p>Validazione dei token JWT</p></li>
-<li><p>Orchestrazione della logica di gioco</p></li>
-<li><p>Gestione delle connessioni WebSocket</p></li>
-<li><p>Coordinamento delle chat (globale e di partita)</p></li>
-</ul>
-<h4 id="frontend">Frontend</h4>
-<p>Il frontend è stato sviluppato in TypeScript utilizzando Angular e
-viene servito tramite Nginx. Quest’ultimo svolge anche il ruolo di
-reverse proxy per mascherare le chiamate al backend e superare eventuali
-problemi di CORS. La comunicazione con il middleware avviene tramite API
-REST e WebSocket per gli aspetti real-time.</p>
-<h3 id="schema-architettura">Schema architettura</h3>
-<p><img src="report/img/Architecture.png" style="width:16cm"
-alt="image" /><br />
-</p>
 <h2 id="pattern-architetturali-applicati">Pattern architetturali
 applicati</h2>
 <h3 id="api-gateway-pattern">API Gateway Pattern</h3>
