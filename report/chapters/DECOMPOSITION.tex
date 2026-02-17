@@ -23,11 +23,27 @@ Le classi chiave identificate per MaraffaOnline sono:
 
 \noindent Si noti come il termine ``Player'' e ``User'' rappresentino lo stesso individuo ma in contesti diversi: \textbf{User} nel contesto di autenticazione e gestione profilo, \textbf{Player} nel contesto della logica di gioco. Questa polisemia è un segnale naturale dell'esistenza di bounded context distinti, dove lo stesso concetto del mondo reale assume significati e attributi diversi in ciascun contesto.
 
+\subsection{Casi d'uso}
+Si riporta di seguito lo schema dei casi d'uso che modella l'interazione dell'utente con l'applicazione.
+\begin{figure}[h!]
+\centering 
+\includegraphics[scale=0.45]{report/img/Casi_duso.png}
+\caption{Schema dei casi d'uso}
+\label{use_case}
+\end{figure}
+
 \subsection{Event Storming}
 
 Per raffinare il domain model e identificare le operazioni chiave, è stato utilizzato l'Event Storming. L'analisi ha prodotto i seguenti elementi:
 
-\textbf{Domain Events} (arancione):
+ \begin{figure}[h!]
+    \centering 
+    \includegraphics[scale=0.45]{report/img/EventStorming.png}\\[8.5cm]
+    \caption{Event Storming}
+    \label{event_storming}
+\end{figure}
+
+\textbf{Domain Events}:
 \begin{itemize}
     \item \texttt{UserRegistered}, \texttt{UserLoggedIn}, \texttt{UserLoggedOut}
     \item \texttt{GameCreated}, \texttt{PlayerJoined}, \texttt{GameStarted}
@@ -36,19 +52,12 @@ Per raffinare il domain model e identificare le operazioni chiave, è stato util
     \item \texttt{MessageSent}
 \end{itemize}
 
-\textbf{Commands} (blu):
+\textbf{Commands}:
 \begin{itemize}
     \item \texttt{RegisterUser}, \texttt{Login}, \texttt{Logout}
     \item \texttt{CreateGame}, \texttt{JoinGame}, \texttt{StartGame}
     \item \texttt{DealCards}, \texttt{PlayCard}, \texttt{DeclareMaraffa}
     \item \texttt{SendMessage}
-\end{itemize}
-
-\textbf{Aggregates} (giallo):
-\begin{itemize}
-    \item \texttt{User} -- gestisce registrazione, autenticazione, profilo
-    \item \texttt{Game} -- invariante principale: esattamente 4 giocatori, 2 team; governa il ciclo di vita della partita
-    \item \texttt{Round} -- invariante: distribuzione corretta delle carte, regole della presa, calcolo punteggio
 \end{itemize}
 
 \subsection{System Operations}
