@@ -426,8 +426,6 @@ class="math inline">→</span> gameId – Crea una nuova partita</p></li>
 nella partita</p></li>
 <li><p><code>playCard(playerId, gameId, card)</code> – Gioca una carta
 nel turno corrente</p></li>
-<li><p><code>declareMaraffa(playerId, gameId, suit)</code> – Dichiara
-una Maraffa</p></li>
 <li><p><code>sendMessage(playerId, gameId, text)</code> – Invia un
 messaggio in chat</p></li>
 </ul>
@@ -459,26 +457,19 @@ punteggi e la logica dei turni. È il subdomain <strong>core</strong>
 perché rappresenta ciò che l’applicazione fa <em>diversamente</em> da
 qualsiasi altra piattaforma: implementare correttamente le regole
 specifiche della Maraffa, un gioco di carte regionale con regole non
-banali. È naturalmente complesso e rappresenta il vantaggio competitivo
-dell’applicazione.</p></li>
+banali.</p></li>
 <li><p><strong>User Management</strong> (<em>Generic Subdomain</em>) –
 Comprende registrazione, autenticazione, gestione profili e statistiche.
 È un subdomain <strong>generic</strong> perché l’autenticazione e la
 gestione utenti sono attività che tutte le applicazioni svolgono allo
-stesso modo, senza fornire vantaggio competitivo. Per questo tipo di
-subdomain, Richardson suggerisce di adottare soluzioni esistenti quando
-possibile.</p></li>
+stesso modo.</p></li>
 <li><p><strong>Chat</strong> (<em>Supporting Subdomain</em>) – Gestisce
 la messaggistica in tempo reale durante le partite. È un subdomain
 <strong>supporting</strong> perché supporta l’esperienza di gioco ma non
-fornisce vantaggio competitivo, e la sua business logic è relativamente
-semplice.</p></li>
+fornisce nessuna funzionalità fondamentale.</p></li>
 </ol>
 <h3 id="progettazione-dei-bounded-contexts">Progettazione dei Bounded
 Contexts</h3>
-<p>Un bounded context definisce il confine entro cui un particular
-domain model è definito e applicabile, garantendo la consistenza
-dell’ubiquitous language al suo interno.</p>
 <p>Per MaraffaOnline sono stati progettati due bounded contexts
 principali, con una corrispondenza quasi uno-a-uno con i subdomains:</p>
 <ol>
@@ -508,21 +499,19 @@ integrazione tra i bounded contexts del sistema:</p>
 <ul>
 <li><p><strong>Game Context <span class="math inline">↔︎</span> User
 Context</strong>: relazione di tipo <strong>Customer-Supplier</strong>.
-Il Game Context (downstream/customer) ha bisogno di verificare
-l’identità dei giocatori e aggiornare le statistiche. Lo User Context
-(upstream/supplier) fornisce il servizio di autenticazione e l’accesso
-ai profili. Il Game Context si conforma al contratto esposto dallo User
-Context per l’autenticazione (<strong>Conformist</strong>), accettando
-il formato del token JWT così com’è.</p></li>
+Il Game Context ha bisogno di verificare l’identità dei giocatori e
+aggiornare le statistiche. Lo User Context (supplier) fornisce il
+servizio di autenticazione e l’accesso ai profili. Il Game Context si
+conforma al contratto esposto dallo User Context per l’autenticazione,
+accettando il formato del token JWT così com’è.</p></li>
 <li><p><strong>Middleware <span class="math inline">↔︎</span> Game
 Context</strong>: il middleware agisce come API Gateway e instrada le
-richieste verso il Game Context. Funge da <strong>Anticorruption
-Layer</strong> parziale, traducendo le richieste HTTP/WebSocket del
-frontend nel formato atteso dal servizio di business logic.</p></li>
+richieste verso il Game Context. Traducendo le richieste HTTP/WebSocket
+del frontend nel formato atteso dal servizio di business logic.</p></li>
 <li><p><strong>Middleware <span class="math inline">↔︎</span> User
 Context</strong>: il middleware instrada le richieste di autenticazione
-e gestione profilo verso lo User Context, operando come semplice proxy
-(<strong>Conformist</strong>), senza trasformare il modello.</p></li>
+e gestione profilo verso lo User Context, operando come semplice proxy,
+senza trasformare il modello.</p></li>
 </ul>
 <h3 id="dai-bounded-contexts-ai-servizi">Dai Bounded Contexts ai
 Servizi</h3>
