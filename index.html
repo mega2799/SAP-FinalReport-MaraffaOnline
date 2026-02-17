@@ -135,9 +135,7 @@ SAP</span>
         <div class="well toc">
 
         <ul>
-        <li><a href="#declaration"
-        id="toc-declaration">Declaration</a></li>
-        <li><a href="#abstract" id="toc-abstract">Abstract</a>
+        <li><a href="#declaration" id="toc-declaration">Declaration</a>
         <ul>
         <li><a href="#list-of-abbreviations"
         id="toc-list-of-abbreviations">List of Abbreviations</a></li>
@@ -238,10 +236,22 @@ SAP</span>
         </ul></li>
         <li><a href="#ch:testing" id="toc-ch:testing">Testing</a>
         <ul>
-        <li><a href="#integration-test"
-        id="toc-integration-test">Integration Test</a></li>
-        <li><a href="#testing-asincrono"
-        id="toc-testing-asincrono">Testing asincrono</a></li>
+        <li><a href="#strumenti-di-testing"
+        id="toc-strumenti-di-testing">Strumenti di Testing</a></li>
+        <li><a
+        href="#architettura-dei-componenti-e-strategia-di-testing"
+        id="toc-architettura-dei-componenti-e-strategia-di-testing">Architettura
+        dei Componenti e Strategia di Testing</a></li>
+        <li><a href="#unit-test" id="toc-unit-test">Unit Test</a></li>
+        <li><a href="#sec:integration_test"
+        id="toc-sec:integration_test">Integration Test</a></li>
+        <li><a href="#sec:component_test"
+        id="toc-sec:component_test">Component Test</a></li>
+        <li><a href="#sec:async_test" id="toc-sec:async_test">Testing
+        Asincrono</a></li>
+        <li><a href="#livelli-superiori-della-piramide"
+        id="toc-livelli-superiori-della-piramide">Livelli Superiori
+        della Piramide</a></li>
         </ul></li>
         <li><a href="#ch:production_ready"
         id="toc-ch:production_ready">Micro-servizi production
@@ -280,7 +290,7 @@ Department of Computer Science</span><br />
 <span> Matteo Santoro </span><br />
 <span> <em>Supervisor:</em> Alessandro ricci</span><br />
 </p>
-<p>2026-01-29</p>
+<p>2026-02-17</p>
 </div>
 </div>
 <h1 class="unnumbered" id="declaration">Declaration</h1>
@@ -296,43 +306,9 @@ sarà sanzionato di conseguenza.<br />
  <br />
 </p>
 <div class="flushright">
-<p>Firstname(s) Lastname</p>
-<p>2026-01-29</p>
+<p>Matteo Santoro</p>
+<p>2026-02-17</p>
 </div>
-<h1 class="unnumbered" id="abstract">Abstract</h1>
-<p>This is an undergraduate project report template and instruction on
-how to write a report. It also has some useful examples to use LaTeX. Do
-read this template carefully. The number of chapters and their titles
-may vary depending on the type of project and personal preference.
-Section titles in this template are illustrative should be updated
-accordingly. For example, sections named “A section...” and “Example of
-...” should be updated. The number of sections in each chapter may also
-vary. This template may or may not suit your project. Discuss the
-structure of your report with your supervisor.</p>
-<p> <br />
-<strong>Guidance on abstract writing:</strong> An abstract is a summary
-of a report in a single paragraph up to a maximum of 250 words. An
-abstract should be self-contained, and it should not refer to sections,
-figures, tables, equations, or references. An abstract typically
-consists of sentences describing the following four parts: (1)
-introduction (background and purpose of the project), (2) methods, (3)
-results and analysis, and (4) conclusions. The distribution of these
-four parts of the abstract should reflect the relative proportion of
-these parts in the report itself. An abstract starts with a few
-sentences describing the project’s general field, comprehensive
-background and context, the main purpose of the project; and the problem
-statement. A few sentences describe the methods, experiments, and
-implementation of the project. A few sentences describe the main results
-achieved and their significance. The final part of the abstract
-describes the conclusions and the implications of the results to the
-relevant field.</p>
-<p> <br />
-<strong>Keywords:</strong> a maximum of five keywords/keyphrase
-separated by commas</p>
-<p><strong>Report’s total word count:</strong> we expect a maximum of
-20,000 words (excluding reference and appendices) and about 50 - 60
-pages. [A good project report can also be written in approximately
-10,000 words.]</p>
 <h2 id="list-of-abbreviations">List of Abbreviations</h2>
 <div class="abbrv">
 <p>School of Mathematical, Physical and Computational Sciences</p>
@@ -872,22 +848,26 @@ distribuito su diverse piattaforme e ambienti, grazie all’uso di
 tecnologie containerizzate come Docker..</p></li>
 </ul>
 <h1 id="ch:testing">Testing</h1>
-<p>Per ogni servizio di questo sistema è stato adottato, ove possibile,
-il paradigma di programmazione TDD (Test Driven Development). Questo
+<p>Per ogni servizio del sistema è stato adottato, ove possibile, il
+paradigma di programmazione TDD (Test Driven Development). Questo
 approccio prevede che i test vengano scritti prima del codice, in modo
 da guidarne lo sviluppo e garantire che il software prodotto soddisfi i
 requisiti specificati.</p>
+<p>La strategia di testing adottata si ispira alla <strong>test
+pyramid</strong> descritta in <span class="citation"
+data-cites="richardson2019"></span>, che prevede una distribuzione dei
+test su livelli crescenti di granularità: molti <em>unit test</em> alla
+base, un numero inferiore di <em>integration test</em>, e pochi test ai
+livelli superiori.</p>
+<h2 id="strumenti-di-testing">Strumenti di Testing</h2>
 <p>Le operazioni di testing sono state implementate con
 <strong>Jest</strong> per quanto riguarda i servizi basati su Node.js,
 generando report chiari e di facile lettura. Il componente middleware,
 scritto in Java, produceva invece risultati di test meno comprensibili.
 Per risolvere questo problema è stata introdotta, nel file di build
-Gradle, una dipendenza che consente di ottenere report più dettagliati e
-leggibili.</p>
-<p>La libreria <a
+Gradle, la libreria <a
 href="https://plugins.gradle.org/plugin/com.adarshr.test-logger"><u>Test
-Logger</u></a>, tramite una semplice configurazione nel file
-<code>build.gradle</code> riportata di seguito.</p>
+Logger</u></a>, tramite la seguente configurazione:</p>
 <div class="sourceCode" id="list:gradle_testlogger" data-language="Java"
 data-caption="Configurazione del Test Logger"
 data-label="list:gradle_testlogger"><pre
@@ -914,38 +894,54 @@ class="sourceCode java"><code class="sourceCode java"><span id="list:gradle_test
 <span id="list:gradle_testlogger-21"><a href="#list:gradle_testlogger-21" aria-hidden="true" tabindex="-1"></a>    showFailedStandardStreams <span class="op">=</span> <span class="kw">true</span></span>
 <span id="list:gradle_testlogger-22"><a href="#list:gradle_testlogger-22" aria-hidden="true" tabindex="-1"></a>    logLevel <span class="op">=</span> LogLevel<span class="op">.</span><span class="fu">LIFECYCLE</span></span>
 <span id="list:gradle_testlogger-23"><a href="#list:gradle_testlogger-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>L’architettura dei componenti può essere riassunta come segue:</p>
+<h2 id="architettura-dei-componenti-e-strategia-di-testing">Architettura
+dei Componenti e Strategia di Testing</h2>
+<p>L’architettura interna di ciascun servizio segue una struttura a due
+livelli:</p>
 <ul>
-<li><p><strong>Classi controller</strong>: espongono le rotte e
-contengono al loro interno le classi di servizio.</p></li>
+<li><p><strong>Classi controller</strong>: espongono le rotte e delegano
+alle classi di servizio.</p></li>
 <li><p><strong>Classi di servizio</strong>: contengono la logica di
 business.</p></li>
 </ul>
-<p>Gli <em>unit test</em> vengono eseguiti sulle classi di servizio,
-verificando la correttezza della logica di business. Questo approccio
-permette di ottenere una maggiore copertura del codice e di garantire
-che la logica applicativa sia corretta.</p>
-<h3 id="integration-test">Integration Test</h3>
-<p>Poiché l’architettura adottata è di tipo <em>microservices</em>, è
-necessario testare anche il corretto funzionamento delle comunicazioni
-tra i vari servizi. A tal fine sono stati implementati dei test di
-integrazione, che verificano la corretta esposizione e interazione delle
-API tra i servizi.</p>
-<p>Questi test sono stati realizzati principalmente all’interno del
-componente middleware, che si occupa di mettere in comunicazione i
-servizi tra loro e con il frontend, verificando così che i controller
-degli altri servizi rispondessero correttamente e che i contenuti
-venissero deserializzati in modo corretto. Non sono stati quindi creati
-<em>unit test</em> sui controller interni ai singoli servizi, poiché il
-loro comportamento viene testato indirettamente attraverso il
-middleware.</p>
-<p>Ad eccezione del servizio contenente la <em>business logic</em> — che
-non ha interazioni con database né dipendenze da altri servizi — sono
-stati realizzati test di integrazione per verificare il corretto
-collegamento tra i servizi che utilizzano database, sia relazionali che
-non.</p>
+<p>Questa separazione consente di applicare strategie di testing
+differenziate per ciascun livello, coerentemente con quanto suggerito
+dall’architettura esagonale <span class="citation"
+data-cites="richardson2019"></span>: le classi di servizio vengono
+testate con <em>solitary unit test</em> che ne verificano la logica in
+isolamento, mentre le interazioni tra servizi e con l’infrastruttura
+vengono verificate ai livelli superiori della piramide.</p>
+<h2 id="unit-test">Unit Test</h2>
+<p>Gli <em>unit test</em> costituiscono la base della test pyramid e
+sono orientati alla tecnologia. Nel nostro sistema, sono stati
+implementati come <strong>solitary unit test</strong> sulle classi di
+servizio, verificando la correttezza della logica di business in
+isolamento dalle dipendenze esterne.</p>
+<p>Non sono stati realizzati unit test dedicati per le classi controller
+dei singoli servizi. Secondo la strategia suggerita in <span
+class="citation" data-cites="richardson2019"></span>, i controller
+andrebbero testati con solitary unit test che mockano i servizi
+sottostanti; nel nostro caso, si è scelto di verificarne il
+comportamento ai livelli superiori della piramide, tramite i test
+descritti nella Sezione <a href="#sec:component_test"
+data-reference-type="ref" data-reference="sec:component_test">4.5</a>.
+Si tratta di una limitazione consapevole, motivata dalla semplicità dei
+controller che si limitano a delegare alle classi di servizio.</p>
+<h2 id="sec:integration_test">Integration Test</h2>
+<p>Gli <em>integration test</em> si collocano al livello immediatamente
+superiore agli unit test nella piramide. Il loro scopo è verificare che
+un servizio possa interagire correttamente con i servizi
+infrastrutturali da cui dipende, in particolare i database <span
+class="citation" data-cites="richardson2019"></span>.</p>
+<p>Nel nostro sistema, ad eccezione del servizio contenente la business
+logic — che non ha dipendenze verso database né verso altri servizi —
+sono stati realizzati <strong>persistence integration test</strong> per
+verificare il corretto collegamento tra i servizi e i rispettivi
+database (MySQL e MongoDB).</p>
+<p>L’esempio seguente mostra un persistence integration test che
+verifica l’interazione tra il servizio di gioco e MongoDB:</p>
 <div class="sourceCode" id="list:mongo_test" data-language="Java"
-data-caption="Esempio di test di integrazione per MongoDB"
+data-caption="Persistence integration test per MongoDB"
 data-label="list:mongo_test"><pre class="sourceCode java"><code class="sourceCode java"><span id="list:mongo_test-1"><a href="#list:mongo_test-1" aria-hidden="true" tabindex="-1"></a><span class="at">@TestInstance</span><span class="op">(</span>Lifecycle<span class="op">.</span><span class="fu">PER_CLASS</span><span class="op">)</span></span>
 <span id="list:mongo_test-2"><a href="#list:mongo_test-2" aria-hidden="true" tabindex="-1"></a><span class="at">@ExtendWith</span><span class="op">(</span>VertxExtension<span class="op">.</span><span class="fu">class</span><span class="op">)</span></span>
 <span id="list:mongo_test-3"><a href="#list:mongo_test-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> StatisticMongoTest <span class="op">{</span></span>
@@ -988,14 +984,35 @@ data-label="list:mongo_test"><pre class="sourceCode java"><code class="sourceCod
 <span id="list:mongo_test-40"><a href="#list:mongo_test-40" aria-hidden="true" tabindex="-1"></a>        <span class="fu">assertNotNull</span><span class="op">(</span>doc<span class="op">);</span></span>
 <span id="list:mongo_test-41"><a href="#list:mongo_test-41" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="list:mongo_test-42"><a href="#list:mongo_test-42" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<h3 id="testing-asincrono">Testing asincrono</h3>
+<p>Il test segue le fasi canoniche: <strong>setup</strong>
+(inizializzazione di Vert.x e del servizio con connessione a MongoDB),
+<strong>execute</strong> (creazione di una partita e recupero del
+record), <strong>verify</strong> (asserzione sulla presenza del
+documento), <strong>teardown</strong> (chiusura di Vert.x).</p>
+<h2 id="sec:component_test">Component Test</h2>
+<p>I <em>component test</em> verificano il comportamento di un servizio
+trattandolo come una <em>black box</em> e interagendo con esso
+attraverso la sua API <span class="citation"
+data-cites="richardson2019"></span>.</p>
+<p>Nel nostro sistema, il componente middleware svolge il ruolo di API
+Gateway e si occupa di mettere in comunicazione i servizi tra loro e con
+il frontend. I test realizzati al suo interno verificano che le API
+esposte dagli altri servizi rispondano correttamente e che i contenuti
+vengano deserializzati nel formato atteso.</p>
+<p>Questi test, pur non utilizzando un framework di contract testing
+come Spring Cloud Contract o Pact, svolgono nella pratica un ruolo
+analogo ai <strong>consumer-driven contract test</strong>: il middleware
+agisce come <em>consumer</em> delle API degli altri servizi, e i test
+verificano che il <em>provider</em> rispetti il contratto implicito
+(endpoint corretto, struttura della response attesa, status code).</p>
+<h2 id="sec:async_test">Testing Asincrono</h2>
 <p>Durante la scrittura dei test del servizio Java, alcune operazioni
 risultavano asincrone; è stato quindi necessario attendere il
 completamento di tali operazioni prima di poter validare i test. La
 struttura di test standard fornita da Vert.x non era sufficiente in un
 primo momento. La forma classica dei test è la seguente:</p>
 <div class="sourceCode" id="list:test_std_vertx" data-language="Java"
-data-caption="Esempio di test standard con Vert.x"
+data-caption="Esempio di test sincrono con Vert.x"
 data-label="list:test_std_vertx"><pre
 class="sourceCode java"><code class="sourceCode java"><span id="list:test_std_vertx-1"><a href="#list:test_std_vertx-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Test</span></span>
 <span id="list:test_std_vertx-2"><a href="#list:test_std_vertx-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">createGameTest</span><span class="op">(</span><span class="dt">final</span> VertxTestContext context<span class="op">)</span> <span class="op">{</span></span>
@@ -1038,9 +1055,17 @@ class="sourceCode java"><code class="sourceCode java"><span id="list:test_async_
 <span id="list:test_async_vertx-12"><a href="#list:test_async_vertx-12" aria-hidden="true" tabindex="-1"></a>            <span class="op">});</span></span>
 <span id="list:test_async_vertx-13"><a href="#list:test_async_vertx-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">});</span></span>
 <span id="list:test_async_vertx-14"><a href="#list:test_async_vertx-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>Infine, gli ulteriori livelli di testing sono stati accorpati e
-verificati durante la fase di <em>alpha testing</em> dell’applicazione,
-condotta da più utenti tramite il servizio di frontend.</p>
+<h2 id="livelli-superiori-della-piramide">Livelli Superiori della
+Piramide</h2>
+<p>I livelli superiori della test pyramid — in particolare gli
+<em>end-to-end test</em>, che secondo <span class="citation"
+data-cites="richardson2019"></span> dovrebbero essere minimizzati data
+la loro complessità, lentezza e fragilità — non sono stati implementati
+in forma automatizzata. La verifica del comportamento complessivo
+dell’applicazione è stata condotta tramite sessioni di <em>alpha
+testing</em> con più utenti attraverso il frontend, coprendo in modo
+esplorativo i percorsi principali dell’utente (<em>user
+journey</em>).</p>
 <h1 id="ch:production_ready">Micro-servizi production ready(Assignement
 7)</h1>
 <h2 id="sicurezza">Sicurezza</h2>
