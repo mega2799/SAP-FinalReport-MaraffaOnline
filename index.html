@@ -906,11 +906,10 @@ business.</p></li>
 </ul>
 <p>Questa separazione consente di applicare strategie di testing
 differenziate per ciascun livello, coerentemente con quanto suggerito
-dall’architettura esagonale <span class="citation"
-data-cites="richardson2019"></span>: le classi di servizio vengono
-testate con <em>solitary unit test</em> che ne verificano la logica in
-isolamento, mentre le interazioni tra servizi e con l’infrastruttura
-vengono verificate ai livelli superiori della piramide.</p>
+dall’architettura esagonale: le classi di servizio vengono testate con
+<em>solitary unit test</em> che ne verificano la logica in isolamento,
+mentre le interazioni tra servizi e con l’infrastruttura vengono
+verificate ai livelli superiori della piramide.</p>
 <h2 id="unit-test">Unit Test</h2>
 <p>Gli <em>unit test</em> costituiscono la base della test pyramid e
 sono orientati alla tecnologia. Nel nostro sistema, sono stati
@@ -918,12 +917,10 @@ implementati come <strong>solitary unit test</strong> sulle classi di
 servizio, verificando la correttezza della logica di business in
 isolamento dalle dipendenze esterne.</p>
 <p>Non sono stati realizzati unit test dedicati per le classi controller
-dei singoli servizi. Secondo la strategia suggerita in <span
-class="citation" data-cites="richardson2019"></span>, i controller
-andrebbero testati con solitary unit test che mockano i servizi
-sottostanti; nel nostro caso, si è scelto di verificarne il
-comportamento ai livelli superiori della piramide, tramite i test
-descritti nella Sezione <a href="#sec:component_test"
+dei singoli servizi. I controller andrebbero testati con solitary unit
+test che mockano i servizi sottostanti; nel nostro caso, si è scelto di
+verificarne il comportamento ai livelli superiori della piramide,
+tramite i test descritti nella Sezione <a href="#sec:component_test"
 data-reference-type="ref" data-reference="sec:component_test">4.5</a>.
 Si tratta di una limitazione consapevole, motivata dalla semplicità dei
 controller che si limitano a delegare alle classi di servizio.</p>
@@ -1058,10 +1055,9 @@ class="sourceCode java"><code class="sourceCode java"><span id="list:test_async_
 <h2 id="livelli-superiori-della-piramide">Livelli Superiori della
 Piramide</h2>
 <p>I livelli superiori della test pyramid — in particolare gli
-<em>end-to-end test</em>, che secondo <span class="citation"
-data-cites="richardson2019"></span> dovrebbero essere minimizzati data
-la loro complessità, lentezza e fragilità — non sono stati implementati
-in forma automatizzata. La verifica del comportamento complessivo
+<em>end-to-end test</em>, che dovrebbero essere minimizzati data la loro
+complessità, lentezza e fragilità — non sono stati implementati in forma
+automatizzata. La verifica del comportamento complessivo
 dell’applicazione è stata condotta tramite sessioni di <em>alpha
 testing</em> con più utenti attraverso il frontend, coprendo in modo
 esplorativo i percorsi principali dell’utente (<em>user
@@ -1123,22 +1119,6 @@ style="width:16cm" />
 <img src="report/img/Jaeger-UI.png" style="width:16cm" />
 <figcaption aria-hidden="true"></figcaption>
 </figure>
-<div class="appendices">
-<h1 id="appn:A">An Appendix Chapter (Optional)</h1>
-<p>Some lengthy tables, codes, raw data, length proofs, etc. which are
-<strong>very important but not essential part</strong> of the project
-report goes into an Appendix. An appendix is something a reader would
-consult if he/she needs extra information and a more comprehensive
-understating of the report. Also, note that you should use one appendix
-for one idea.</p>
-<p>An appendix is optional. If you feel you do not need to include an
-appendix in your report, avoid including it. Sometime including
-irrelevant and unnecessary materials in the Appendices may unreasonably
-increase the total number of pages in your report and distract the
-reader.</p>
-<h1 id="appn:B">An Appendix Chapter (Optional)</h1>
-<p>...</p>
-</div>
             </div>
     </div>
   </div>
